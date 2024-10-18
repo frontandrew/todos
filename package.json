@@ -1,7 +1,12 @@
 {
-  "name": "vite_bundler",
-  "private": true,
-  "version": "0.0.0",
+  "name": "stellar-burgers",
+  "author": {
+    "name": "Andrew Bubnov",
+    "email": "jackblack.nt@yandex.ru",
+    "url": "https://github.com/frontandrew"
+  },
+  "private": false,
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
