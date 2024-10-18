@@ -18,7 +18,16 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Global paths */
+    "baseUrl": "./src",
+    "paths": {
+      "assets/*": ["./shared/assets/*"],
+      "features/*": ["./features/*"],
+      "pages": ["./pages/index"],
+      "uikit": ["./shared/uikit/index"],
+    },
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
