@@ -1,0 +1,15 @@
+body {
+    margin: unset;
+    padding: unset;
+
+    display: flex;
+    justify-content: center;
+}
+
+#root {
+    max-width: 80em;
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+}
