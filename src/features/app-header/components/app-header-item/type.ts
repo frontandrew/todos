@@ -4,4 +4,4 @@ interface Props {
   variant: 'orders' | 'profile' | 'constructor'
 }
 
-export type ItemProps = PropsWithChildren<Props>
+export type AppHeaderItemProps = PropsWithChildren<Props>

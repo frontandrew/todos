@@ -1,10 +1,10 @@
 import { Button, ListIcon, BurgerIcon, ProfileIcon } from 'uikit'
 import { FC, PropsWithChildren } from 'react'
 
-import { ItemProps } from './type'
+import { AppHeaderItemProps } from './type'
 import style from './style.module.css'
 
-export const AppHeaderItem: FC<PropsWithChildren<ItemProps>> = ({ variant }) => {
+export const AppHeaderItem: FC<PropsWithChildren<AppHeaderItemProps>> = ({ variant }) => {
   const active = matchLocation(variant)
 
   const iconState = active ? 'primary' : 'secondary'
