@@ -12,7 +12,7 @@ import { data } from './ingrs-mock'
 export const BurgerIngredients: FC = () => {
   const [current, setCurrent] = useState(IngredientType[0])
 
-  const listedData: Record<string, Ingredient[]> = separateGroupsByType(data as Ingredient[])
+  const listedData: Record<string, Ingredient[]> = separateGroupsByType(data)
 
   function separateGroupsByType(array: Array<Ingredient>): typeof listedData {
     return {
