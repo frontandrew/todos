@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { BurgerIngredients } from 'features/burger-ingredients'
+import { BurgerConstructor } from 'features/burger-constructor'
 
 import style from './style.module.css'
 
@@ -11,7 +12,7 @@ export const Main: FC = () => {
         <BurgerIngredients />
       </section>
       <section className={style.content}>
-
+        <BurgerConstructor />
       </section>
     </div>
   )
