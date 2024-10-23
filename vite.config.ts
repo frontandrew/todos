@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       assets: path.resolve('src/shared/assets'),
+      entities: path.resolve('src/entities/'),
       features: path.resolve('src/features/'),
       pages: path.resolve('src/pages/index'),
       uikit: '@ya.praktikum/react-developer-burger-ui-components',
