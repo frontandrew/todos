@@ -7,7 +7,7 @@ import { IngredientsGroup } from './components'
 import { IngredientsGroupNames } from './consts'
 import style from './style.module.css'
 
-import { data } from './data'
+import { data } from './ingrs-mock'
 
 export const BurgerIngredients: FC = () => {
   const [current, setCurrent] = useState(IngredientType[0])
