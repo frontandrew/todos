@@ -1,6 +1,19 @@
 import { Ingredient } from 'entities/ingredient';
 
 export const data: Ingredient[] = [
+    {
+    id: "643d69a5c3f7b9001cfa093d",
+    name: "Флюоресцентная булка R2-D3",
+    type: "bun",
+    proteins: 44,
+    fat: 26,
+    carbohydrates: 85,
+    calories: 643,
+    price: 988,
+    image: "https://code.s3.yandex.net/react/code/bun-01.png",
+    imageMobile: "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
+    imageLarge: "https://code.s3.yandex.net/react/code/bun-01-large.png",
+  },
   {
     id: "643d69a5c3f7b9001cfa0941",
     name: "Биокотлета из марсианской Магнолии",
@@ -52,19 +65,6 @@ export const data: Ingredient[] = [
     image: "https://code.s3.yandex.net/react/code/meat-04.png",
     imageMobile: "https://code.s3.yandex.net/react/code/meat-04-mobile.png",
     imageLarge: "https://code.s3.yandex.net/react/code/meat-04-large.png",
-  },
-  {
-    id: "643d69a5c3f7b9001cfa093d",
-    name: "Флюоресцентная булка R2-D3",
-    type: "bun",
-    proteins: 44,
-    fat: 26,
-    carbohydrates: 85,
-    calories: 643,
-    price: 988,
-    image: "https://code.s3.yandex.net/react/code/bun-01.png",
-    imageMobile: "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
-    imageLarge: "https://code.s3.yandex.net/react/code/bun-01-large.png",
   },
   {
     id: "643d69a5c3f7b9001cfa0944",

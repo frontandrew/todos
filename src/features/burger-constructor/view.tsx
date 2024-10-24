@@ -15,12 +15,16 @@ const bun = remove(data, function ({ type }) {
 export const BurgerConstructor: FC = () => {
 
   return (
-    <article className={style.container + ' pt-25 pr-4 pb-10 pl-4'}>
-      <ul className={style.content}>
+    <article className={style.container + ' pt-25 pb-10'}>
+
+      <div className={style.content}>
         <IngredientItem ingredient={bun} isLocked={true} type='top' key={bun.id} />
-        {data.map(item => <IngredientItem ingredient={item} key={item.id} />)}
+        <ul className={style.draggable}>
+          {data.map(item => <IngredientItem ingredient={item} key={item.id} />)}
+        </ul>
         <IngredientItem ingredient={bun} isLocked={true} type='bottom' key={bun.id + 'aferfae'} />
-      </ul>
+      </div>
+
       <div className={style.footer}>
         <div className={style.total}>
           <span className='text text_type_digits-medium'>{tolal}</span>
@@ -30,6 +34,7 @@ export const BurgerConstructor: FC = () => {
           Оформить заказ
         </Button>
       </div>
+
     </article>
   )
 }

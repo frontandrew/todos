@@ -5,15 +5,28 @@
 
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 2.5em;
 }
 
 .content {
     width: 100%;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: 1em;
+
+    overflow: hidden;
+}
+
+.content li, .content > div {
+    padding: 0 1em 0;
+}
+
+.draggable {
+    width: 100%;
     
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     gap: 1em;
 
     margin: unset;
