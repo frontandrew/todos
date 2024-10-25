@@ -25,6 +25,7 @@
     "baseUrl": "./src",
     "paths": {
       "assets/*": ["./shared/assets/*"],
+      "components": ["./shared/components/index"],
       "entities/*": ["./entities/*"],
       "features/*": ["./features/*"],
       "pages": ["./pages/index"],

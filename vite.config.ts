@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       assets: path.resolve('src/shared/assets'),
+      components: path.resolve('src/shared/components/index'),
       entities: path.resolve('src/entities/'),
       features: path.resolve('src/features/'),
       pages: path.resolve('src/pages/index'),
