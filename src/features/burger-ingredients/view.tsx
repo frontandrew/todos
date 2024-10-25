@@ -11,18 +11,20 @@ import { data } from './ingrs-mock'
 
 export const BurgerIngredients: FC = () => {
   const [current, setCurrent] = useState(IngredientType[0])
+  const [ingredients, setIngredients] = useState<Record<string, Ingredient[]> | null>(null)
 
-  const listedData: Record<string, Ingredient[]> = separateGroupsByType(data)
-
-  function separateGroupsByType(array: Array<Ingredient>): typeof listedData {
-    return {
-      [IngredientType[0]]: array.filter(({ type }) => type === IngredientType[0]),
-      [IngredientType[1]]: array.filter(({ type }) => type === IngredientType[1]),
-      [IngredientType[2]]: array.filter(({ type }) => type === IngredientType[2]),
+  useEffect(() => {
+    const catagorizedList = {
+      [IngredientType[0]]: data.filter(({ type }) => type === IngredientType[0]),
+      [IngredientType[1]]: data.filter(({ type }) => type === IngredientType[1]),
+      [IngredientType[2]]: data.filter(({ type }) => type === IngredientType[2]),
     }
-  }
 
-  function renderGroups(data: typeof listedData): ReactNode[] {
+    setIngredients(catagorizedList)
+  }, [])
+
+  const renderGroups = (data: typeof ingredients): ReactNode[] | null => {
+    if (!data) return null
     return Object.entries(data).map(([key, value], index) => (
       <IngredientsGroup
         category={IngredientsGroupNames[IngredientType[index]]}
@@ -61,7 +63,7 @@ export const BurgerIngredients: FC = () => {
         </div>
       </div>
       <ul className={style.content}>
-        {renderGroups(listedData)}
+        {renderGroups(ingredients)}
       </ul>
     </article>
   )
