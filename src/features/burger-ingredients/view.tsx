@@ -10,7 +10,7 @@ import style from './style.module.css'
 import { data } from './ingrs-mock'
 
 export const BurgerIngredients: FC = () => {
-  const [current, setCurrent] = useState(IngredientType[0])
+  const [currentTab, setCurrentTab] = useState(IngredientType[0])
   const [ingredients, setIngredients] = useState<Record<string, Ingredient[]> | null>(null)
 
   useEffect(() => {
@@ -41,22 +41,22 @@ export const BurgerIngredients: FC = () => {
         <div className={style.tabs}>
           <Tab
             value={IngredientType[0]}
-            active={current === IngredientType[0]}
-            onClick={setCurrent}
+            active={currentTab === IngredientType[0]}
+            onClick={setCurrentTab}
           >
             {IngredientsGroupNames[IngredientType[0]]}
           </Tab>
           <Tab
             value={IngredientType[1]}
-            active={current === IngredientType[1]}
-            onClick={setCurrent}
+            active={currentTab === IngredientType[1]}
+            onClick={setCurrentTab}
           >
             {IngredientsGroupNames[IngredientType[1]]}
           </Tab>
           <Tab
             value={IngredientType[2]}
-            active={current === IngredientType[2]}
-            onClick={setCurrent}
+            active={currentTab === IngredientType[2]}
+            onClick={setCurrentTab}
           >
             {IngredientsGroupNames[IngredientType[2]]}
           </Tab>
