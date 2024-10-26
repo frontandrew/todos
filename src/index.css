@@ -1,3 +1,7 @@
+:root {
+    --background-backdrop: #0000009a
+}
+
 body {
     margin: unset;
     padding: unset;
