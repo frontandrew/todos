@@ -1,7 +1,8 @@
-import { FC, ReactNode, useState } from 'react'
+import { FC, ReactNode, SyntheticEvent, useCallback, useEffect, useState } from 'react'
 import { Tab } from 'uikit'
+import { useModal } from 'components'
 
-import { Ingredient, IngredientType } from 'entities/ingredient'
+import { Ingredient, IngredientType, IngredientDetails } from 'entities/ingredient'
 
 import { IngredientsGroup } from './components'
 import { IngredientsGroupNames } from './consts'
@@ -12,6 +13,7 @@ import { data } from './ingrs-mock'
 export const BurgerIngredients: FC = () => {
   const [currentTab, setCurrentTab] = useState(IngredientType[0])
   const [ingredients, setIngredients] = useState<Record<string, Ingredient[]> | null>(null)
+  const { Modal, open } = useModal()
 
   useEffect(() => {
     const catagorizedList = {
@@ -33,6 +35,11 @@ export const BurgerIngredients: FC = () => {
       />
     ))
   }
+
+  const hadleIngredientClick = useCallback((event: SyntheticEvent) => {
+    event.stopPropagation()
+    open()
+  }, [open])
 
   return (
     <article className={style.container + ' pt-10'}>
@@ -62,9 +69,12 @@ export const BurgerIngredients: FC = () => {
           </Tab>
         </div>
       </div>
-      <ul className={style.content}>
+      <ul className={style.content} onClick={hadleIngredientClick}>
         {renderGroups(ingredients)}
       </ul>
+      <Modal title='Детали ингредиента'>
+        <IngredientDetails {...data[1]} />
+      </Modal>
     </article>
   )
 }
