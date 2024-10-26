@@ -12,8 +12,6 @@
 }
 
 .list {
-    margin: unset;
-    padding: unset;
     width: 100%;
 
     display: flex;

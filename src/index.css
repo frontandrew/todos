@@ -13,3 +13,8 @@ body {
 
     overflow: hidden;
 }
+
+ul, li {
+    margin: unset;
+    padding: unset;
+}

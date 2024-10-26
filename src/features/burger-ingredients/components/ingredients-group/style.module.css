@@ -3,9 +3,6 @@
     gap: 1.5em;
     flex-direction: column;
 
-    margin: unset;
-    padding: unset;
-
     box-sizing: border-box;
 }
 
@@ -16,8 +13,6 @@
     row-gap: 2em;
     
     width: 100%;
-    margin: unset;
-    /* padding: unset; */
 
     box-sizing: border-box;
     transition: var(--common-transition);

@@ -29,9 +29,6 @@
     flex-direction: column;
     gap: 1em;
 
-    margin: unset;
-    padding: unset;
-
     overflow-y:scroll;
     overflow-x: hidden;
 }
