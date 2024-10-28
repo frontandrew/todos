@@ -28,6 +28,7 @@
       "components": ["./shared/components/index"],
       "entities/*": ["./entities/*"],
       "features/*": ["./features/*"],
+      "hooks": ["./shared/hooks/index"],
       "pages": ["./pages/index"],
       "uikit": ["./shared/uikit/index"],
       "utils": ["./shared/utils/index"],
