@@ -10,7 +10,7 @@ import { INGREDIENTS_HOST } from 'consts'
 import style from './style.module.css'
 
 export const App: FC = () => {
-  const [ingredients, setIngredients] = useState<Ingredient[]>()
+  const [ingredients, setIngredients] = useState<Ingredient[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
 
@@ -19,7 +19,7 @@ export const App: FC = () => {
       .then((response) => {
         const { status, statusText } = response
 
-        if ((status >= 200) && (status <= 399)) return response.json()
+        if ((status >= 200) && (status <= 399)) return response.json() || []
         throw new Error(
           `request failed with status: ${status} by ${statusText || 'unknown reason'}.`
         )
@@ -42,7 +42,9 @@ export const App: FC = () => {
         <AppHeader />
       </header>
       <main className={style.content}>
-        <Main />
+        {!hasError && !isLoading && <Main
+          ingredients={ingredients}
+        />}
       </main>
     </div>
   )

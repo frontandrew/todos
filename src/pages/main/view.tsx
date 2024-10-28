@@ -2,10 +2,11 @@ import { FC } from 'react'
 
 import { BurgerIngredients } from 'features/burger-ingredients'
 import { BurgerConstructor } from 'features/burger-constructor'
+import { Ingredient } from 'entities/ingredient'
 
 import style from './style.module.css'
 
-export const Main: FC = () => {
+export const Main: FC<{ ingredients: Ingredient[] }> = ({ ingredients }) => {
   return (
     <div className={style.container}>
       <section className={style.content}>
