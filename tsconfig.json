@@ -30,6 +30,7 @@
       "features/*": ["./features/*"],
       "pages": ["./pages/index"],
       "uikit": ["./shared/uikit/index"],
+      "utils": ["./shared/utils/index"],
     },
   },
   "include": ["src"],
