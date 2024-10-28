@@ -1,5 +1,6 @@
 import { FC, PropsWithChildren, useState } from 'react';
 import { ModalOverlay } from 'components';
+import { useHotKey } from 'hooks';
 
 import { ModalProps } from './type'
 import { Modal } from './view';
@@ -16,6 +17,7 @@ export const useModal = () => {
     if (isOpen) close()
   }
 
+  useHotKey(close, 'Escape')
 
   const Component: FC<PropsWithChildren<Omit<ModalProps, 'close'>>> = (props) => (
     <ModalOverlay isVisible={isOpen} onClick={close}>
