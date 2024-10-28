@@ -7,7 +7,7 @@ export default defineConfig({
   server: { port: 3000 },
   resolve: {
     alias: {
-      assets: path.resolve('src/shared/assets'),
+      consts: path.resolve('src/shared/consts/index'),
       components: path.resolve('src/shared/components/index'),
       entities: path.resolve('src/entities/'),
       features: path.resolve('src/features/'),
