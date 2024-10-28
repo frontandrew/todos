@@ -10,7 +10,7 @@ export const Main: FC<{ ingredients: Ingredient[] }> = ({ ingredients }) => {
   return (
     <div className={style.container}>
       <section className={style.content}>
-        <BurgerIngredients />
+        <BurgerIngredients ingredients={ingredients} />
       </section>
       <section className={style.content}>
         <BurgerConstructor

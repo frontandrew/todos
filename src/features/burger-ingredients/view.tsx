@@ -1,6 +1,6 @@
-import { FC, ReactNode, SyntheticEvent, useCallback, useEffect, useState } from 'react'
-import { Tab } from 'uikit'
+import { FC, ReactNode, SyntheticEvent, useCallback, useMemo, useState } from 'react'
 import { useModal } from 'components'
+import { Tab } from 'uikit'
 
 import { Ingredient, IngredientType, IngredientDetails } from 'entities/ingredient'
 
@@ -8,33 +8,27 @@ import { IngredientsGroup } from './components'
 import { IngredientsGroupNames } from './consts'
 import style from './style.module.css'
 
-import { data } from './ingrs-mock'
-
-export const BurgerIngredients: FC = () => {
-  const [currentTab, setCurrentTab] = useState(IngredientType[0])
-  const [ingredients, setIngredients] = useState<Record<string, Ingredient[]> | null>(null)
+export const BurgerIngredients: FC<{ ingredients: Ingredient[] }> = ({ ingredients = [] }) => {
+  const [currentTab, setCurrentTab] = useState('')
   const { Modal, open } = useModal()
 
-  useEffect(() => {
-    const catagorizedList = {
-      [IngredientType[0]]: data.filter(({ type }) => type === IngredientType[0]),
-      [IngredientType[1]]: data.filter(({ type }) => type === IngredientType[1]),
-      [IngredientType[2]]: data.filter(({ type }) => type === IngredientType[2]),
-    }
+  /** TODO: придумать как мапать ингредиенты не зная количества категорий */
+  const ingredientsMap = useMemo<Record<string, Ingredient[]>>(() => ({
+    [IngredientType[0]]: ingredients.filter(({ type }) => type === IngredientType[0]),
+    [IngredientType[1]]: ingredients.filter(({ type }) => type === IngredientType[1]),
+    [IngredientType[2]]: ingredients.filter(({ type }) => type === IngredientType[2]),
+  }), [ingredients])
 
-    setIngredients(catagorizedList)
-  }, [])
-
-  const renderGroups = (data: typeof ingredients): ReactNode[] | null => {
-    if (!data) return null
-    return Object.entries(data).map(([key, value], index) => (
+  const renderGroups = (data: typeof ingredientsMap): ReactNode[] => Object
+    .entries(data)
+    .map(([key, value], index) => (
+      (key === currentTab || !currentTab) &&
       <IngredientsGroup
         category={IngredientsGroupNames[IngredientType[index]]}
         ingredients={value}
         key={key}
       />
     ))
-  }
 
   const hadleIngredientClick = useCallback((event: SyntheticEvent) => {
     event.stopPropagation()
@@ -70,10 +64,10 @@ export const BurgerIngredients: FC = () => {
         </div>
       </div>
       <ul className={style.content} onClick={hadleIngredientClick}>
-        {renderGroups(ingredients)}
+        {renderGroups(ingredientsMap)}
       </ul>
       <Modal title='Детали ингредиента'>
-        <IngredientDetails {...data[1]} />
+        <IngredientDetails {...ingredients[1]} />
       </Modal>
     </article>
   )
