@@ -1,4 +1,5 @@
 import { FC, PropsWithChildren, useState } from 'react';
+import { ModalOverlay } from 'components';
 
 import { ModalProps } from './type'
 import { Modal } from './view';
@@ -15,9 +16,12 @@ export const useModal = () => {
     if (isOpen) close()
   }
 
-  const View: FC<PropsWithChildren<Omit<ModalProps, 'isOpen' | 'close'>>> = (props) => (
-    <Modal {...props} isOpen={isOpen} close={close} />
+
+  const Component: FC<PropsWithChildren<Omit<ModalProps, 'close'>>> = (props) => (
+    <ModalOverlay isVisible={isOpen} onClick={close}>
+      <Modal {...props} close={close} />
+    </ModalOverlay>
   )
 
-  return { Modal: View, open, close, toggle, isOpen }
+  return { Modal: Component, open, close, toggle, isOpen }
 }
