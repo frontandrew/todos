@@ -13,7 +13,9 @@ export const Main: FC<{ ingredients: Ingredient[] }> = ({ ingredients }) => {
         <BurgerIngredients />
       </section>
       <section className={style.content}>
-        <BurgerConstructor />
+        <BurgerConstructor
+          order={{ id: 134232, ingredients, total: 610, date: new Date(), status: 'created' }}
+        />
       </section>
     </div>
   )
