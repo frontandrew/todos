@@ -46,6 +46,27 @@ body {
     overflow: hidden;
 }
 
+/* Scrollbars */
+
+::-webkit-scrollbar {
+    width: var(--scrollable-width);
+    scrollbar-width: none;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 2px;
+    background-color: #00000000;
+}
+
+::-webkit-scrollbar-track:hover {
+    background-color: var(--background-element);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: var(--text-inactive-color);
+}
+
 /* Reset */
 
 :root {

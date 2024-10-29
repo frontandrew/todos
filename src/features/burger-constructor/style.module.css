@@ -18,7 +18,11 @@
     overflow: hidden;
 }
 
-.content li, .content > div {
+.content li {
+    padding: 0 calc(1em - var(--scrollable-width)) 0 1em;
+}
+
+.content > div {
     padding: 0 1em 0;
 }
 
