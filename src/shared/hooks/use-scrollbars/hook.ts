@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import style from './style.module.css'
 
 export const useScrollbars = () => {
   const scrollClassRef = useRef('')
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     scrollClassRef.current = style.scrollable
   }, []);
 
