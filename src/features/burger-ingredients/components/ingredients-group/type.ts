@@ -3,7 +3,8 @@ import { PropsWithChildren } from 'react'
 import { Ingredient } from 'entities/ingredient'
 
 interface Props {
-  category: string
+  categoryName: string
+  categoryId: string
   ingredients: Ingredient[]
 }
 
