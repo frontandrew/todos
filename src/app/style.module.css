@@ -25,6 +25,7 @@
 /* Global */
 
 :root {
+    --scrollable-width: 2px;
     --background-backdrop: #0000009a;
     --text-glow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.50);
 }
@@ -46,6 +47,11 @@ body {
 }
 
 /* Reset */
+
+:root {
+    scrollbar-color: unset;
+    scrollbar-width: unset;
+}
 
 body, ul, li {
     margin: unset;
