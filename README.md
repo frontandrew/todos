@@ -1,4 +1,4 @@
-# 🛸 Stellar Burger
+# 🛸 Stellar Burgers
 
 ![Screenshot](https://github.com/user-attachments/assets/f2a6f314-4627-4e15-b294-2b7672e2a4dd)
 
