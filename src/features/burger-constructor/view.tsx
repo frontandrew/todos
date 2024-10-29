@@ -1,6 +1,8 @@
 import { FC, SyntheticEvent, useCallback, useMemo } from 'react'
+
 import { Button, CurrencyIcon } from 'uikit'
-import { useModal } from 'components'
+import { Modal } from 'components'
+import { useModal } from 'hooks'
 
 import { IngredientItem, IngredientType } from 'entities/ingredient'
 import { Order, OrderDetails } from 'entities/order'
@@ -9,7 +11,7 @@ import style from './style.module.css'
 
 /** TODO: декомпозировать на более мелкие и радтелить стэйт */
 export const BurgerConstructor: FC<{ order: Order }> = ({ order }) => {
-  const { Modal, open } = useModal()
+  const { isModalOpen, closeModal, openModal } = useModal()
 
   const bun = useMemo(() => order.ingredients.find(
     ({ type }) => type === IngredientType[0]
@@ -21,8 +23,8 @@ export const BurgerConstructor: FC<{ order: Order }> = ({ order }) => {
 
   const handleOrderSubmit = useCallback((e: SyntheticEvent) => {
     e.stopPropagation()
-    open()
-  }, [open])
+    openModal()
+  }, [openModal])
 
   return (
     <article className={style.container + ' pt-25 pb-10'}>
@@ -49,7 +51,7 @@ export const BurgerConstructor: FC<{ order: Order }> = ({ order }) => {
           Оформить заказ
         </Button>
       </div>
-      <Modal>
+      <Modal close={closeModal} isVisible={isModalOpen}>
         <OrderDetails {...order} />
       </Modal>
     </article>
