@@ -1,10 +1,13 @@
 # 🛸 Stellar Burgers
 
 ![Screenshot](https://github.com/user-attachments/assets/f2a6f314-4627-4e15-b294-2b7672e2a4dd)
+#### Hungry for burger?!
 
-##### Hungry for burger?!
+<div style="width=100%; height=80px; bacground=red">
 
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg)](https://opensource.org/licenses/mit-license.php)
+
+</div>
 
 ### Start and use:
 - clone repo
@@ -27,5 +30,4 @@
 ---
 
 #### Templates: [Figma](https://www.figma.com/design/TbuS5lWzTxGut4DkvaSV8v/React-_-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_external_link-(Copy))
-
-#### Live action: in progress
+#### Live action: [GH-Pages](https://frontandrew.github.io/stellar-burgers/)
