@@ -1,0 +1,80 @@
+/* Application */
+
+.container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    width: 100%;
+}
+
+.content {
+    height: auto;
+    overflow: hidden;
+
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Global */
+
+:root {
+    --scrollable-width: 2px;
+    --background-backdrop: #0000009a;
+    --text-glow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.50);
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    
+    display: flex;
+    justify-content: center;
+}
+
+:global(.app) {
+    max-width: 1280px;
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+}
+
+/* Scrollbars */
+
+::-webkit-scrollbar {
+    width: var(--scrollable-width);
+    scrollbar-width: none;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 2px;
+    background-color: #00000000;
+}
+
+::-webkit-scrollbar-track:hover {
+    background-color: var(--background-element);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: var(--text-inactive-color);
+}
+
+/* Reset */
+
+:root {
+    scrollbar-color: unset;
+    scrollbar-width: unset;
+}
+
+body, ul, li {
+    margin: unset;
+    padding: unset;
+}

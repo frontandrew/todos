@@ -1,30 +1,31 @@
-# React + TypeScript + Vite
+# 🛸 Stellar Burgers
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Screenshot](https://github.com/user-attachments/assets/f2a6f314-4627-4e15-b294-2b7672e2a4dd)
 
-Currently, two official plugins are available:
+##### Hungry for burger?!
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg)](https://opensource.org/licenses/mit-license.php)
 
-## Expanding the ESLint configuration
+### Start and use:
+- clone repo
+- install dependencies: `npm ci`
+- for create build run: `npm run build`
+- for use build localy run: `npm run start`
+- for use dev-server run: `npm run dev`
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Used tools:
 
-- Configure the top-level `parserOptions` property like this:
+- [TypeScript](https://www.typescriptlang.org/) - is JavaScript with syntax for types
+- [React](https://react.dev/) - the library for web and native user interfaces
+- [Vite](https://vitejs.dev/) - is a build tool that aims to provide a faster and leaner development experience for modern web projects
+- [ESLint](https://eslint.org/) - statically analyzes your code to quickly find problems
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Project features:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- in progress
+
+---
+
+#### Templates: [Figma](https://www.figma.com/design/TbuS5lWzTxGut4DkvaSV8v/React-_-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_external_link-(Copy))
+
+#### Live action: in progress
