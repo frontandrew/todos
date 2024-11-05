@@ -2,16 +2,15 @@ import { forwardRef, SyntheticEvent, useMemo } from 'react'
 
 import { Ingredient, IngredientDetails, IngredientType } from 'entities/ingredient'
 import { Modal } from 'components'
-import { useModal } from 'hooks'
+import { useAppSelector, useModal } from 'hooks'
 
 import { IngredientsGroupNames } from '../../consts'
 import { IngredientsGroup } from '../ingredients-group'
 
-import { IngredientsListProps } from './type'
 import style from './style.module.css'
 
-export const IngredientsList = forwardRef<HTMLUListElement, IngredientsListProps>(
-  ({ ingredients = [] }, ref) => {
+export const IngredientsList = forwardRef<HTMLUListElement>((_, ref) => {
+  const ingredients = useAppSelector(state => state.ingredients)
     const { isModalOpen, closeModal, openModal } = useModal()
 
     const ingredientsMap = useMemo<Record<string, Ingredient[]>>(() => Object
