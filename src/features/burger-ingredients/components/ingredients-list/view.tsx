@@ -1,48 +1,59 @@
-import { forwardRef, SyntheticEvent, useMemo } from 'react'
+import { forwardRef, useEffect, useMemo } from 'react'
 
-import { Ingredient, IngredientDetails, IngredientType } from 'entities/ingredient'
+import {
+  currentIngredientSlice,
+  Ingredient,
+  IngredientDetails,
+  IngredientType,
+} from 'entities/ingredient'
 import { Modal } from 'components'
-import { useAppSelector, useModal } from 'hooks'
+import { useAppDispatch, useAppSelector, useModal } from 'hooks'
 
 import { IngredientsGroupNames } from '../../consts'
 import { IngredientsGroup } from '../ingredients-group'
 
 import style from './style.module.css'
 
-export const IngredientsList = forwardRef<HTMLUListElement>((_, ref) => {
+export const IngredientsList = forwardRef<HTMLUListElement>((_props, ref) => {
   const ingredients = useAppSelector(state => state.ingredients)
-    const { isModalOpen, closeModal, openModal } = useModal()
+  const { ingredient } = useAppSelector(state => state.currentIngrdient)
 
-    const ingredientsMap = useMemo<Record<string, Ingredient[]>>(() => Object
-      .entries(IngredientsGroupNames)
-      .reduce(
-        (acc, [key], index) => (
-          { ...acc, [key]: ingredients.filter(({ type }) => type === IngredientType[index]) }
-        ), {}
-      ), [ingredients])
+  const { resetCurrentIngredient } = currentIngredientSlice.actions
+  const dispatch = useAppDispatch()
 
-    const hadleIngredientClick = (event: SyntheticEvent) => {
-      event.stopPropagation()
-      openModal()
-    }
+  const { isModalOpen, closeModal, openModal } = useModal({
+    closeHandler: () => dispatch(resetCurrentIngredient()),
+  })
 
-    return (
-      <>
-        <ul className={style.container} onClick={hadleIngredientClick} ref={ref}>
-          {Object.entries(ingredientsMap).map(([key, value], index) =>
-            <IngredientsGroup
-              categoryName={IngredientsGroupNames[IngredientType[index]]}
-              categoryId={key}
-              ingredients={value}
-              key={key}
-            />
-          )}
-        </ul>
+  const ingredientsMap = useMemo<Record<string, Ingredient[]>>(() => Object
+    .entries(IngredientsGroupNames)
+    .reduce(
+      (acc, [key], index) => (
+        { ...acc, [key]: ingredients.filter(({ type }) => type === IngredientType[index]) }
+      ), {}
+    ), [ingredients])
 
-        <Modal title='Детали ингредиента' close={closeModal} isVisible={isModalOpen}>
-          <IngredientDetails {...ingredients[1]} />
-        </Modal>
-      </>
-    )
-  }
-)
+  useEffect(() => {
+    if (ingredient) openModal()
+  }, [ingredient])
+
+  return (
+    <>
+      <ul className={style.container} ref={ref}>
+        {Object.entries(ingredientsMap).map(([key, value], index) =>
+          value.length > 0 &&
+          <IngredientsGroup
+            categoryName={IngredientsGroupNames[IngredientType[index]]}
+            categoryId={key}
+            ingredients={value}
+            key={key}
+          />
+        )}
+      </ul>
+
+      <Modal title='Детали ингредиента' close={closeModal} isVisible={isModalOpen}>
+        <IngredientDetails {...ingredient!} />
+      </Modal>
+    </>
+  )
+})
