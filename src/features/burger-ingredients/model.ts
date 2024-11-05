@@ -6,7 +6,7 @@ import { apiSlice } from 'api'
 const initState: Ingredient[] = []
 
 export const ingredientsSlice = createSlice({
-  name: 'ingrdients',
+  name: 'ingredients',
   initialState: initState,
   reducers: {},
   extraReducers(builder) {
