@@ -24,6 +24,7 @@
     /* Global paths */
     "baseUrl": "./src",
     "paths": {
+      "api": ["./shared/api/index"],
       "consts": ["./shared/consts/index"],
       "components": ["./shared/components/index"],
       "entities/*": ["./entities/*"],
