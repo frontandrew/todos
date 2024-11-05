@@ -19,3 +19,7 @@ export interface Ingredient {
   imageMobile: string,
   imageLarge: string,
 }
+
+export interface CurrentIngredientState {
+  ingredient: Ingredient | null
+}
