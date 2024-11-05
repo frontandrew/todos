@@ -30,6 +30,7 @@
       "features/*": ["./features/*"],
       "hooks": ["./shared/hooks/index"],
       "pages": ["./pages/index"],
+      "store": ["./store/index"],
       "uikit": ["./shared/uikit/index"],
       "utils": ["./shared/utils/index"],
     },

@@ -14,6 +14,7 @@ export default defineConfig({
       features: path.resolve('src/features/'),
       hooks: path.resolve('src/shared/hooks/index'),
       pages: path.resolve('src/pages/index'),
+      store: path.resolve('src/store/index'),
       uikit: '@ya.praktikum/react-developer-burger-ui-components',
       utils: path.resolve('src/shared/utils/index'),
     },
