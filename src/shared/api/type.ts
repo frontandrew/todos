@@ -1,6 +1,6 @@
 import { IngredientTypes } from 'entities/ingredient'
 
-export type IngredientsResponseData = {
+export type IngredientsResponse = {
   _id: string
   name: string
   type: IngredientTypes
@@ -13,4 +13,4 @@ export type IngredientsResponseData = {
   image_mobile: string
   image_large: string
   __v: number
-}[]
+}

@@ -1,1 +1,1 @@
-export const INGREDIENTS_HOST = 'https://norma.nomoreparties.space/api/ingredients'
+export const API_HOST = 'https://norma.nomoreparties.space/api'
