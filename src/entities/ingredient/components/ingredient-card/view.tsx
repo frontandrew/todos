@@ -16,7 +16,8 @@ export const IngredientCard: FC<IngredientCardProps> = ({ data, count = 0 }) => 
   }
 
   const { image = '', id, name = 'unknown', price = 0, } = data
-  return (
+
+  const ingredientCard = (
     <li className={style.container} key={id} onClick={handleCardClick}>
       <img className={style.image} src={image} alt={name} />
       <div className={style.price}>
@@ -33,4 +34,6 @@ export const IngredientCard: FC<IngredientCardProps> = ({ data, count = 0 }) => 
       }
     </li>
   )
+
+  return id && name && (typeof price === 'number') ? ingredientCard : null
 }
