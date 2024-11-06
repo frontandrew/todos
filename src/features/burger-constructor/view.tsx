@@ -2,21 +2,23 @@ import { FC, SyntheticEvent, useCallback, useMemo } from 'react'
 
 import { Button, CurrencyIcon } from 'uikit'
 import { Modal } from 'components'
-import { useModal } from 'hooks'
+import { useAppSelector, useModal } from 'hooks'
 
 import { IngredientItem, IngredientType } from 'entities/ingredient'
-import { Order, OrderDetails } from 'entities/order'
+import { OrderDetails } from 'entities/order'
 
 import style from './style.module.css'
 
 /** TODO: возможно, декомпозировать на более мелкие и радтелить стэйт */
-export const BurgerConstructor: FC<{ order: Order }> = ({ order }) => {
-  const { isModalOpen, closeModal, openModal } = useModal()
+export const BurgerConstructor: FC = () => {
+  const order = useAppSelector(state => state.currentOrder)
 
   const [bun, otherIngredients] = useMemo(() => [
     order.ingredients.find(({ type }) => type === IngredientType[0]),
     order.ingredients.filter(({ type }) => type !== IngredientType[0]),
   ], [order.ingredients])
+
+  const { isModalOpen, closeModal, openModal } = useModal()
 
   const handleOrderSubmit = useCallback((e: SyntheticEvent) => {
     e.stopPropagation()

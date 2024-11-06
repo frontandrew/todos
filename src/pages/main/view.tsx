@@ -15,9 +15,7 @@ export const Main: FC = () => {
           <BurgerIngredients />
         </section>
         <section className={style.content}>
-          <BurgerConstructor
-            order={{ id: '134232', ingredients: [], total: 610, date: new Date(), status: 'created' }}
-          />
+          <BurgerConstructor />
         </section>
       </DndProvider>
     </div>
