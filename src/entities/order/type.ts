@@ -1,12 +1,15 @@
 import { Ingredient } from 'entities/ingredient';
 
-type OrderStatus = 'created' | 'inprogress' | 'done'
+export type OrderStatus = 'draft' | 'created' | 'inprogress' | 'done'
+export interface OrderIngredientItem extends Ingredient {
+  orderIngredientIndex: string
+}
 
 export interface Order {
-  id: number
+  id: string | null
   name?: string
-  ingredients: Ingredient[]
+  ingredients: OrderIngredientItem[]
   status: OrderStatus
-  date: Date
+  date?: ReturnType<() => Date>
   total: number
 }
