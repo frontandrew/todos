@@ -1,4 +1,6 @@
 import { FC, SyntheticEvent } from 'react'
+import { useDrag } from 'react-dnd'
+
 import { Counter, CurrencyIcon } from 'uikit'
 import { useAppDispatch } from 'hooks'
 
@@ -7,6 +9,8 @@ import { IngredientCardProps } from './type'
 import style from './style.module.css'
 
 export const IngredientCard: FC<IngredientCardProps> = ({ data, count = 0 }) => {
+  const { image = '', id, name = 'unknown', price = 0, } = data
+
   const { setCurrentIngredient } = currentIngredientSlice.actions
   const dispatch = useAppDispatch()
 
@@ -15,10 +19,23 @@ export const IngredientCard: FC<IngredientCardProps> = ({ data, count = 0 }) => 
     dispatch(setCurrentIngredient(data))
   }
 
-  const { image = '', id, name = 'unknown', price = 0, } = data
+  const [{ isDrag }, cardRef] = useDrag({
+    type: 'ingredient',
+    item: data,
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging()
+    })
+  })
+
 
   const ingredientCard = (
-    <li className={style.container} key={id} onClick={handleCardClick}>
+    <li
+      key={id}
+      ref={cardRef}
+      className={isDrag ? style.container_dragging : style.container}
+      onClick={handleCardClick}
+      draggable
+    >
       <img className={style.image} src={image} alt={name} />
       <div className={style.price}>
         <span className={'text text_type_digits-default'}>{price}</span>
