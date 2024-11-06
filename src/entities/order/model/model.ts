@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { genItemIndex } from 'utils'
 import { Ingredient } from 'entities/ingredient'
 
-import { Order } from './type'
-import { genItemIndex } from 'utils'
+import { addIngredientIntoOrder, calcOrderTotal, removeIngredientFromOrder } from './utils'
+import { Order } from '../type'
 
 const initState: Order = {
   id: null,
@@ -16,18 +17,18 @@ export const currentOrderSlice = createSlice({
   initialState: initState,
   reducers: {
     createNewOrder: (state, { payload }: PayloadAction<Ingredient>) => {
-      state.ingredients.push({ ...payload, orderIngredientIndex: genItemIndex()})
+
+      state.ingredients = addIngredientIntoOrder(state.ingredients, payload)
       state.id = genItemIndex(6)
-      state.total += payload.price
+      state.total = calcOrderTotal(state.ingredients)
     },
     addOrderIngredient: (state, { payload }: PayloadAction<Ingredient>) => {
-      state.ingredients.push({ ...payload, orderIngredientIndex: genItemIndex()})
-      state.total += payload.price
+      state.ingredients = addIngredientIntoOrder(state.ingredients, payload)
+      state.total = calcOrderTotal(state.ingredients)
     },
     removeOrderIngredient: (state, { payload }: PayloadAction<string>) => {
-      const index = state.ingredients.findIndex((item) => item.orderIngredientIndex === payload)
-      state.ingredients.splice(index, 1)
-      state.total = state.ingredients.reduce((total, { price }) => total + price, 0)
+      state.ingredients = removeIngredientFromOrder(state.ingredients, payload)
+      state.total = calcOrderTotal(state.ingredients)
     },
     // requestOrder: (state) => {
     //   state.ingredient = initState.ingredient

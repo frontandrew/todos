@@ -1,5 +1,6 @@
 export type IngredientTypes = 'main' | 'sauce' | 'bun'
 
+/** TODO: добавить ключи типа `BUN` к IngredientType */
 export enum IngredientType {
   'bun',
   'sauce',
