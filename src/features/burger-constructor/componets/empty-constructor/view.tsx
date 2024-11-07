@@ -7,7 +7,7 @@ import { Ingredient } from 'entities/ingredient'
 
 import style from './style.module.css'
 
-export const EmptyBurgerConstructor: FC = () => {
+export const EmptyConstructor: FC = () => {
   const { createNewOrder } = currentOrderSlice.actions
   const dispatch = useAppDispatch()
 

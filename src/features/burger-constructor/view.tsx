@@ -7,7 +7,7 @@ import { useAppSelector, useModal } from 'hooks'
 import { IngredientItem, IngredientType } from 'entities/ingredient'
 import { OrderDetails } from 'entities/order'
 
-import { EmptyItem, EmptyBurgerConstructor } from './componets'
+import { EmptyItem, EmptyConstructor } from './componets'
 import style from './style.module.css'
 
 /** TODO: возможно, декомпозировать на более мелкие и радтелить стэйт */
@@ -68,7 +68,7 @@ export const BurgerConstructor: FC = () => {
             </div>
           </>
           :
-          <EmptyBurgerConstructor />
+          <EmptyConstructor />
         }
       </article>
 
