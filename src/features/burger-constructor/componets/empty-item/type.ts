@@ -1,7 +1,8 @@
+import { IngredientType } from 'entities/ingredient'
 import { PropsWithChildren } from 'react'
 
 interface Props {
-  expectType: 'bun' | 'other'
+  expectType: IngredientType.BUN | 'other'
 }
 
 export type EmptyItemProps = PropsWithChildren<Props>

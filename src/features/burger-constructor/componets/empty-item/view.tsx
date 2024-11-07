@@ -30,7 +30,7 @@ export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType }) => {
     <li className={style.container} ref={dropAreaRef}>
       <div className={shouldExpand ? style.droparea_expanded : style.droparea}>
         <p className='text text_type_main-default text_color_inactive'>
-          {`Добавьте ${expectType === IngredientType[0] ? 'булку' : 'ингредиент'}`}
+          {`Добавьте ${expectType === IngredientType.BUN ? 'булку' : 'ингредиент'}`}
         </p>
       </div>
       {children}

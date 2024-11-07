@@ -15,8 +15,8 @@ export const BurgerConstructor: FC = () => {
   const order = useAppSelector(state => state.currentOrder)
 
   const [bun, otherIngredients] = useMemo(() => [
-    order.ingredients.find(({ type }) => type === IngredientType[0]),
-    order.ingredients.filter(({ type }) => type !== IngredientType[0]),
+    order.ingredients.find(({ type }) => type === IngredientType.BUN),
+    order.ingredients.filter(({ type }) => type !== IngredientType.BUN),
   ], [order.ingredients])
 
   const { isModalOpen, closeModal, openModal } = useModal()
@@ -34,7 +34,7 @@ export const BurgerConstructor: FC = () => {
             <div className={style.content}>
               {bun?.orderIngredientIndex
                 ? <IngredientItem ingredient={bun} isLocked={true} type='top' />
-                : <EmptyItem expectType={'bun'} />
+                : <EmptyItem expectType={IngredientType.BUN} />
               }
               {otherIngredients.length > 0
                 ? <ul className={style.draggable}>
@@ -48,7 +48,7 @@ export const BurgerConstructor: FC = () => {
               }
               {bun?.orderIngredientIndex
                 ? <IngredientItem ingredient={bun} isLocked={true} type='bottom' />
-                : <EmptyItem expectType={'bun'} />
+                : <EmptyItem expectType={IngredientType.BUN} />
               }
             </div>
 

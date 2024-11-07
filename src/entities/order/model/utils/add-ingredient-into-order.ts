@@ -6,9 +6,9 @@ import { AddIngredientIntoOrder } from './type'
 
 export const addIngredientIntoOrder: AddIngredientIntoOrder = (items, item) => {
 
-        if (item.type === IngredientType[0]) {
+        if (item.type === IngredientType.BUN) {
           const removedItem = items.find(
-            ({ type }) => type === IngredientType[0]
+            ({ type }) => type === IngredientType.BUN
           )
 
           if (removedItem?.orderIngredientIndex) {

@@ -4,7 +4,6 @@ import {
   currentIngredientSlice,
   Ingredient,
   IngredientDetails,
-  IngredientType,
 } from 'entities/ingredient'
 import { Modal } from 'components'
 import { useAppDispatch, useAppSelector, useModal } from 'hooks'
@@ -26,10 +25,10 @@ export const IngredientsList = forwardRef<HTMLUListElement>((_props, ref) => {
   })
 
   const ingredientsMap = useMemo<Record<string, Ingredient[]>>(() => Object
-    .entries(IngredientsGroupNames)
+    .keys(IngredientsGroupNames)
     .reduce(
-      (acc, [key], index) => (
-        { ...acc, [key]: ingredients.filter(({ type }) => type === IngredientType[index]) }
+      (acc, key) => (
+        { ...acc, [key]: ingredients.filter(({ type }) => type === key) }
       ), {}
     ), [ingredients])
 
@@ -40,10 +39,10 @@ export const IngredientsList = forwardRef<HTMLUListElement>((_props, ref) => {
   return (
     <>
       <ul className={style.container} ref={ref}>
-        {Object.entries(ingredientsMap).map(([key, value], index) =>
+        {Object.entries(ingredientsMap).map(([key, value]) =>
           value.length > 0 &&
           <IngredientsGroup
-            categoryName={IngredientsGroupNames[IngredientType[index]]}
+            categoryName={IngredientsGroupNames[value[0].type]}
             categoryId={key}
             ingredients={value}
             key={key}

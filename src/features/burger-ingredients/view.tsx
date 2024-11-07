@@ -16,13 +16,13 @@ export const BurgerIngredients: FC = () => {
   }, [listRef])
 
   return (
-    <article className={style.container + ' pt-10'}>
+    <article className={style.container + ' pt-10 pb-10'}>
       <div className={style.header}>
         <h2 className={'text text_type_main-large'}>Собери бургер</h2>
         <Tabs
           onClick={handleTabClick}
           tabsNameValueMap={IngredientsGroupNames}
-          initialTab={IngredientType[0]}
+          initialTab={IngredientType.BUN}
         />
       </div>
       <IngredientsList ref={listRef} />
