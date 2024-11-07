@@ -12,15 +12,13 @@ export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType }) => {
   const { addOrderIngredient } = currentOrderSlice.actions
   const dispatch = useAppDispatch()
 
-  const [{ isOver }, dropAreaRef] = useDrop<Ingredient, void, { isOver: boolean, canDrop: boolean, item: Ingredient }>({
+  const [{ isOver }, dropAreaRef] = useDrop<Ingredient, void, { isOver: boolean }>({
     accept: 'ingredient',
     drop: (ingredient) => {
       dispatch(addOrderIngredient(ingredient))
     },
     collect: (monitor) => ({
-      canDrop: monitor.canDrop(),
       isOver: monitor.isOver(),
-      item: monitor.getItem(),
     })
   })
 
