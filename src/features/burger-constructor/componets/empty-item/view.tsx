@@ -9,13 +9,13 @@ import style from './style.module.css'
 import { EmptyItemProps } from './type'
 
 export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType }) => {
-  const { createNewOrder } = currentOrderSlice.actions
+  const { addOrderIngredient } = currentOrderSlice.actions
   const dispatch = useAppDispatch()
 
   const [{ isOver }, dropAreaRef] = useDrop<Ingredient, void, { isOver: boolean, canDrop: boolean, item: Ingredient }>({
     accept: 'ingredient',
     drop: (ingredient) => {
-      dispatch(createNewOrder(ingredient))
+      dispatch(addOrderIngredient(ingredient))
     },
     collect: (monitor) => ({
       canDrop: monitor.canDrop(),
