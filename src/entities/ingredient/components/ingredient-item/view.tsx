@@ -8,7 +8,7 @@ export const IngredientItem: FC<IngredientItemProps> = ({ ingredient, isLocked, 
   const { name, id, image, price } = ingredient
 
   return (
-    <li className={style.container} draggable={!isLocked}>
+    <div className={style.container} draggable={!isLocked}>
       {!isLocked && <DragIcon type='primary' />}
       <ConstructorElement
         key={id}
@@ -18,6 +18,6 @@ export const IngredientItem: FC<IngredientItemProps> = ({ ingredient, isLocked, 
         price={price}
         thumbnail={image}
       />
-    </li>
+    </div>
   )
 }
