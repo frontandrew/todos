@@ -17,7 +17,6 @@ export const currentOrderSlice = createSlice({
   initialState: initState,
   reducers: {
     createNewOrder: (state, { payload }: PayloadAction<Ingredient>) => {
-
       state.ingredients = addIngredientIntoOrder(state.ingredients, payload)
       state.id = genItemIndex(6)
       state.total = calcOrderTotal(state.ingredients)
