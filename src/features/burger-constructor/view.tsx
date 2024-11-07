@@ -7,7 +7,7 @@ import { useAppSelector, useModal } from 'hooks'
 import { IngredientItem, IngredientType } from 'entities/ingredient'
 import { OrderDetails } from 'entities/order'
 
-import { EmptyBurgerConstructor } from './componets'
+import { EmptyItem, EmptyBurgerConstructor } from './componets'
 import style from './style.module.css'
 
 /** TODO: возможно, декомпозировать на более мелкие и радтелить стэйт */
@@ -32,11 +32,24 @@ export const BurgerConstructor: FC = () => {
         {order.id ?
           <>
             <div className={style.content}>
-              {bun && <IngredientItem ingredient={bun} isLocked={true} type='top' />}
-              <ul className={style.draggable}>
-                {otherIngredients.map(item => <IngredientItem ingredient={item} key={item.id} />)}
-              </ul>
-              {bun && <IngredientItem ingredient={bun} isLocked={true} type='bottom' />}
+              {bun?.orderIngredientIndex
+                ? <IngredientItem ingredient={bun} isLocked={true} type='top' />
+                : <EmptyItem expectType={'bun'} />
+              }
+              {otherIngredients.length > 0
+                ? <ul className={style.draggable}>
+                  {otherIngredients.map(item => (
+                    <EmptyItem expectType={'other'}>
+                      <IngredientItem ingredient={item} key={item.id} />
+                    </EmptyItem>
+                  ))}
+                </ul>
+                : <EmptyItem expectType={'other'} />
+              }
+              {bun?.orderIngredientIndex
+                ? <IngredientItem ingredient={bun} isLocked={true} type='bottom' />
+                : <EmptyItem expectType={'bun'} />
+              }
             </div>
 
             <div className={style.footer}>
