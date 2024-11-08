@@ -39,8 +39,8 @@ export const BurgerConstructor: FC = () => {
               {otherIngredients.length > 0
                 ? <ul className={style.draggable}>
                   {otherIngredients.map(item => (
-                    <EmptyItem expectType={'other'} key={item.id}>
-                      <IngredientItem ingredient={item} />
+                    <EmptyItem expectType={'other'} key={item.orderIngredientIndex} targetIndex={item.orderIngredientIndex}>
+                      <IngredientItem ingredient={item} isLocked={false} />
                     </EmptyItem>
                   ))}
                 </ul>
