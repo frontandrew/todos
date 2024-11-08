@@ -2,8 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { genItemIndex } from 'utils'
 import { Ingredient } from 'entities/ingredient'
 
-import { addIngredientIntoOrder, calcOrderTotal, changeIngredientPosition, removeIngredientFromOrder } from './utils'
 import { Order } from '../type'
+import {
+  addIngredientIntoOrder,
+  calcOrderTotal,
+  changeIngredientPosition,
+  removeIngredientFromOrder,
+} from './utils'
 
 const initState: Order = {
   id: null,
