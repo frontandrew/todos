@@ -1,9 +1,9 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { useDrop } from 'react-dnd'
 
 import { useAppDispatch } from 'hooks'
 import { currentOrderSlice } from 'entities/order'
-import { Ingredient, IngredientViewType } from 'entities/ingredient'
+import { Ingredient, IngredientType, IngredientViewType } from 'entities/ingredient'
 
 import style from './style.module.css'
 
@@ -11,8 +11,17 @@ export const EmptyConstructor: FC = () => {
   const { createNewOrder } = currentOrderSlice.actions
   const dispatch = useAppDispatch()
 
+  /**
+   * TODO: вынести вычисление принимаемых типов в отдельную
+   * `entity/ingredient/components/utils`
+   */
+  const dndAcceptTypesMap = useMemo(() => ({
+    bun: `${IngredientViewType.CARD}-${IngredientType.BUN}`,
+    other: `${IngredientViewType.CARD}-${'other'}`,
+  }), [])
+
   const [{ isOver, canDrop }, dropAreaRef] = useDrop<Ingredient, void, { isOver: boolean, canDrop: boolean }>({
-    accept: IngredientViewType.CARD,
+    accept: Object.values(dndAcceptTypesMap),
     drop: (ingredient) => {
       dispatch(createNewOrder(ingredient))
     },

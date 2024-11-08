@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { useDrop } from 'react-dnd'
 
 import { useAppDispatch } from 'hooks'
@@ -12,12 +12,19 @@ export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType, targetInde
   const { addOrderIngredient, sortOrderIngredients } = currentOrderSlice.actions
   const dispatch = useAppDispatch()
 
-  const [{ isOver }, dropAreaRef] = useDrop<OrderIngredientItem | Ingredient, void, { isOver: boolean }>({
-    accept: [IngredientViewType.CARD, IngredientViewType.ITEM],
-    drop: (item, monitor) => {
+  /**
+   * TODO: вынести вычисление принимаемых типов в отдельную
+   * `entity/ingredient/components/utils`
+   */
+  const dndAcceptTypesMap = useMemo(() => ({
+    fromOrder: `${IngredientViewType.ITEM}-${expectType}`,
+    fromList: `${IngredientViewType.CARD}-${expectType}`,
+  }), [expectType])
 
-      if (monitor.getItemType() === IngredientViewType.ITEM) {
-        console.log(`CURR:`, monitor.getItem())
+  const [{ isOver }, dropAreaRef] = useDrop<OrderIngredientItem | Ingredient, void, { isOver: boolean }>({
+    accept: Object.values(dndAcceptTypesMap),
+    drop: (item, monitor) => {
+      if (monitor.getItemType() === dndAcceptTypesMap.fromOrder) {
         const currId = (monitor.getItem() as OrderIngredientItem).orderIngredientIndex
         dispatch(sortOrderIngredients({ currId, targId: targetIndex! }))
         return

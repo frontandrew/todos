@@ -1,8 +1,9 @@
-import { FC, SyntheticEvent } from 'react'
+import { FC, SyntheticEvent, useMemo } from 'react'
 import { useDrag } from 'react-dnd'
 
 import { Counter, CurrencyIcon } from 'uikit'
 import { useAppDispatch } from 'hooks'
+import { IngredientType } from 'entities/ingredient/type'
 
 import { currentIngredientSlice } from '../../model'
 import { IngredientViewType } from '../type'
@@ -10,7 +11,7 @@ import { IngredientCardProps } from './type'
 import style from './style.module.css'
 
 export const IngredientCard: FC<IngredientCardProps> = ({ data, count = 0 }) => {
-  const { image = '', id, name = 'unknown', price = 0, } = data
+  const { image = '', id, name = 'unknown', price = 0, type } = data
 
   const { setCurrentIngredient } = currentIngredientSlice.actions
   const dispatch = useAppDispatch()
@@ -20,8 +21,16 @@ export const IngredientCard: FC<IngredientCardProps> = ({ data, count = 0 }) => 
     dispatch(setCurrentIngredient(data))
   }
 
+  /**
+   * TODO: вынести вычисление принимаемых типов в отдельную
+   * `entity/ingredient/components/utils`
+   */
+  const getDNDAcceptType = useMemo(() => (
+    type === IngredientType.BUN ? IngredientType.BUN : 'other'
+  ), [type])
+
   const [{ isDrag }, cardRef] = useDrag({
-    type: IngredientViewType.CARD,
+    type: `${IngredientViewType.CARD}-${getDNDAcceptType}`,
     item: data,
     collect: (monitor) => ({
       isDrag: monitor.isDragging()
