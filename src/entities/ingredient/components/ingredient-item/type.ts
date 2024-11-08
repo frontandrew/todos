@@ -5,7 +5,7 @@ import { Ingredient } from 'entities/ingredient'
 
 interface Props {
   ingredient: Ingredient
-  isLocked?: boolean
+  isLocked: boolean
   type?: 'top' | 'bottom'
 }
 
