@@ -23,7 +23,7 @@ export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType, targetInde
         return
       }
 
-      dispatch(addOrderIngredient(item))
+      dispatch(addOrderIngredient({ item: (item as Ingredient), targId: targetIndex! }))
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),

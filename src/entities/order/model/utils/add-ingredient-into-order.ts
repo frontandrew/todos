@@ -3,8 +3,10 @@ import { IngredientType } from 'entities/ingredient'
 
 import { removeIngredientFromOrder } from './remove-ingredient-from-order'
 import { AddIngredientIntoOrder } from './type'
+import { changeIngredientPosition } from './change-ingredient-position'
 
-export const addIngredientIntoOrder: AddIngredientIntoOrder = (items, item) => {
+export const addIngredientIntoOrder: AddIngredientIntoOrder = (items, item, targ) => {
+        const newItemIndexIntoOrder = genItemIndex()
 
         if (item.type === IngredientType.BUN) {
           const removedItem = items.find(
@@ -13,11 +15,15 @@ export const addIngredientIntoOrder: AddIngredientIntoOrder = (items, item) => {
 
           if (removedItem?.orderIngredientIndex) {
             return [
-              { ...item, orderIngredientIndex: genItemIndex() },
+              { ...item, orderIngredientIndex: newItemIndexIntoOrder },
               ...removeIngredientFromOrder(items, removedItem.orderIngredientIndex),
             ]
           }
         }
 
-      return [...items, { ...item, orderIngredientIndex: genItemIndex() }]
+      const newItems = [...items, { ...item, orderIngredientIndex: newItemIndexIntoOrder }]
+
+      return targ
+        ? changeIngredientPosition(newItems, newItemIndexIntoOrder, targ)
+        : newItems
 }

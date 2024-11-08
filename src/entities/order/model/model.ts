@@ -21,8 +21,8 @@ export const currentOrderSlice = createSlice({
       state.id = genItemIndex(6)
       state.total = calcOrderTotal(state.ingredients)
     },
-    addOrderIngredient: (state, { payload }: PayloadAction<Ingredient>) => {
-      state.ingredients = addIngredientIntoOrder(state.ingredients, payload)
+    addOrderIngredient: (state, { payload }: PayloadAction<{ item: Ingredient, targId: string }>) => {
+      state.ingredients = addIngredientIntoOrder(state.ingredients, payload.item, payload.targId)
       state.total = calcOrderTotal(state.ingredients)
     },
     removeOrderIngredient: (state, { payload }: PayloadAction<string>) => {
