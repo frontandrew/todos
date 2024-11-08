@@ -13,8 +13,8 @@ export const addIngredientIntoOrder: AddIngredientIntoOrder = (items, item) => {
 
           if (removedItem?.orderIngredientIndex) {
             return [
+              { ...item, orderIngredientIndex: genItemIndex() },
               ...removeIngredientFromOrder(items, removedItem.orderIngredientIndex),
-              { ...item, orderIngredientIndex: genItemIndex() }
             ]
           }
         }
