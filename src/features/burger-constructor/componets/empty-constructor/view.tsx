@@ -3,7 +3,7 @@ import { useDrop } from 'react-dnd'
 
 import { useAppDispatch } from 'hooks'
 import { currentOrderSlice } from 'entities/order'
-import { Ingredient } from 'entities/ingredient'
+import { Ingredient, IngredientViewType } from 'entities/ingredient'
 
 import style from './style.module.css'
 
@@ -12,7 +12,7 @@ export const EmptyConstructor: FC = () => {
   const dispatch = useAppDispatch()
 
   const [{ isOver, canDrop }, dropAreaRef] = useDrop<Ingredient, void, { isOver: boolean, canDrop: boolean }>({
-    accept: 'ingredient',
+    accept: IngredientViewType.CARD,
     drop: (ingredient) => {
       dispatch(createNewOrder(ingredient))
     },

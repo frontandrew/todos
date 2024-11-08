@@ -5,6 +5,7 @@ import { Counter, CurrencyIcon } from 'uikit'
 import { useAppDispatch } from 'hooks'
 
 import { currentIngredientSlice } from '../../model'
+import { IngredientViewType } from '../type'
 import { IngredientCardProps } from './type'
 import style from './style.module.css'
 
@@ -20,7 +21,7 @@ export const IngredientCard: FC<IngredientCardProps> = ({ data, count = 0 }) => 
   }
 
   const [{ isDrag }, cardRef] = useDrag({
-    type: 'ingredient',
+    type: IngredientViewType.CARD,
     item: data,
     collect: (monitor) => ({
       isDrag: monitor.isDragging()
@@ -34,7 +35,6 @@ export const IngredientCard: FC<IngredientCardProps> = ({ data, count = 0 }) => 
       ref={cardRef}
       className={isDrag ? style.container_dragging : style.container}
       onClick={handleCardClick}
-      draggable
     >
       <img className={style.image} src={image} alt={name} />
       <div className={style.price}>
