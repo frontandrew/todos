@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { genItemIndex } from 'utils'
 import { Ingredient } from 'entities/ingredient'
 
-import { addIngredientIntoOrder, calcOrderTotal, removeIngredientFromOrder } from './utils'
+import { addIngredientIntoOrder, calcOrderTotal, changeIngredientPosition, removeIngredientFromOrder } from './utils'
 import { Order } from '../type'
 
 const initState: Order = {
@@ -29,6 +29,9 @@ export const currentOrderSlice = createSlice({
       state.ingredients = removeIngredientFromOrder(state.ingredients, payload)
       state.total = calcOrderTotal(state.ingredients)
     },
+    sortOrderIngredients: (state, { payload }: PayloadAction<{currId: string, targId: string}>) => {
+      state.ingredients = changeIngredientPosition(state.ingredients, payload.currId, payload.targId)
+    }
     // requestOrder: (state) => {
     //   state.ingredient = initState.ingredient
     // },
