@@ -1,10 +1,8 @@
 import { PropsWithChildren } from 'react'
-
-import { Ingredient } from 'entities/ingredient'
-
+import { OrderIngredientItem } from 'entities/order'
 
 interface Props {
-  ingredient: Ingredient
+  ingredient: OrderIngredientItem
   isLocked: boolean
   type?: 'top' | 'bottom'
 }
