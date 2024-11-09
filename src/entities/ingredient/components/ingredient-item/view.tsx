@@ -33,8 +33,8 @@ export const IngredientItem: FC<IngredientItemProps> = ({ ingredient, isLocked, 
   const dispatch = useAppDispatch()
 
   const handleRemove = useCallback(() => {
-    dispatch(removeOrderIngredient(orderIngredientIndex))
-  }, [dispatch, orderIngredientIndex, removeOrderIngredient])
+    dispatch(removeOrderIngredient({ currId: orderIngredientIndex, ingredientId: id }))
+  }, [dispatch, id, orderIngredientIndex, removeOrderIngredient])
 
   return (
     <div
