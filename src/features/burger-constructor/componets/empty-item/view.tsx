@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 import { useDrop } from 'react-dnd'
 
 import { useAppDispatch } from 'hooks'
@@ -9,8 +9,13 @@ import { EmptyItemProps } from './type'
 import style from './style.module.css'
 
 export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType, targetIndex }) => {
-  const { manageOrderIngredients } = currentOrderSlice.actions
+  const { sortOrderIngredients, addOrderIngredient } = currentOrderSlice.actions
   const dispatch = useAppDispatch()
+
+  const handleDrop: (x: OrderIngredientItem) => void = useCallback((item) => {
+    if (!item.orderIngredientIndex) dispatch(addOrderIngredient({ item, targId: targetIndex }))
+    else dispatch(sortOrderIngredients({ currId: item.orderIngredientIndex, targId: targetIndex! }))
+  }, [addOrderIngredient, dispatch, sortOrderIngredients, targetIndex])
 
   /**
    * TODO: вынести вычисление принимаемых типов в отдельную
@@ -23,13 +28,11 @@ export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType, targetInde
 
   const [{ isOver }, dropAreaRef] = useDrop<OrderIngredientItem, void, { isOver: boolean }>({
     accept: Object.values(dndAcceptTypesMap),
-    drop: (item) => {
-      dispatch(manageOrderIngredients({ item, targId: targetIndex }))
-    },
+    drop: handleDrop,
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     })
-  }, [dispatch, manageOrderIngredients])
+  }, [dndAcceptTypesMap, handleDrop])
 
   const isBunType = expectType === IngredientType.BUN
 
@@ -45,7 +48,7 @@ export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType, targetInde
       : isOver && isBunType
         ? style.content_collapsed
         : style.content,
-  ], [isOver])
+  ], [children, isBunType, isOver])
 
   return (
     <li className={style.container} ref={dropAreaRef}>

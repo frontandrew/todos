@@ -26,15 +26,7 @@ export const currentOrderSlice = createSlice({
       state.id = genItemIndex(6)
       state.total = calcOrderTotal(state.ingredients)
     },
-    manageOrderIngredients: (state, { payload }: PayloadAction<{ item: OrderIngredientItem, targId?: string }>) => {
-      const { orderIngredientIndex } = payload.item
-
-      state.ingredients = orderIngredientIndex
-        ? changeIngredientPosition(state.ingredients, orderIngredientIndex, payload.targId!)
-        : addIngredientIntoOrder(state.ingredients, payload.item, payload.targId)
-      state.total = calcOrderTotal(state.ingredients)
-    },
-    addOrderIngredient: (state, { payload }: PayloadAction<{ item: Ingredient, targId: string }>) => {
+    addOrderIngredient: (state, { payload }: PayloadAction<{ item: OrderIngredientItem, targId?: string }>) => {
       state.ingredients = addIngredientIntoOrder(state.ingredients, payload.item, payload.targId)
       state.total = calcOrderTotal(state.ingredients)
     },
@@ -45,8 +37,5 @@ export const currentOrderSlice = createSlice({
     sortOrderIngredients: (state, { payload }: PayloadAction<{currId: string, targId: string}>) => {
       state.ingredients = changeIngredientPosition(state.ingredients, payload.currId, payload.targId)
     }
-    // requestOrder: (state) => {
-    //   state.ingredient = initState.ingredient
-    // },
   },
 })
