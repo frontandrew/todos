@@ -4,7 +4,7 @@ import { Button, CurrencyIcon } from 'uikit'
 import { Modal } from 'components'
 import { useAppSelector, useModal } from 'hooks'
 
-import { IngredientItem, IngredientType } from 'entities/ingredient'
+import { IngredientType } from 'entities/ingredient'
 import { OrderDetails } from 'entities/order'
 
 import { EmptyItem, EmptyConstructor } from './componets'
@@ -29,31 +29,35 @@ export const BurgerConstructor: FC = () => {
   return (
     <>
       <article className={style.container + ' pt-25 pb-10'}>
-        {order.id ?
+        {order.ingredients.length > 0 ?
           <>
             <div className={style.content}>
-              {bun?.orderIngredientIndex
-                ? <EmptyItem expectType={IngredientType.BUN} key={bun.orderIngredientIndex} targetIndex={bun.orderIngredientIndex}>
-                  <IngredientItem ingredient={bun} isLocked={true} position='top' />
-                </EmptyItem>
-                : <EmptyItem expectType={IngredientType.BUN} />
-              }
-              {otherIngredients.length > 0
-                ? <ul className={style.draggable}>
-                  {otherIngredients.map(item => (
-                    <EmptyItem expectType={'other'} key={item.orderIngredientIndex} targetIndex={item.orderIngredientIndex}>
-                      <IngredientItem ingredient={item} isLocked={false} />
-                    </EmptyItem>
-                  ))}
-                </ul>
-                : <EmptyItem expectType={'other'} />
-              }
-              {bun?.orderIngredientIndex
-                ? <EmptyItem expectType={IngredientType.BUN} key={bun.orderIngredientIndex + '2'} targetIndex={bun.orderIngredientIndex}>
-                  <IngredientItem ingredient={bun} isLocked={true} position='bottom' />
-                </EmptyItem>
-                : <EmptyItem expectType={IngredientType.BUN} />
-              }
+              <EmptyItem
+                orderIngredient={bun}
+                key={`${bun?.orderIngredientIndex}1`}
+                expectType={IngredientType.BUN}
+                position={'top'}
+              />
+
+              <ul className={style.draggable}>
+                {otherIngredients.length > 0
+                  ? otherIngredients.map(item => (
+                    <EmptyItem
+                      orderIngredient={item}
+                      key={item.orderIngredientIndex}
+                      expectType={'other'}
+                    />
+                  ))
+                  : <EmptyItem key={`3`} expectType={'other'} />
+                }
+              </ul>
+
+              <EmptyItem
+                orderIngredient={bun}
+                key={`${bun?.orderIngredientIndex}2`}
+                expectType={IngredientType.BUN}
+                position={'bottom'}
+              />
             </div>
 
             <div className={style.footer}>

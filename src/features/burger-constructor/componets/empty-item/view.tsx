@@ -3,19 +3,36 @@ import { useDrop } from 'react-dnd'
 
 import { useAppDispatch } from 'hooks'
 import { currentOrderSlice, OrderIngredientItem } from 'entities/order'
-import { IngredientType, IngredientViewType } from 'entities/ingredient'
+import { IngredientItem, IngredientType, IngredientViewType } from 'entities/ingredient'
 
 import { EmptyItemProps } from './type'
 import style from './style.module.css'
 
-export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType, targetIndex }) => {
-  const { sortOrderIngredients, addOrderIngredient } = currentOrderSlice.actions
+export const EmptyItem: FC<EmptyItemProps> = ({ orderIngredient: ingr, position, expectType }) => {
+  const isBunType = expectType === IngredientType.BUN
+
+  const {
+    addOrderIngredient,
+    removeOrderIngredient,
+    sortOrderIngredients,
+  } = currentOrderSlice.actions
   const dispatch = useAppDispatch()
 
   const handleDrop: (x: OrderIngredientItem) => void = useCallback((item) => {
-    if (!item.orderIngredientIndex) dispatch(addOrderIngredient({ item, targId: targetIndex }))
-    else dispatch(sortOrderIngredients({ currId: item.orderIngredientIndex, targId: targetIndex! }))
-  }, [addOrderIngredient, dispatch, sortOrderIngredients, targetIndex])
+    if (!item.orderIngredientIndex) {
+
+      if (isBunType && ingr) dispatch(removeOrderIngredient({
+        orderId: ingr.orderIngredientIndex,
+        ingrId: ingr.id,
+      }))
+      dispatch(addOrderIngredient({ item, targId: ingr?.orderIngredientIndex }))
+    }
+
+    else dispatch(sortOrderIngredients({
+      currId: item.orderIngredientIndex,
+      targId: ingr!.orderIngredientIndex,
+    }))
+  }, [addOrderIngredient, dispatch, ingr, isBunType, removeOrderIngredient, sortOrderIngredients])
 
   /**
    * TODO: вынести вычисление принимаемых типов в отдельную
@@ -34,21 +51,19 @@ export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType, targetInde
     })
   }, [dndAcceptTypesMap, handleDrop])
 
-  const isBunType = expectType === IngredientType.BUN
-
   const [dropAreaStyles, contentStyle] = useMemo(() => [
-    !children
-    ? style.droparea
-    : isOver
+    !ingr
+      ? style.droparea
+      : isOver
         ? isBunType ? style.droparea : style.droparea_expanded
         : style.droparea_collapsed,
 
-    !children
+    !ingr
       ? style.content_collapsed
       : isOver && isBunType
         ? style.content_collapsed
         : style.content,
-  ], [children, isBunType, isOver])
+  ], [isBunType, isOver, ingr])
 
   return (
     <li className={style.container} ref={dropAreaRef}>
@@ -58,7 +73,13 @@ export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType, targetInde
         </p>
       </div>
       <div className={contentStyle}>
-        {children}
+        {ingr &&
+          <IngredientItem
+            ingredient={ingr}
+            position={position}
+            isLocked={isBunType}
+          />
+        }
       </div>
     </li>
   )
