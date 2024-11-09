@@ -12,12 +12,12 @@ export const ingredientsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => builder
 
-    .addCase(currentOrderSlice.actions.removeOrderIngredient, (state, { payload }) => {
-      state = state.map((item) => item.id === payload.ingredientId
+    .addCase(currentOrderSlice.actions.removeOrderIngredient, (state, { payload }) => state
+      .map((item) => item.id === payload.ingrId
         ? { ...item, count: undefined }
         : item
       )
-    })
+    )
 
     .addCase(currentOrderSlice.actions.addOrderIngredient, (state, { payload }) => {
       const isBun = payload.item.type === IngredientType.BUN

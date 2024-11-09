@@ -30,8 +30,8 @@ export const currentOrderSlice = createSlice({
       state.ingredients = addIngredientIntoOrder(state.ingredients, payload.item, payload.targId)
       state.total = calcOrderTotal(state.ingredients)
     },
-    removeOrderIngredient: (state, { payload }: PayloadAction<{ currId: string, ingredientId: string }>) => {
-      state.ingredients = removeIngredientFromOrder(state.ingredients, payload.currId)
+    removeOrderIngredient: (state, { payload }: PayloadAction<{ orderId: string, ingrId: string }>) => {
+      state.ingredients = removeIngredientFromOrder(state.ingredients, payload.orderId)
       state.total = calcOrderTotal(state.ingredients)
     },
     sortOrderIngredients: (state, { payload }: PayloadAction<{currId: string, targId: string}>) => {
