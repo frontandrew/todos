@@ -1,6 +1,6 @@
-import { RenoveIngredientFromOrder } from './type'
+import { RemoveIngredientFromOrder } from './type'
 
-export const removeIngredientFromOrder: RenoveIngredientFromOrder = (items, index) => {
+export const removeIngredientFromOrder: RemoveIngredientFromOrder = (items, index) => {
   const removedIndex = items.findIndex(({ orderIngredientIndex: id }) => index === id )
 
   if (removedIndex >= 0) {
