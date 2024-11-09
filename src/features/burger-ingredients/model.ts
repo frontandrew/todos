@@ -19,30 +19,20 @@ export const ingredientsSlice = createSlice({
       )
     )
 
-    .addCase(currentOrderSlice.actions.addOrderIngredient, (state, { payload }) => {
-      const isBun = payload.item.type === IngredientType.BUN
+    .addCase(currentOrderSlice.actions.addOrderIngredient, (state, { payload }) => state
+      .map((item) => {
+        if (item.id === payload.item.id) {
+          const nextCount = payload.item.type === IngredientType.BUN ? 2 : 1
 
-      if (isBun) {
-        state = state.map((item) => item.type === IngredientType.BUN
-          ? {...item, count: undefined}
-          : item
-        )
-      }
-
-      return state.map((item) => {
-      if (item.id === payload.item.id) {
-
-
-        const nextCount = isBun ? 2 : 1
-
-        return { ...item, count: typeof item.count === 'number'
-            ? item.count + nextCount
-            : nextCount
+          return { ...item, count: typeof item.count === 'number'
+              ? item.count + nextCount
+              : nextCount
+          }
         }
-      }
 
-      return item
-    })})
+        return item
+      })
+    )
 
     .addCase(currentOrderSlice.actions.createNewOrder, (state, { payload }) => state
       .map((item) => {
