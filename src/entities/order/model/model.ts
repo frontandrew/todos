@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { genItemIndex } from 'utils'
 import { Ingredient } from 'entities/ingredient'
 
-import { Order } from '../type'
+import { Order, OrderIngredientItem } from '../type'
 import {
   addIngredientIntoOrder,
   calcOrderTotal,
@@ -24,6 +24,14 @@ export const currentOrderSlice = createSlice({
     createNewOrder: (state, { payload }: PayloadAction<Ingredient>) => {
       state.ingredients = addIngredientIntoOrder(state.ingredients, payload)
       state.id = genItemIndex(6)
+      state.total = calcOrderTotal(state.ingredients)
+    },
+    manageOrderIngredients: (state, { payload }: PayloadAction<{ item: OrderIngredientItem, targId?: string }>) => {
+      const { orderIngredientIndex } = payload.item
+
+      state.ingredients = orderIngredientIndex
+        ? changeIngredientPosition(state.ingredients, orderIngredientIndex, payload.targId!)
+        : addIngredientIntoOrder(state.ingredients, payload.item, payload.targId)
       state.total = calcOrderTotal(state.ingredients)
     },
     addOrderIngredient: (state, { payload }: PayloadAction<{ item: Ingredient, targId: string }>) => {

@@ -9,7 +9,7 @@ import { EmptyItemProps } from './type'
 import style from './style.module.css'
 
 export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType, targetIndex }) => {
-  const { addOrderIngredient, sortOrderIngredients } = currentOrderSlice.actions
+  const { manageOrderIngredients } = currentOrderSlice.actions
   const dispatch = useAppDispatch()
 
   /**
@@ -21,24 +21,15 @@ export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType, targetInde
     fromList: `${IngredientViewType.CARD}-${expectType}`,
   }), [expectType])
 
-  const [{ isOver }, dropAreaRef] = useDrop<OrderIngredientItem | Ingredient, void, { isOver: boolean }>({
+  const [{ isOver }, dropAreaRef] = useDrop<OrderIngredientItem, void, { isOver: boolean }>({
     accept: Object.values(dndAcceptTypesMap),
-    drop: (item, monitor) => {
-      if (monitor.getItemType() === dndAcceptTypesMap.fromOrder) {
-        const currId = (monitor.getItem() as OrderIngredientItem).orderIngredientIndex
-        dispatch(sortOrderIngredients({ currId, targId: targetIndex! }))
-        return
-      }
-
-      dispatch(addOrderIngredient({ item: (item as Ingredient), targId: targetIndex! }))
+    drop: (item) => {
+      dispatch(manageOrderIngredients({ item, targId: targetIndex }))
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
-      // isBunOver: () => {
-      //   monitor.getItemType()
-      // }
     })
-  })
+  }, [dispatch, manageOrderIngredients])
 
   const isBunType = expectType === IngredientType.BUN
 
