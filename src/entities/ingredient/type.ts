@@ -18,6 +18,7 @@ export interface Ingredient {
   image: string,
   imageMobile: string,
   imageLarge: string,
+  count?: number,
 }
 
 export interface CurrentIngredientState {
