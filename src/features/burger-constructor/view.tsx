@@ -32,10 +32,11 @@ export const BurgerConstructor: FC = () => {
         {order.id ?
           <>
             <div className={style.content}>
-              {bun?.orderIngredientIndex &&
-                <EmptyItem expectType={IngredientType.BUN} targetIndex={bun.orderIngredientIndex}>
+              {bun?.orderIngredientIndex
+                ? <EmptyItem expectType={IngredientType.BUN} key={bun.orderIngredientIndex} targetIndex={bun.orderIngredientIndex}>
                   <IngredientItem ingredient={bun} isLocked={true} position='top' />
                 </EmptyItem>
+                : <EmptyItem expectType={IngredientType.BUN} />
               }
               {otherIngredients.length > 0
                 ? <ul className={style.draggable}>
@@ -47,10 +48,11 @@ export const BurgerConstructor: FC = () => {
                 </ul>
                 : <EmptyItem expectType={'other'} />
               }
-              {bun?.orderIngredientIndex &&
-                <EmptyItem expectType={IngredientType.BUN} targetIndex={bun.orderIngredientIndex}>
+              {bun?.orderIngredientIndex
+                ? <EmptyItem expectType={IngredientType.BUN} key={bun.orderIngredientIndex + '2'} targetIndex={bun.orderIngredientIndex}>
                   <IngredientItem ingredient={bun} isLocked={true} position='bottom' />
                 </EmptyItem>
+                : <EmptyItem expectType={IngredientType.BUN} />
               }
             </div>
 

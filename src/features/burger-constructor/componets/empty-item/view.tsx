@@ -3,7 +3,7 @@ import { useDrop } from 'react-dnd'
 
 import { useAppDispatch } from 'hooks'
 import { currentOrderSlice, OrderIngredientItem } from 'entities/order'
-import { Ingredient, IngredientType, IngredientViewType } from 'entities/ingredient'
+import { IngredientType, IngredientViewType } from 'entities/ingredient'
 
 import { EmptyItemProps } from './type'
 import style from './style.module.css'
@@ -34,15 +34,27 @@ export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType, targetInde
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
+      // isBunOver: () => {
+      //   monitor.getItemType()
+      // }
     })
   })
 
   const isBunType = expectType === IngredientType.BUN
-  const dropAreaStyles = !children
+
+  const [dropAreaStyles, contentStyle] = useMemo(() => [
+    !children
     ? style.droparea
     : isOver
-      ? style.droparea_expanded
-      : style.droparea_collapsed
+        ? isBunType ? style.droparea : style.droparea_expanded
+        : style.droparea_collapsed,
+
+    !children
+      ? style.content_collapsed
+      : isOver && isBunType
+        ? style.content_collapsed
+        : style.content,
+  ], [isOver])
 
   return (
     <li className={style.container} ref={dropAreaRef}>
@@ -51,7 +63,9 @@ export const EmptyItem: FC<EmptyItemProps> = ({ children, expectType, targetInde
           {`Добавьте ${isBunType ? 'булку' : 'ингредиент'}`}
         </p>
       </div>
-      {children}
+      <div className={contentStyle}>
+        {children}
+      </div>
     </li>
   )
 }

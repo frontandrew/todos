@@ -40,3 +40,26 @@
     height: 0px;
     margin-bottom: 0;
 }
+
+.content {
+    box-sizing: border-box;
+    width: 100%;
+    height: 80px;
+    opacity: 1;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    transition:
+        height 0.2s ease-out,
+        opacity 0.1s ease-out;
+
+    overflow: hidden;
+}
+
+.content_collapsed {
+    composes: content;
+
+    height: 0;
+    opacity: 0;
+}
