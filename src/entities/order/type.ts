@@ -12,4 +12,5 @@ export interface Order {
   status: OrderStatus
   date?: ReturnType<() => Date>
   total: number
+  isReady: boolean
 }

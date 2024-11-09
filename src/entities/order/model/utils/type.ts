@@ -6,3 +6,4 @@ export type AddIngredientIntoOrder = (items: OrderIngredientItem[], item: Ingred
 export type RemoveIngredientFromOrder = (items: OrderIngredientItem[], index: string) => OrderIngredientItem[]
 export type CalcOrderTotal = (items: { [x: string]: any, price: number, type: IngredientTypes }[]) => number
 export type ChangeIngredientPosition = (items: OrderIngredientItem[], curr: string, targ: string) => OrderIngredientItem[]
+export type CheckOrderIsReady = (items: OrderIngredientItem[], length: number) => boolean
