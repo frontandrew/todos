@@ -6,4 +6,4 @@ interface Props {
   root?: HTMLElement
 }
 
-export type ModalOverlayProps = PropsWithChildren<Props>
+export type OverlayProps = PropsWithChildren<Props>

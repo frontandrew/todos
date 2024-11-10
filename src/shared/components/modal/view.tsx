@@ -1,12 +1,12 @@
 import { FC } from 'react'
 import { CloseIcon } from 'uikit'
+import { Overlay } from 'components'
 
-import { ModalOverlay } from './components'
 import { ModalProps } from './type'
 import style from './style.module.css'
 
 export const Modal: FC<ModalProps> = ({ children, title, close, isVisible, root }) => (
-  <ModalOverlay root={root} onClick={close} isVisible={isVisible}>
+  <Overlay root={root} onClick={close} isVisible={isVisible}>
     <section
       className={style.container + ' p-10'}
       onClick={(e) => e.stopPropagation()}
@@ -19,5 +19,5 @@ export const Modal: FC<ModalProps> = ({ children, title, close, isVisible, root 
         {children}
       </div>
     </section >
-  </ModalOverlay>
+  </Overlay>
 )
