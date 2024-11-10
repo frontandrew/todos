@@ -4,6 +4,7 @@ import { apiSlice } from 'api'
 import { Main } from 'pages'
 
 import { AppHeader } from 'features/app-header'
+import { AppLoader } from 'features/app-loader'
 
 import style from './style.module.css'
 
@@ -20,6 +21,7 @@ export const App: FC = () => {
         {isLoading && <h3>Loading...</h3>}
         {isSuccess && <Main />}
       </main>
+      <AppLoader />
     </div>
   )
 }
