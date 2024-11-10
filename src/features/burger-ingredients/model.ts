@@ -11,14 +11,12 @@ export const ingredientsSlice = createSlice({
   initialState: initState,
   reducers: {},
   extraReducers: (builder) => builder
-
     .addCase(currentOrderSlice.actions.removeOrderIngredient, (state, { payload }) => state
       .map((item) => item.id === payload.ingrId
         ? { ...item, count: undefined }
         : item
       )
     )
-
     .addCase(currentOrderSlice.actions.addOrderIngredient, (state, { payload }) => state
       .map((item) => {
         if (item.id === payload.item.id) {
@@ -33,7 +31,6 @@ export const ingredientsSlice = createSlice({
         return item
       })
     )
-
     .addCase(currentOrderSlice.actions.createNewOrder, (state, { payload }) => state
       .map((item) => {
         if (item.id === payload.id) {
@@ -46,6 +43,9 @@ export const ingredientsSlice = createSlice({
 
         return item
       })
+    )
+    .addCase(currentOrderSlice.actions.resetOrderState, (state) => state
+      .map((item) => ({...item, count: undefined }))
     )
 
     .addMatcher(apiSlice.endpoints.getIngredients.matchFulfilled, (_state, { payload }) => payload)
