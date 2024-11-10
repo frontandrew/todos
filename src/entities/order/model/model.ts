@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { genItemIndex } from 'utils'
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Ingredient } from 'entities/ingredient'
+import { apiSlice } from 'api'
 
 import { Order, OrderIngredientItem } from '../type'
 
@@ -8,10 +8,10 @@ import {
   addIngredientIntoOrder,
   calcOrderTotal,
   changeIngredientPosition,
+  checkOrderIsReady,
   removeIngredientFromOrder,
 } from './utils'
-import { checkOrderIsReady } from './utils/check-order-is-ready'
-import { ORDER_ID_LENGTH, ORDER_MIN_LENGTH } from './const'
+import { ORDER_MIN_LENGTH } from './const'
 
 const initState: Order = {
   id: null,
@@ -19,6 +19,8 @@ const initState: Order = {
   status: 'draft',
   total: 0,
   isReady: false,
+  isLoading: false,
+  error: null,
 }
 
 export const currentOrderSlice = createSlice({
@@ -28,7 +30,6 @@ export const currentOrderSlice = createSlice({
     createNewOrder: (state, { payload }: PayloadAction<Ingredient>) => {
       state.ingredients = addIngredientIntoOrder(state.ingredients, payload)
       state.total = calcOrderTotal(state.ingredients)
-      state.id = genItemIndex(ORDER_ID_LENGTH)
     },
     addOrderIngredient: (state, { payload }: PayloadAction<{ item: OrderIngredientItem, targId?: string }>) => {
       state.ingredients = addIngredientIntoOrder(state.ingredients, payload.item, payload.targId)
@@ -53,6 +54,6 @@ export const currentOrderSlice = createSlice({
       return { ...state, isLoading: false, error: error ?? null, status: 'rejected' }
     })
     .addMatcher(apiSlice.endpoints.postOrder.matchFulfilled, (state, { payload }) => {
-      return { ...state, ...payload, isLoading: false, status: 'inprogress', date: new Date() }
+      return { ...state, ...payload, isLoading: false, status: 'inprogress', date: Date.now() }
     }),
 })

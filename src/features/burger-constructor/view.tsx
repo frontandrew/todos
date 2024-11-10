@@ -1,12 +1,12 @@
-import { FC, SyntheticEvent, useCallback, useMemo } from 'react'
+import { FC, SyntheticEvent, useCallback, useEffect, useMemo } from 'react'
 
+import { useAppDispatch, useAppSelector, useModal } from 'hooks'
 import { Button, CurrencyIcon } from 'uikit'
 import { Modal } from 'components'
-import { useAppSelector, useModal } from 'hooks'
 import { apiSlice } from 'api'
 
 import { IngredientType } from 'entities/ingredient'
-import { OrderDetails } from 'entities/order'
+import { currentOrderSlice, OrderDetails } from 'entities/order'
 
 import { EmptyItem, EmptyConstructor } from './componets'
 import style from './style.module.css'
@@ -14,20 +14,29 @@ import style from './style.module.css'
 /** TODO: возможно, декомпозировать на более мелкие и радтелить стэйт */
 export const BurgerConstructor: FC = () => {
   const order = useAppSelector(state => state.currentOrder)
+  const resetOrder = currentOrderSlice.actions.resetOrderState
   const [postOrder] = apiSlice.usePostOrderMutation()
+  const dispatch = useAppDispatch()
 
   const [bun, otherIngredients] = useMemo(() => [
     order.ingredients.find(({ type }) => type === IngredientType.BUN),
     order.ingredients.filter(({ type }) => type !== IngredientType.BUN),
   ], [order.ingredients])
 
-  const { isModalOpen, closeModal, openModal } = useModal()
+  const { isModalOpen, closeModal, openModal } = useModal({
+    closeHandler: () => {
+      dispatch(resetOrder())
+    }
+  })
 
   const handleOrderSubmit = useCallback((e: SyntheticEvent) => {
     e.stopPropagation()
     postOrder(order.ingredients)
-    openModal()
-  }, [openModal, order, postOrder])
+  }, [order, postOrder])
+
+  useEffect(() => {
+    if (order.id) openModal()
+  }, [openModal, order.id])
 
   return (
     <>
@@ -84,7 +93,7 @@ export const BurgerConstructor: FC = () => {
       </article>
 
       <Modal close={closeModal} isVisible={isModalOpen}>
-        <OrderDetails {...order} />
+        <OrderDetails orderId={order.id ?? undefined} />
       </Modal>
     </>
   )
