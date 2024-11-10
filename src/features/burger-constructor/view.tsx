@@ -3,6 +3,7 @@ import { FC, SyntheticEvent, useCallback, useMemo } from 'react'
 import { Button, CurrencyIcon } from 'uikit'
 import { Modal } from 'components'
 import { useAppSelector, useModal } from 'hooks'
+import { apiSlice } from 'api'
 
 import { IngredientType } from 'entities/ingredient'
 import { OrderDetails } from 'entities/order'
@@ -13,6 +14,7 @@ import style from './style.module.css'
 /** TODO: возможно, декомпозировать на более мелкие и радтелить стэйт */
 export const BurgerConstructor: FC = () => {
   const order = useAppSelector(state => state.currentOrder)
+  const [postOrder] = apiSlice.usePostOrderMutation()
 
   const [bun, otherIngredients] = useMemo(() => [
     order.ingredients.find(({ type }) => type === IngredientType.BUN),
@@ -23,8 +25,9 @@ export const BurgerConstructor: FC = () => {
 
   const handleOrderSubmit = useCallback((e: SyntheticEvent) => {
     e.stopPropagation()
+    postOrder(order.ingredients)
     openModal()
-  }, [openModal])
+  }, [openModal, order, postOrder])
 
   return (
     <>

@@ -43,5 +43,16 @@ export const currentOrderSlice = createSlice({
     sortOrderIngredients: (state, { payload }: PayloadAction<{currId: string, targId: string}>) => {
       state.ingredients = changeIngredientPosition(state.ingredients, payload.currId, payload.targId)
     },
+    resetOrderState: () => initState,
   },
+  extraReducers: (builder) => builder
+    .addMatcher(apiSlice.endpoints.postOrder.matchPending, (state) => {
+      return { ...state, isLoading: true, error: null, status: 'created' }
+    })
+    .addMatcher(apiSlice.endpoints.postOrder.matchRejected, (state, { error }) => {
+      return { ...state, isLoading: false, error: error ?? null, status: 'rejected' }
+    })
+    .addMatcher(apiSlice.endpoints.postOrder.matchFulfilled, (state, { payload }) => {
+      return { ...state, ...payload, isLoading: false, status: 'inprogress', date: new Date() }
+    }),
 })
