@@ -14,3 +14,10 @@ export type IngredientsResponse = {
   image_large: string
   __v: number
 }
+
+export type PostOrderResponse = {
+  name: string
+  order: {
+     number: number
+  }
+}
