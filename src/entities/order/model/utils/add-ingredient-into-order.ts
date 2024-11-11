@@ -1,13 +1,10 @@
-import { genItemIndex } from 'utils'
-
-import { AddIngredientIntoOrder } from './type'
 import { changeIngredientPosition } from './change-ingredient-position'
+import { AddIngredientIntoOrder } from './type'
 
 export const addIngredientIntoOrder: AddIngredientIntoOrder = (items, item, targ) => {
-  const newItemIndexIntoOrder = genItemIndex()
-  const newItems = [...items, { ...item, orderIngredientIndex: newItemIndexIntoOrder }]
+  const newItems = [...items, item]
 
   return targ
-    ? changeIngredientPosition(newItems, newItemIndexIntoOrder, targ)
+    ? changeIngredientPosition(newItems, item.orderIngredientIndex, targ)
     : newItems
 }
