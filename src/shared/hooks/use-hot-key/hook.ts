@@ -10,5 +10,5 @@ export const useHotKey = (handler: () => void, key: string) => {
     document.addEventListener('keyup', handleKeyDown)
 
     return () => document.removeEventListener('keyup', handleKeyDown)
-  }, [handler, key])
+  }, [])
 }
