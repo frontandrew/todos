@@ -1,12 +1,12 @@
 import { FC, SyntheticEvent, useCallback, useEffect, useMemo } from 'react'
 
-import { useAppDispatch, useAppSelector, useModal } from 'hooks'
+import { useAppSelector, useModal } from 'hooks'
 import { Button, CurrencyIcon } from 'uikit'
 import { Modal } from 'components'
 import { apiSlice } from 'api'
 
 import { IngredientType } from 'entities/ingredient'
-import { currentOrderSlice, OrderDetails } from 'entities/order'
+import { OrderDetails } from 'entities/order'
 
 import { EmptyItem, EmptyConstructor } from './componets'
 import style from './style.module.css'
@@ -14,20 +14,14 @@ import style from './style.module.css'
 /** TODO: возможно, декомпозировать на более мелкие и радтелить стэйт */
 export const BurgerConstructor: FC = () => {
   const order = useAppSelector(state => state.currentOrder)
-  const resetOrder = currentOrderSlice.actions.resetOrderState
   const [postOrder] = apiSlice.usePostOrderMutation()
-  const dispatch = useAppDispatch()
 
   const [bun, otherIngredients] = useMemo(() => [
     order.ingredients.find(({ type }) => type === IngredientType.BUN),
     order.ingredients.filter(({ type }) => type !== IngredientType.BUN),
   ], [order.ingredients])
 
-  const { isModalOpen, closeModal, openModal } = useModal({
-    closeHandler: () => {
-      dispatch(resetOrder())
-    }
-  })
+  const { isModalOpen, closeModal, openModal } = useModal()
 
   const handleOrderSubmit = useCallback((e: SyntheticEvent) => {
     e.stopPropagation()

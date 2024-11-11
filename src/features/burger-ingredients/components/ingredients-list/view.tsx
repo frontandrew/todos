@@ -1,12 +1,8 @@
-import { forwardRef, useEffect, useMemo } from 'react'
+import { forwardRef, useMemo } from 'react'
 
-import {
-  currentIngredientSlice,
-  Ingredient,
-  IngredientDetails,
-} from 'entities/ingredient'
+import { Ingredient, IngredientDetails } from 'entities/ingredient'
 import { Modal } from 'components'
-import { useAppDispatch, useAppSelector, useModal } from 'hooks'
+import { useAppSelector, useModal } from 'hooks'
 
 import { IngredientsGroupNames } from '../../consts'
 import { IngredientsGroup } from '../ingredients-group'
@@ -15,14 +11,7 @@ import style from './style.module.css'
 
 export const IngredientsList = forwardRef<HTMLUListElement>((_props, ref) => {
   const ingredients = useAppSelector(state => state.ingredients)
-  const { ingredient } = useAppSelector(state => state.currentIngrdient)
-
-  const { resetCurrentIngredient } = currentIngredientSlice.actions
-  const dispatch = useAppDispatch()
-
-  const { isModalOpen, closeModal, openModal } = useModal({
-    closeHandler: () => dispatch(resetCurrentIngredient()),
-  })
+  const { isModalOpen, closeModal, openModal } = useModal()
 
   const ingredientsMap = useMemo<Record<string, Ingredient[]>>(() => Object
     .keys(IngredientsGroupNames)
