@@ -8,3 +8,8 @@ interface Props {
 }
 
 export type IngredientItemProps = PropsWithChildren<Props>
+
+export enum FromPositionPostfix {
+  TOP = 'top',
+  BOTTOM = 'bottom',
+}

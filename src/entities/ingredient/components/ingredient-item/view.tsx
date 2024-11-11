@@ -1,13 +1,14 @@
 import { FC, useCallback, useMemo } from 'react';
 import { useDrag } from 'react-dnd';
 import { ConstructorElement, DragIcon } from 'uikit'
+import { useAppDispatch } from 'hooks'
 
 import { currentOrderSlice } from 'entities/order'
-import { useAppDispatch } from 'hooks'
 import { IngredientType } from 'entities/ingredient/type'
 
 import { IngredientViewType } from '../type'
-import { IngredientItemProps } from './type'
+import { FromPositionPostfix, IngredientItemProps } from './type'
+import { fromPositionPostfix } from './const'
 import style from './style.module.css'
 
 export const IngredientItem: FC<IngredientItemProps> = ({ ingredient, isLocked, position }) => {
@@ -36,6 +37,14 @@ export const IngredientItem: FC<IngredientItemProps> = ({ ingredient, isLocked, 
     dispatch(removeOrderIngredient({ orderId: orderIngredientIndex, ingrId: id }))
   }, [dispatch, id, orderIngredientIndex, removeOrderIngredient])
 
+  const printBunTypePostfix = useCallback(() => {
+    if (!position) return ''
+    if (position === FromPositionPostfix.TOP) {
+      return ` (${fromPositionPostfix.top})`
+    }
+    return ` (${fromPositionPostfix.bottom})`
+  }, [])
+
   return (
     <div
       className={isDrag ? style.container_dragging : style.container}
@@ -47,7 +56,7 @@ export const IngredientItem: FC<IngredientItemProps> = ({ ingredient, isLocked, 
         key={id}
         type={position}
         isLocked={isLocked}
-        text={name}
+        text={`${name}${printBunTypePostfix()}`}
         price={price}
         thumbnail={image}
       />
