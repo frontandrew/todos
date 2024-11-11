@@ -9,16 +9,12 @@ import { AppLoader } from 'features/app-loader'
 import style from './style.module.css'
 
 export const App: FC = () => {
-  const { isLoading, isError, isSuccess } = apiSlice.useGetIngredientsQuery()
+  const { isSuccess } = apiSlice.useGetIngredientsQuery()
 
   return (
     <div className={style.container}>
-      <header className={style.header}>
-        <AppHeader />
-      </header>
+      <AppHeader />
       <main className={style.content}>
-        {isError && 'Error...'}
-        {isLoading && <h3>Loading...</h3>}
         {isSuccess && <Main />}
       </main>
       <AppLoader />
