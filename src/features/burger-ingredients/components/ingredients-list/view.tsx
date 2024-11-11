@@ -30,11 +30,7 @@ export const IngredientsList = forwardRef<HTMLUListElement>((_props, ref) => {
       (acc, key) => (
         { ...acc, [key]: ingredients.filter(({ type }) => type === key) }
       ), {}
-    ), [ingredients])
-
-  useEffect(() => {
-    if (ingredient) openModal()
-  }, [ingredient])
+  ), [ingredients])
 
   return (
     <>
@@ -50,9 +46,9 @@ export const IngredientsList = forwardRef<HTMLUListElement>((_props, ref) => {
         )}
       </ul>
 
-      <Modal title='Детали ингредиента' close={closeModal} isVisible={isModalOpen}>
-        <IngredientDetails {...ingredient!} />
-      </Modal>
+      {<Modal title='Детали ингредиента' close={closeModal} isVisible={isModalOpen}>
+        <IngredientDetails showHandler={openModal} />
+      </Modal>}
     </>
   )
 })
