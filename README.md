@@ -20,6 +20,8 @@
 
 - [TypeScript](https://www.typescriptlang.org/) - is JavaScript with syntax for types
 - [React](https://react.dev/) - the library for web and native user interfaces
+- [React DnD](https://react-dnd.github.io/react-dnd/about) - set of React utilities to help you build complex drag and drop interfaces while keeping your components decoupled
+- [Redux Toolkit](https://redux-toolkit.js.org/) - the official, opinionated, batteries-included toolset for efficient Redux development
 - [Vite](https://vitejs.dev/) - is a build tool that aims to provide a faster and leaner development experience for modern web projects
 - [ESLint](https://eslint.org/) - statically analyzes your code to quickly find problems
 
