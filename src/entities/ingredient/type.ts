@@ -1,9 +1,9 @@
 export type IngredientTypes = 'main' | 'sauce' | 'bun'
 
 export enum IngredientType {
-  'bun',
-  'sauce',
-  'main',
+  BUN = 'bun',
+  SAUCE = 'sauce',
+  MAIN = 'main',
 }
 
 export interface Ingredient {
@@ -18,4 +18,9 @@ export interface Ingredient {
   image: string,
   imageMobile: string,
   imageLarge: string,
+  count?: number,
+}
+
+export interface CurrentIngredientState {
+  ingredient: Ingredient | null
 }

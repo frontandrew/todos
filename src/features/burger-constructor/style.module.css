@@ -10,7 +10,9 @@
 }
 
 .content {
+    box-sizing: border-box;
     width: 100%;
+
     display: grid;
     grid-template-rows: auto auto auto;
     gap: 1em;
@@ -18,23 +20,27 @@
     overflow: hidden;
 }
 
-.content li {
-    padding: 0 calc(1em - var(--scrollable-width)) 0 1em;
-}
-
-.content > div {
-    padding: 0 1em 0;
+.content > * {
+    padding: 0 1em;
 }
 
 .draggable {
+    box-sizing: border-box;
     width: 100%;
     
     display: flex;
     flex-direction: column;
-    gap: 1em;
 
     overflow-y:scroll;
     overflow-x: hidden;
+}
+
+.draggable > * {
+    padding: 1em 0 0;
+}
+
+.draggable :first-child {
+    padding: 0;
 }
 
 .total {

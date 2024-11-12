@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useHotKey } from 'hooks'
 
 import { UseModalType } from './type'
@@ -6,18 +6,22 @@ import { UseModalType } from './type'
 export const useModal: UseModalType = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const openModal = () => {
+  const openModal = useCallback(() => {
     if (props?.openHandler instanceof Function) props?.openHandler()
+
     setIsModalOpen(true)
-  }
-  const closeModal = () => {
+  }, [props])
+
+  const closeModal = useCallback(() => {
     if (props?.closeHandler instanceof Function) props?.closeHandler()
+
     setIsModalOpen(false)
-  }
-  const toggleModal = () => {
+  }, [props])
+
+  const toggleModal = useCallback(() => {
     if (!isModalOpen) openModal()
     if (isModalOpen) closeModal()
-  }
+  }, [closeModal, isModalOpen, openModal])
 
   useHotKey(closeModal, 'Escape')
 

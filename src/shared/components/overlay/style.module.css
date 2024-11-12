@@ -1,0 +1,34 @@
+.backdrop {
+    /*
+     TODO: отключил анимацию оверлея!!
+     Задежка при закрытии модольных
+     окон приводит к "скачку" верстки,
+     поскольку стор очищается раньше,
+     чем модалка полностью пропадет и
+     происходит перерисовка без данных/контента
+     */
+    --appear-duration: 0s;
+
+    visibility: hidden;
+    position: absolute;
+    z-index: 1000;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--background-backdrop);
+    
+    transition:
+        opacity var(--appear-duration) ease-in-out,
+        visibility var(--appear-duration) ease-in-out;
+    opacity: 0;
+}
+
+.backdrop_hidden {
+    visibility: visible;
+    opacity: 1;
+}

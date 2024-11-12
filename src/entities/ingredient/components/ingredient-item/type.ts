@@ -1,12 +1,15 @@
 import { PropsWithChildren } from 'react'
-
-import { Ingredient } from 'entities/ingredient'
-
+import { OrderIngredientItem } from 'entities/order'
 
 interface Props {
-  ingredient: Ingredient
-  isLocked?: boolean
-  type?: 'top' | 'bottom'
+  ingredient: OrderIngredientItem
+  isLocked: boolean
+  position?: 'top' | 'bottom'
 }
 
 export type IngredientItemProps = PropsWithChildren<Props>
+
+export enum FromPositionPostfix {
+  TOP = 'top',
+  BOTTOM = 'bottom',
+}

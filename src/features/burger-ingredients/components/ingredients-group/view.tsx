@@ -12,7 +12,7 @@ export const IngredientsGroup: FC<IngredientsGroupProps> = (props) => {
       <h3 className={'text text_type_main-medium'}>{categoryName}</h3>
       <ul className={style.list + ' pr-4 pl-4'}>
         {Array.isArray(ingredients) && ingredients.length > 0
-          ? ingredients.map((ingr) => <IngredientCard data={ingr} key={ingr.id} />)
+          ? ingredients.map((ingr) => <IngredientCard {...ingr} key={ingr.id} />)
           : null
         }
       </ul>

@@ -1,13 +1,13 @@
 import { FC, useCallback, useRef } from 'react'
-import { Tabs } from 'components'
 
-import { Ingredient, IngredientType } from 'entities/ingredient'
+import { Tabs } from 'components'
+import { IngredientType } from 'entities/ingredient'
 
 import { IngredientsList } from './components'
 import { IngredientsGroupNames } from './consts'
 import style from './style.module.css'
 
-export const BurgerIngredients: FC<{ ingredients: Ingredient[] }> = ({ ingredients = [] }) => {
+export const BurgerIngredients: FC = () => {
   const listRef = useRef<HTMLUListElement>(null)
 
   const handleTabClick = useCallback((tabId: string) => {
@@ -16,16 +16,16 @@ export const BurgerIngredients: FC<{ ingredients: Ingredient[] }> = ({ ingredien
   }, [listRef])
 
   return (
-    <article className={style.container + ' pt-10'}>
+    <article className={style.container + ' pt-10 pb-10'}>
       <div className={style.header}>
         <h2 className={'text text_type_main-large'}>Собери бургер</h2>
         <Tabs
           onClick={handleTabClick}
           tabsNameValueMap={IngredientsGroupNames}
-          initialTab={IngredientType[0]}
+          initialTab={IngredientType.BUN}
         />
       </div>
-      <IngredientsList ingredients={ingredients} ref={listRef} />
+      <IngredientsList ref={listRef} />
     </article>
   )
 }
