@@ -5,39 +5,25 @@ import { Input, Button } from 'uikit'
 
 import style from './style.module.css'
 
-export const RegisterPage: FC = () => {
+export const ForgotPassPage: FC = () => {
   return (
     <div className={style.container}>
       <form className={style.form}>
-        <h1 className={'text text_type_main-medium'}>Регистрация</h1>
-        <Input
-          onChange={() => {
-          }}
-          type={'text'}
-          placeholder={'Имя'}
-          value={''}
-        />
+        <h1 className={'text text_type_main-medium'}>Восстановление пароля</h1>
         <Input
           onChange={() => {
           }}
           type={'email'}
-          placeholder={'E-mail'}
+          placeholder={'Укажите e-mail'}
           value={''}
         />
-        <Input
-          onChange={() => {
-          }}
-          type={'password'}
-          placeholder={'Пароль'}
-          value={''}
-        />
-        <Button htmlType="submit">Зарегистрироваться</Button>
+        <Button htmlType="submit">Восстановить</Button>
       </form>
       <nav>
         <ul className={style.navlist}>
           <li className={style.navitem}>
             <span className={'text text_type_main-small text_color_inactive'}>
-              Уже зарегистрированы?
+              Вспомнили пароль?
             </span>
             <span className={'text text_type_main-small text_color_accent'}>
               <NavLink to={'/register'}>

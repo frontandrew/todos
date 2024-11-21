@@ -29,7 +29,7 @@ export const LoginPage: FC = () => {
       <nav>
         <ul className={style.navlist}>
           <li className={style.navitem}>
-            <span className={'text text_type_main-small'}>
+            <span className={'text text_type_main-small text_color_inactive'}>
               Вы — новый пользователь?
             </span>
             <span className={'text text_type_main-small text_color_accent'}>
@@ -39,7 +39,7 @@ export const LoginPage: FC = () => {
             </span>
           </li>
           <li className={style.navitem}>
-            <span className={'text text_type_main-small'}>
+            <span className={'text text_type_main-small text_color_inactive'}>
               Забыли пароль?
             </span>
             <span className={'text text_type_main-small text_color_accent'}>
