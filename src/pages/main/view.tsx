@@ -7,7 +7,7 @@ import { BurgerConstructor } from 'features/burger-constructor'
 
 import style from './style.module.css'
 
-export const Main: FC = () => {
+export const MainPage: FC = () => {
   return (
     <div className={style.container}>
       <DndProvider backend={HTML5Backend}>
