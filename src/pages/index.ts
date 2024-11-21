@@ -1,3 +1,3 @@
 export * from './login'
 export * from './main'
-export * from './reg'
+export * from './register'

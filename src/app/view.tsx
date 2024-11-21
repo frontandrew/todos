@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { FC } from 'react'
 
 import { apiSlice } from 'api'
-import {  LoginPage, MainPage, RegPage } from 'pages'
+import {  LoginPage, MainPage, RegisterPage } from 'pages'
 
 import { AppHeader } from 'features/app-header'
 import { AppLoader } from 'features/app-loader'
@@ -23,7 +23,7 @@ export const App: FC = () => {
           <Routes>
             <Route path="/" element={<MainPage/>}/>
             <Route path="/login" element={<LoginPage/>}/>
-            <Route path="/register" element={<RegPage/>}/>
+            <Route path="/register" element={<RegisterPage/>}/>
           </Routes>
         </BrowserRouter>
       </main>

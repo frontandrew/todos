@@ -5,7 +5,7 @@ import { Input, Button } from 'uikit'
 
 import style from './style.module.css'
 
-export const RegPage: FC = () => {
+export const RegisterPage: FC = () => {
   return (
     <div className={style.container}>
       <form className={style.form}>
