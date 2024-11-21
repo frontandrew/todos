@@ -5,7 +5,7 @@ import { Input, Button } from 'uikit'
 
 import style from './style.module.css'
 
-export const ForgotPassPage: FC = () => {
+export const ResetPassPage: FC = () => {
   return (
     <div className={style.container}>
       <form className={style.form}>
@@ -13,11 +13,18 @@ export const ForgotPassPage: FC = () => {
         <Input
           onChange={() => {
           }}
-          type={'email'}
-          placeholder={'Укажите e-mail'}
+          type={'password'}
+          placeholder={'Введите новый пароль'}
           value={''}
         />
-        <Button htmlType="submit">Восстановить</Button>
+        <Input
+          onChange={() => {
+          }}
+          type={'text'}
+          placeholder={'Введите код из письма'}
+          value={''}
+        />
+        <Button htmlType="submit">Сохранить</Button>
       </form>
       <nav>
         <ul className={style.navlist}>

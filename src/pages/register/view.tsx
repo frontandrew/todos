@@ -40,7 +40,7 @@ export const RegisterPage: FC = () => {
               Уже зарегистрированы?
             </span>
             <span className={'text text_type_main-small text_color_accent'}>
-              <NavLink to={'/register'}>
+              <NavLink to={'/login'}>
                 Войти
               </NavLink>
             </span>
