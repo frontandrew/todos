@@ -74,3 +74,8 @@ body, ul, li {
     margin: unset;
     padding: unset;
 }
+
+a {
+	text-decoration: none;
+	color: var(--colors-interface-accent);
+}
