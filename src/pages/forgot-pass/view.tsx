@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { Input, Button } from 'uikit'
+import { Button, EmailInput } from 'uikit'
 
 import style from './style.module.css'
 
@@ -10,10 +10,9 @@ export const ForgotPassPage: FC = () => {
     <div className={style.container}>
       <form className={style.form}>
         <h1 className={'text text_type_main-medium'}>Восстановление пароля</h1>
-        <Input
+        <EmailInput
           onChange={() => {
           }}
-          type={'email'}
           placeholder={'Укажите e-mail'}
           value={''}
         />

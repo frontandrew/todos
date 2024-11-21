@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { Input, Button } from 'uikit'
+import { Button, EmailInput, PasswordInput } from 'uikit'
 
 import style from './style.module.css'
 
@@ -10,18 +10,16 @@ export const LoginPage: FC = () => {
     <div className={style.container}>
       <form className={style.form}>
         <h1 className={'text text_type_main-medium'}>Вход</h1>
-        <Input
+        <EmailInput
           onChange={() => {
           }}
-          type={'email'}
           placeholder={'E-mail'}
           value={''}
         />
-        <Input
+        <PasswordInput
           onChange={() => {
           }}
-          type={'password'}
-          placeholder={'Password'}
+          placeholder={'Пароль'}
           value={''}
         />
         <Button htmlType="submit">Войти</Button>

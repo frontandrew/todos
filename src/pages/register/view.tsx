@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { Input, Button } from 'uikit'
+import { Input, Button, PasswordInput, EmailInput } from 'uikit'
 
 import style from './style.module.css'
 
@@ -13,21 +13,18 @@ export const RegisterPage: FC = () => {
         <Input
           onChange={() => {
           }}
-          type={'text'}
           placeholder={'Имя'}
           value={''}
         />
-        <Input
+        <EmailInput
           onChange={() => {
           }}
-          type={'email'}
           placeholder={'E-mail'}
           value={''}
         />
-        <Input
+        <PasswordInput
           onChange={() => {
           }}
-          type={'password'}
           placeholder={'Пароль'}
           value={''}
         />

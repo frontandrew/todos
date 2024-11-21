@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { Input, Button } from 'uikit'
+import { Input, Button, PasswordInput } from 'uikit'
 
 import style from './style.module.css'
 
@@ -10,17 +10,15 @@ export const ResetPassPage: FC = () => {
     <div className={style.container}>
       <form className={style.form}>
         <h1 className={'text text_type_main-medium'}>Восстановление пароля</h1>
-        <Input
+        <PasswordInput
           onChange={() => {
           }}
-          type={'password'}
           placeholder={'Введите новый пароль'}
           value={''}
         />
         <Input
           onChange={() => {
           }}
-          type={'text'}
           placeholder={'Введите код из письма'}
           value={''}
         />
