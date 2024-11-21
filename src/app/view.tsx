@@ -1,7 +1,8 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { FC } from 'react'
 
 import { apiSlice } from 'api'
-import { Main } from 'pages'
+import { MainPage, LoginPage } from 'pages'
 
 import { AppHeader } from 'features/app-header'
 import { AppLoader } from 'features/app-loader'
@@ -9,13 +10,21 @@ import { AppLoader } from 'features/app-loader'
 import style from './style.module.css'
 
 export const App: FC = () => {
-  const { isSuccess } = apiSlice.useGetIngredientsQuery()
+  apiSlice.useGetIngredientsQuery()
 
   return (
     <div className={style.container}>
-      <AppHeader />
+      <AppHeader/>
       <main className={style.content}>
-        {isSuccess && <Main />}
+        <BrowserRouter future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}>
+          <Routes>
+            <Route path="/" element={<MainPage/>}/>
+            <Route path="/login" element={<LoginPage/>}/>
+          </Routes>
+        </BrowserRouter>
       </main>
       <AppLoader />
     </div>
