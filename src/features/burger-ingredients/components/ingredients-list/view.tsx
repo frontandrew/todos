@@ -35,9 +35,9 @@ export const IngredientsList = forwardRef<HTMLUListElement>((_props, ref) => {
         )}
       </ul>
 
-      {<Modal title='Детали ингредиента' close={closeModal} isVisible={isModalOpen}>
-        <IngredientDetails showHandler={openModal} />
-      </Modal>}
+      <Modal title='Детали ингредиента' close={closeModal} isVisible={isModalOpen}>
+        <IngredientDetails/>
+      </Modal>
     </>
   )
 })

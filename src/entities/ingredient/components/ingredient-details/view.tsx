@@ -1,15 +1,11 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import { useAppSelector } from 'hooks'
 
 import { IngredientNutrients } from './components'
 import style from './style.module.css'
 
-export const IngredientDetails: FC<{ showHandler: () => void }> = ({ showHandler }) => {
+export const IngredientDetails: FC = () => {
   const { ingredient: data } = useAppSelector(state => state.currentIngrdient)
-
-  useEffect(() => {
-    if (data && showHandler) showHandler()
-  }, [data, showHandler])
 
   return (data &&
     <article className={style.container}>
