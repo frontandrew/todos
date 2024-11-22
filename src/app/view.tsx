@@ -2,7 +2,14 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { FC } from 'react'
 
 import { apiSlice } from 'api'
-import { ForgotPassPage, LoginPage, MainPage, RegisterPage, ResetPassPage } from 'pages'
+import {
+  ForgotPassPage,
+  IngredientPage,
+  LoginPage,
+  MainPage,
+  RegisterPage,
+  ResetPassPage,
+} from 'pages'
 
 import { AppHeader } from 'features/app-header'
 import { AppLoader } from 'features/app-loader'
@@ -26,6 +33,7 @@ export const App: FC = () => {
             <Route path="/register" element={<RegisterPage/>}/>
             <Route path="/forgot-password" element={<ForgotPassPage/>}/>
             <Route path="/reset-password" element={<ResetPassPage/>}/>
+            <Route path="/ingredients/:id" element={<IngredientPage/>}/>
           </Routes>
         </main>
         <AppLoader/>

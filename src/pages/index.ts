@@ -1,4 +1,5 @@
 export * from './forgot-pass'
+export * from './ingredient'
 export * from './login'
 export * from './main'
 export * from './register'
