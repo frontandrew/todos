@@ -1,7 +1,10 @@
-import { PropsWithChildren } from 'react'
+import { FC, PropsWithChildren } from 'react'
+import { TIconProps } from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/utils'
 
 interface Props {
-  variant: 'orders' | 'profile' | 'constructor'
+  to: string
+  title: string
+  Icon: FC<TIconProps>
 }
 
 export type AppHeaderItemProps = PropsWithChildren<Props>

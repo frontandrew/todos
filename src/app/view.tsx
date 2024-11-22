@@ -14,12 +14,12 @@ export const App: FC = () => {
 
   return (
     <div className={style.container}>
-      <AppHeader/>
-      <main className={style.content}>
-        <BrowserRouter future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}>
+      <BrowserRouter future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}>
+        <AppHeader/>
+        <main className={style.content}>
           <Routes>
             <Route path="/" element={<MainPage/>}/>
             <Route path="/login" element={<LoginPage/>}/>
@@ -27,9 +27,9 @@ export const App: FC = () => {
             <Route path="/forgot-password" element={<ForgotPassPage/>}/>
             <Route path="/reset-password" element={<ResetPassPage/>}/>
           </Routes>
-        </BrowserRouter>
-      </main>
-      <AppLoader/>
+        </main>
+        <AppLoader/>
+      </BrowserRouter>
     </div>
   )
 }
