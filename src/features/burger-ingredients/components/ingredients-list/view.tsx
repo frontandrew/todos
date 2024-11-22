@@ -1,12 +1,10 @@
 import { forwardRef, useMemo } from 'react'
 
-import { Ingredient, IngredientDetails } from 'entities/ingredient'
+import { Ingredient, IngredientCard, IngredientDetails } from 'entities/ingredient'
 import { Modal } from 'components'
 import { useAppSelector, useModal } from 'hooks'
 
 import { IngredientsGroupNames } from '../../consts'
-import { IngredientsGroup } from '../ingredients-group'
-
 import style from './style.module.css'
 
 export const IngredientsList = forwardRef<HTMLUListElement>((_props, ref) => {
@@ -23,15 +21,17 @@ export const IngredientsList = forwardRef<HTMLUListElement>((_props, ref) => {
 
   return (
     <>
-      <ul className={style.container} ref={ref}>
-        {Object.entries(ingredientsMap).map(([key, value]) =>
-          value.length > 0 &&
-          <IngredientsGroup
-            categoryName={IngredientsGroupNames[value[0].type]}
-            categoryId={key}
-            ingredients={value}
-            key={key}
-          />
+      <ul className={style.groups} ref={ref}>
+        {Object.entries(ingredientsMap).map(([key, ingrs]) =>
+          ingrs.length > 0 &&
+          <li className={style.group} id={key} key={key}>
+            <h3 className={'text text_type_main-medium'}>{IngredientsGroupNames[ingrs[0].type]}</h3>
+            <ul className={style.items + ' pr-4 pl-4'}>
+              {ingrs.map((ingr) =>
+                <IngredientCard ingredient={ingr} onCardClick={() => openModal()} key={ingr.id}/>
+              )}
+            </ul>
+          </li>
         )}
       </ul>
 
