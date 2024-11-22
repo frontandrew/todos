@@ -7,6 +7,7 @@ import {
   IngredientPage,
   LoginPage,
   MainPage,
+  ProfilePage,
   RegisterPage,
   ResetPassPage,
 } from 'pages'
@@ -34,6 +35,7 @@ export const App: FC = () => {
             <Route path="/forgot-password" element={<ForgotPassPage/>}/>
             <Route path="/reset-password" element={<ResetPassPage/>}/>
             <Route path="/ingredients/:id" element={<IngredientPage/>}/>
+            <Route path="/profile" element={<ProfilePage/>}/>
           </Routes>
         </main>
         <AppLoader/>
