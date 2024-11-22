@@ -11,6 +11,7 @@ export const appHeaderItems = {
     title: 'Лента заказов',
     Icon: ListIcon,
   },
+  spacer: { to: '' },
   profile: {
     to: '/profile',
     title: 'Личный кабинет',

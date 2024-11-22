@@ -11,13 +11,10 @@ export const AppHeader: FC = () => {
       <nav className={style.container}>
         <Logo className={style.logo}/>
         <ul className={style.list}>
-          {Object.entries(appHeaderItems).map(([key, item], index) =>
-            <>
-              {index === 2 && <li className={style.spacer} key={'spacer'}></li>}
-              <li className={style.item} key={key}>
-                <AppHeaderItem {...item}/>
-              </li>
-            </>
+          {Object.entries(appHeaderItems).map(([key, item]) =>
+            <li className={item.to ? style.item : style.item_spacer} key={key}>
+              {item.to && <AppHeaderItem {...item}/>}
+            </li>
           )}
         </ul>
       </nav>
