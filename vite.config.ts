@@ -12,7 +12,7 @@ const basePath = process.env.NODE_ENV === 'production'
 export default defineConfig({
   base: basePath,
   plugins: [react()],
-  server: { port: 3000 },
+  server: { port: 3002 },
   resolve: {
     alias: {
       api: path.resolve('src/shared/api/index'),
