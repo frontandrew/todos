@@ -3,13 +3,15 @@ import { useDrag } from 'react-dnd'
 
 import { Counter, CurrencyIcon } from 'uikit'
 import { useAppDispatch } from 'hooks'
-import { Ingredient, IngredientType } from 'entities/ingredient/type'
 
 import { currentIngredientSlice } from '../../model'
+import { IngredientType } from '../../type'
 import { IngredientViewType } from '../type'
+
+import { IngredientCardProps } from './type'
 import style from './style.module.css'
 
-export const IngredientCard: FC<Ingredient> = (ingredient) => {
+export const IngredientCard: FC<IngredientCardProps> = ({ ingredient, onCardClick }) => {
   const { image = '', id, name = 'unknown', price = 0, type, count = 0 } = ingredient
 
   const { setCurrentIngredient } = currentIngredientSlice.actions
@@ -18,6 +20,7 @@ export const IngredientCard: FC<Ingredient> = (ingredient) => {
   const handleCardClick = (event: SyntheticEvent) => {
     event.stopPropagation()
     dispatch(setCurrentIngredient(ingredient))
+    if (onCardClick) onCardClick()
   }
 
   /**
@@ -60,5 +63,5 @@ export const IngredientCard: FC<Ingredient> = (ingredient) => {
     </li>
   )
 
-  return id && name && (typeof price === 'number') ? ingredientCard : null
+  return id && name && price ? ingredientCard : null
 }
