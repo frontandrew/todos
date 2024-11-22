@@ -1,7 +1,7 @@
 import { Logo } from 'uikit'
 import { FC } from 'react'
+import { NavItem } from 'components'
 
-import { AppHeaderItem } from './components'
 import { appHeaderItems } from './items'
 import style from './style.module.css'
 
@@ -13,7 +13,7 @@ export const AppHeader: FC = () => {
         <ul className={style.list}>
           {Object.entries(appHeaderItems).map(([key, item]) =>
             <li className={item.to ? style.item : style.item_spacer} key={key}>
-              {item.to && <AppHeaderItem {...item}/>}
+              {item.to && <NavItem {...item} size={'small'}/>}
             </li>
           )}
         </ul>
