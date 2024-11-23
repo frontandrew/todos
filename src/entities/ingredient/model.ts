@@ -7,7 +7,7 @@ const initState: CurrentIngredientState = {
 }
 
 export const currentIngredientSlice = createSlice({
-  name: 'currentIngrdient',
+  name: 'currentIngredient',
   initialState: initState,
   reducers: {
     setCurrentIngredient: (state, { payload }: PayloadAction<Ingredient>) => {
