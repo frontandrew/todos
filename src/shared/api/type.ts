@@ -1,4 +1,5 @@
 import { IngredientTypes } from 'entities/ingredient'
+import { User } from 'entities/user'
 
 export type IngredientsResponse = {
   _id: string
@@ -20,4 +21,11 @@ export type PostOrderResponse = {
   order: {
      number: number
   }
+}
+
+export type UserResponse = {
+  success: boolean
+  user: User
+  accessToken: string
+  refreshToken: string
 }

@@ -6,7 +6,7 @@ import { Ingredient } from 'entities/ingredient'
 import { Order } from 'entities/order'
 
 import { formatIngredientsResponse, preparePostOrderBody } from './utils'
-import { IngredientsResponse, PostOrderResponse } from './type'
+import { IngredientsResponse, PostOrderResponse, UserResponse } from './type'
 
 export const apiSlice = createApi({
   reducerPath: 'appApi',
@@ -27,6 +27,31 @@ export const apiSlice = createApi({
         name: response.name,
         id: response.order.number,
       }),
+    }),
+
+    registerUser: build.query<UserResponse, User & { password: string }>({
+      query: (credentials) => ({
+        body: credentials,
+        method: 'POST',
+        url: '/auth/register',
+      }),
+    }),
+
+    authUser: build.query<UserResponse, { email: User['email'], password: string }>({
+      query: (credentials) => ({
+        body: credentials,
+        method: 'POST',
+        url: '/auth/login',
+      }),
+    }),
+
+    updateAccess: build.query<Omit<UserResponse, 'user'>, string>({
+      query: (refreshToken) => ({
+        body: { token: refreshToken },
+        method: 'POST',
+        url: '/auth/token',
+      }),
+
     }),
   })
 })
