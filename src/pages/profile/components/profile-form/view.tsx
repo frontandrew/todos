@@ -6,58 +6,83 @@ import style from './style.module.css'
 
 export const ProfileForm: FC = () => {
   const [userData, setUserData] = useState({ email: '', name: '' })
+  const [isEditMode, setEditMode] = useState(false)
 
   const { formRef, formValues, formChange, formSubmit, formReset } = useForm({
     submitHandler: (args) => console.log(args),
-    formInitValues: { ...userData, password: '' },
+    formInitValues: { ...userData, password: '2123123' },
   })
 
   useEffect(() => {
     setUserData({ email: 'magick@mail.com', name: 'Andrew' })
+    setEditMode(false)
     formReset()
   }, [
     // TODO: call useEffect after user data loading
   ])
+
+  const enableEditMode = () => {
+    setEditMode(true)
+  }
+
+  const handleReset = () => {
+    setEditMode(false)
+    formReset()
+  }
+
 
   return (
     <form
       ref={formRef}
       onChange={formChange}
       onSubmit={formSubmit}
-      onReset={formReset}
+      onReset={handleReset}
       className={style.form}
     >
       <Input
-        onChange={() => {}}
+        onIconClick={enableEditMode}
+        onChange={() => {
+        }}
+        name={'name'}
         placeholder={'Имя'}
         value={formValues.name || ''}
-        name={'name'}
+        disabled={!isEditMode}
+        {...{ icon: isEditMode ? undefined : 'EditIcon' }}
       />
       <EmailInput
-        onChange={() => {}}
+        // @ts-expect-error-next-line
+        onIconClick={enableEditMode}
+        onChange={() => {
+        }}
+        name={'email'}
         placeholder={'E-mail'}
         value={formValues.email || ''}
-        name={'email'}
+        disabled={!isEditMode}
+        {...{ icon: isEditMode ? undefined : 'EditIcon' }}
       />
       <PasswordInput
-        onChange={() => {}}
+        // onIconClick={enableEditMode}
+        onChange={() => {
+        }}
+        name={'password'}
         placeholder={'Пароль'}
         value={formValues.password || ''}
-        name={'password'}
+        disabled={!isEditMode}
       />
-      <div className={style.actions}>
-        <Button
-          htmlType={'reset'}
-          type={'secondary'}
-        >
-          Отмена
-        </Button>
-        <Button
-          htmlType={'submit'}
-        >
-          Сохранить
-        </Button>
-      </div>
+      {isEditMode &&
+        <div className={style.actions}>
+          <Button
+            htmlType={'reset'}
+            type={'secondary'}
+          >
+            Отмена
+          </Button>
+          <Button
+            htmlType={'submit'}
+          >
+            Сохранить
+          </Button>
+        </div>}
     </form>
   )
 }
