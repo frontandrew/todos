@@ -5,7 +5,7 @@ import { IngredientNutrients } from './components'
 import style from './style.module.css'
 
 export const IngredientDetails: FC = () => {
-  const { ingredient: data } = useAppSelector(state => state.currentIngrdient)
+  const { ingredient: data } = useAppSelector(state => state.currentIngredient)
 
   return (data &&
     <article className={style.container}>
