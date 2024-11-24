@@ -2,31 +2,42 @@ import { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { Input, Button, PasswordInput, EmailInput } from 'uikit'
+import { useForm } from 'hooks'
 
 import style from './style.module.css'
 
 export const RegisterPage: FC = () => {
+  const { formRef, formValues, formChange, formSubmit } = useForm({
+    submitHandler: (args) => console.log(args),
+    formInitValues: { email: '', password: '', name: '' },
+  })
+
   return (
     <div className={style.container}>
-      <form className={style.form}>
+      <form
+        ref={formRef}
+        onChange={formChange}
+        onSubmit={formSubmit}
+        className={style.form}
+      >
         <h1 className={'text text_type_main-medium'}>Регистрация</h1>
         <Input
-          onChange={() => {
-          }}
+          onChange={() => {}}
           placeholder={'Имя'}
-          value={''}
+          value={formValues.name || ''}
+          name={'name'}
         />
         <EmailInput
-          onChange={() => {
-          }}
+          onChange={() => {}}
           placeholder={'E-mail'}
-          value={''}
+          value={formValues.email || ''}
+          name={'email'}
         />
         <PasswordInput
-          onChange={() => {
-          }}
+          onChange={() => {}}
           placeholder={'Пароль'}
-          value={''}
+          value={formValues.password || ''}
+          name={'password'}
         />
         <Button htmlType="submit">Зарегистрироваться</Button>
       </form>
