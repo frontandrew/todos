@@ -24,8 +24,7 @@ export const useForm = <T>({ submitHandler, formInitValues }: { submitHandler:
     if (submitHandler && isValid) submitHandler({ ...formValues })
   }, [formValues, submitHandler])
 
-  const formReset = useCallback((event: FormEvent) => {
-    event.preventDefault()
+  const formReset = useCallback(() => {
     setFormValues(formInitValues)
   }, [formInitValues])
 
