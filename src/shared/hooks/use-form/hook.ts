@@ -11,10 +11,10 @@ export const useForm = <T>({ submitHandler, formInitValues }: { submitHandler:
     if (firstInput) (firstInput as HTMLInputElement).focus()
   }, [])
 
-  const formChange = (event: FormEvent) => {
+  const formChange = useCallback((event: FormEvent) => {
     const { value, name } = event.target as HTMLInputElement
     setFormValues({ ...formValues, [name]: value })
-  }
+  }, [formValues])
 
   const formSubmit = useCallback((event: FormEvent) => {
     event.preventDefault()
