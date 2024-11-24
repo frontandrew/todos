@@ -1,28 +1,49 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Button, EmailInput, Input, PasswordInput } from 'uikit'
+import { useForm } from 'hooks'
 
 import style from './style.module.css'
 
 export const ProfileForm: FC = () => {
+  const [userData, setUserData] = useState({ email: '', name: '' })
+
+  const { formRef, formValues, formChange, formSubmit, formReset } = useForm({
+    submitHandler: (args) => console.log(args),
+    formInitValues: { ...userData, password: '' },
+  })
+
+  useEffect(() => {
+    setUserData({ email: 'magick@mail.com', name: 'Andrew' })
+    formReset()
+  }, [
+    // TODO: call useEffect after user data loading
+  ])
+
   return (
-    <form className={style.form}>
+    <form
+      ref={formRef}
+      onChange={formChange}
+      onSubmit={formSubmit}
+      onReset={formReset}
+      className={style.form}
+    >
       <Input
-        onChange={() => {
-        }}
+        onChange={() => {}}
         placeholder={'Имя'}
-        value={''}
+        value={formValues.name || ''}
+        name={'name'}
       />
       <EmailInput
-        onChange={() => {
-        }}
+        onChange={() => {}}
         placeholder={'E-mail'}
-        value={''}
+        value={formValues.email || ''}
+        name={'email'}
       />
       <PasswordInput
-        onChange={() => {
-        }}
+        onChange={() => {}}
         placeholder={'Пароль'}
-        value={''}
+        value={formValues.password || ''}
+        name={'password'}
       />
       <div className={style.actions}>
         <Button
