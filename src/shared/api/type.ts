@@ -1,5 +1,17 @@
+import { FetchBaseQueryMeta } from '@reduxjs/toolkit/query'
 import { IngredientTypes } from 'entities/ingredient'
 import { User } from 'entities/user'
+
+export interface BaseQueryResponse {
+  data?: { success: boolean, refreshToken?: string, accessToken?: string } & Record<string, unknown>
+  error?: {
+    data: {
+      success: boolean,
+      message: string,
+    }
+  }
+  meta: FetchBaseQueryMeta
+}
 
 export type IngredientsResponse = {
   _id: string
@@ -19,7 +31,7 @@ export type IngredientsResponse = {
 export type PostOrderResponse = {
   name: string
   order: {
-     number: number
+    number: number
   }
 }
 
