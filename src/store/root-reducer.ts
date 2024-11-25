@@ -6,7 +6,7 @@ import { currentIngredientSlice } from 'entities/ingredient'
 import { currentOrderSlice } from 'entities/order'
 import { appLoaderSlice } from 'features/app-loader'
 
-export const rootReduser = combineReducers({
+export const rootReducer = combineReducers({
   [currentOrderSlice.reducerPath]: currentOrderSlice.reducer,
   [currentIngredientSlice.reducerPath]: currentIngredientSlice.reducer,
   [ingredientsSlice.reducerPath]: ingredientsSlice.reducer,
