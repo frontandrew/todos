@@ -14,10 +14,12 @@ import {
 
 import { AppHeader } from 'features/app-header'
 import { AppLoader } from 'features/app-loader'
+import { OnlyAuth, OnlyUnAuth } from 'features/authentification'
 
 import style from './style.module.css'
 
 export const App: FC = () => {
+  apiSlice.useGetUserQuery()
   apiSlice.useGetIngredientsQuery()
 
   return (
@@ -30,12 +32,12 @@ export const App: FC = () => {
         <main className={style.content}>
           <Routes>
             <Route path="/" element={<MainPage/>}/>
-            <Route path="/login" element={<LoginPage/>}/>
-            <Route path="/register" element={<RegisterPage/>}/>
-            <Route path="/forgot-password" element={<ForgotPassPage/>}/>
-            <Route path="/reset-password" element={<ResetPassPage/>}/>
+            <Route path="/login" element={<OnlyUnAuth component={<LoginPage/>}/>}/>
+            <Route path="/register" element={<OnlyUnAuth component={<RegisterPage/>}/>}/>
+            <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassPage/>}/>}/>
+            <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPassPage/>}/>}/>
             <Route path="/ingredients/:id" element={<IngredientPage/>}/>
-            <Route path="/profile" element={<ProfilePage/>}/>
+            <Route path="/profile" element={<OnlyAuth component={<ProfilePage/>}/>}/>
           </Routes>
         </main>
         <AppLoader/>
