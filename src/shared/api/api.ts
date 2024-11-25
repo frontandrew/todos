@@ -13,8 +13,10 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: API_HOST }),
   endpoints: (build) => ({
     getIngredients: build.query<Ingredient[], void>({
-      query: () => ({ url: '/ingredients'}),
-      transformResponse: ({ data }: { data: IngredientsResponse[] }) => formatIngredientsResponse(data),
+      query: () => ({ url: '/ingredients' }),
+      transformResponse: ({ data }: {
+        data: IngredientsResponse[]
+      }) => formatIngredientsResponse(data),
     }),
 
     postOrder: build.mutation<{ name: string, id: number }, Order['ingredients']>({
@@ -37,7 +39,7 @@ export const apiSlice = createApi({
       }),
     }),
 
-    authUser: build.query<UserResponse, { email: User['email'], password: string }>({
+    loginUser: build.query<UserResponse, { email: User['email'], password: string }>({
       query: (credentials) => ({
         body: credentials,
         method: 'POST',
@@ -45,13 +47,24 @@ export const apiSlice = createApi({
       }),
     }),
 
-    updateAccess: build.query<Omit<UserResponse, 'user'>, string>({
+    logoutUser: build.query<{ success: boolean, message: string }, string>({
       query: (refreshToken) => ({
         body: { token: refreshToken },
         method: 'POST',
-        url: '/auth/token',
+        url: '/auth/logout',
       }),
-
     }),
-  })
+
+    getUser: build.query<UserResponse, void>({
+      query: () => ({ url: '/auth/user' }),
+    }),
+
+    updateUser: build.mutation<UserResponse, User & { password: string }>({
+      query: (credentials) => ({
+        body: credentials,
+        url: '/auth/user',
+        method: 'PATCH',
+      }),
+    }),
+  }),
 })
