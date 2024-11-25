@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
+import { apiSlice } from 'api'
 
 import { User } from './type'
 
@@ -9,12 +10,21 @@ const initState: { user: User | null } = {
 export const userSlice = createSlice({
   name: 'user',
   initialState: initState,
-  reducers: {
-    setUser: (state, { payload }: PayloadAction<User>) => {
-      state.user = payload
-    },
-    resetUser: (state) => {
-      state.user = initState.user
-    },
-  },
+  reducers: {},
+  extraReducers: (builder) => builder
+    .addMatcher(apiSlice.endpoints.loginUser.matchFulfilled, (state, { payload } ) => {
+      state.user = payload.user
+    })
+    .addMatcher(apiSlice.endpoints.logoutUser.matchFulfilled, (state) => {
+      state.user = null
+    })
+    .addMatcher(apiSlice.endpoints.getUser.matchFulfilled, (state, { payload }) => {
+      state.user = payload.user
+    })
+    .addMatcher(apiSlice.endpoints.updateUser.matchFulfilled, (state, { payload }) => {
+      state.user = payload.user
+    })
+    .addMatcher(apiSlice.endpoints.registerUser.matchFulfilled, (state, { payload }) => {
+      state.user = payload.user
+    })
 })
