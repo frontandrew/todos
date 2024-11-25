@@ -19,6 +19,7 @@ export const useForm = <T>({ submitHandler, formInitValues }: { submitHandler:
   const formSubmit = useCallback((event: FormEvent) => {
     event.preventDefault()
     const isValid = Object
+      // TODO: need to improve validity check
       .values(formValues)
       .every(value => Boolean(value))
     if (submitHandler && isValid) submitHandler({ ...formValues })

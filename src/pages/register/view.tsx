@@ -2,15 +2,29 @@ import { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { Input, Button, PasswordInput, EmailInput } from 'uikit'
-import { useForm } from 'hooks'
+import { useAppDispatch, useForm } from 'hooks'
+import { apiSlice } from 'api'
 
 import style from './style.module.css'
 
 export const RegisterPage: FC = () => {
+  const dispatch = useAppDispatch()
+  const { registerUser } = apiSlice.endpoints
+
   const { formRef, formValues, formChange, formSubmit } = useForm({
-    submitHandler: (args) => console.log(args),
+    submitHandler: (args) => dispatch(registerUser.initiate(args)),
     formInitValues: { email: '', password: '', name: '' },
   })
+
+  /**
+   * TODO: need to clean up before review
+   * CREDENTIALS: {
+   *  email: 'some@magic.tech',
+   *  password: '159753',
+   *  name: 'Some Magic'
+   * }
+   */
+
 
   return (
     <div className={style.container}>
@@ -22,19 +36,22 @@ export const RegisterPage: FC = () => {
       >
         <h1 className={'text text_type_main-medium'}>Регистрация</h1>
         <Input
-          onChange={() => {}}
+          onChange={() => {
+          }}
           placeholder={'Имя'}
           value={formValues.name || ''}
           name={'name'}
         />
         <EmailInput
-          onChange={() => {}}
+          onChange={() => {
+          }}
           placeholder={'E-mail'}
           value={formValues.email || ''}
           name={'email'}
         />
         <PasswordInput
-          onChange={() => {}}
+          onChange={() => {
+          }}
           placeholder={'Пароль'}
           value={formValues.password || ''}
           name={'password'}
