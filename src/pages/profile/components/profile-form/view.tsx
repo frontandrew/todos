@@ -44,7 +44,7 @@ export const ProfileForm: FC = () => {
         }}
         name={'name'}
         placeholder={'Имя'}
-        value={formValues.name || ''}
+        value={formValues.name ?? ''}
         disabled={!isEditMode}
         {...{ icon: isEditMode ? undefined : 'EditIcon' }}
       />
@@ -55,32 +55,44 @@ export const ProfileForm: FC = () => {
         }}
         name={'email'}
         placeholder={'E-mail'}
-        value={formValues.email || ''}
+        value={formValues.email ?? ''}
         disabled={!isEditMode}
         {...{ icon: isEditMode ? undefined : 'EditIcon' }}
       />
-      <PasswordInput
-        onChange={() => {
-        }}
-        name={'password'}
-        placeholder={'Пароль'}
-        value={formValues.password || ''}
-        disabled={!isEditMode}
-      />
-      {isEditMode &&
-        <div className={style.actions}>
-          <Button
-            htmlType={'reset'}
-            type={'secondary'}
-          >
-            Отмена
-          </Button>
-          <Button
-            htmlType={'submit'}
-          >
-            Сохранить
-          </Button>
-        </div>}
+
+      {!isEditMode ?
+        <Input
+          onIconClick={enableEditMode}
+          onChange={() => {
+          }}
+          placeholder={'Пароль'}
+          value={''}
+          disabled={true}
+          icon={'EditIcon'}
+        /> :
+        <>
+          <PasswordInput
+            onChange={() => {
+            }}
+            name={'password'}
+            placeholder={'Пароль'}
+            value={formValues.password ?? ''}
+          />
+          <div className={style.actions}>
+            <Button
+              htmlType={'reset'}
+              type={'secondary'}
+            >
+              Отмена
+            </Button>
+            <Button
+              htmlType={'submit'}
+            >
+              Сохранить
+            </Button>
+          </div>
+        </>
+      }
     </form>
   )
 }
