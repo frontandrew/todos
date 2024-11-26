@@ -16,8 +16,6 @@ const baseQuery = fetchBaseQuery({
     const token = localStorage.getItem('accessToken')
     if (token) headers.set('authorization', `Bearer ${token}`)
 
-    console.log('HEADERS', headers)
-
     return headers
   },
 })
@@ -25,9 +23,6 @@ const baseQuery = fetchBaseQuery({
 export const apiSlice = createApi({
   reducerPath: 'appApi',
   baseQuery: async (args, api, extraOptions) => {
-
-    console.log('REQUEST!')
-
     let result = await baseQuery(args, api, extraOptions)
     const { data, error } = result as unknown as BaseQueryResponse
 
@@ -165,6 +160,25 @@ export const apiSlice = createApi({
         body: credentials,
         url: '/auth/user',
         method: 'PATCH',
+      }),
+    }),
+
+    recoverPass: build.query<{ success: boolean, message: string }, string>({
+      query: (email) => ({
+        body: { email },
+        method: 'POST',
+        url: '/password-reset',
+      }),
+    }),
+
+    resetPass: build.query<{ success: boolean, message: string }, {
+      password: string,
+      token: string
+    }>({
+      query: (credentials) => ({
+        body: credentials,
+        method: 'POST',
+        url: '/password-reset/reset',
       }),
     }),
   }),
