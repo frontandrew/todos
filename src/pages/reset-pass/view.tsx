@@ -1,15 +1,23 @@
-import { FC } from 'react'
-import { NavLink } from 'react-router-dom'
+import { FC, useEffect } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import { Input, Button, PasswordInput } from 'uikit'
 import { useForm } from 'hooks'
+import { apiSlice } from 'api'
 
 import style from './style.module.css'
 
 export const ResetPassPage: FC = () => {
+  const nav = useNavigate()
+  const [handleSubmit, { data }] = apiSlice.useLazyResetPassQuery()
+
+  useEffect(() => {
+    if (data?.success) nav('/login')
+  }, [data, nav])
+
   const { formRef, formValues, formChange, formSubmit } = useForm({
-    submitHandler: (args) => console.log(args),
-    formInitValues: { password: '', code: '' },
+    submitHandler: handleSubmit,
+    formInitValues: { password: '', token: '' },
   })
 
   return (
@@ -25,15 +33,15 @@ export const ResetPassPage: FC = () => {
           onChange={() => {
           }}
           placeholder={'Введите новый пароль'}
-          value={formValues.password || ''}
+          value={formValues.password ?? ''}
           name={'password'}
         />
         <Input
           onChange={() => {
           }}
           placeholder={'Введите код из письма'}
-          value={formValues.code || ''}
-          name={'code'}
+          value={formValues.token ?? ''}
+          name={'token'}
         />
         <Button htmlType="submit">Сохранить</Button>
       </form>
