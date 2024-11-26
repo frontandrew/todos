@@ -163,9 +163,9 @@ export const apiSlice = createApi({
       }),
     }),
 
-    recoverPass: build.query<{ success: boolean, message: string }, string>({
-      query: (email) => ({
-        body: { email },
+    recoverPass: build.query<{ success: boolean, message: string }, { email: string }>({
+      query: (credentials) => ({
+        body: credentials,
         method: 'POST',
         url: '/password-reset',
       }),

@@ -1,14 +1,23 @@
-import { FC } from 'react'
-import { NavLink } from 'react-router-dom'
+import { FC, useEffect } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import { Button, EmailInput } from 'uikit'
 import { useForm } from 'hooks'
+import { apiSlice } from 'api'
 
 import style from './style.module.css'
 
 export const ForgotPassPage: FC = () => {
+
+  const nav = useNavigate()
+  const [handleSubmit, { data }] = apiSlice.useLazyRecoverPassQuery()
+
+  useEffect(() => {
+    if (data?.success) nav('/reset-password')
+  }, [data, nav])
+
   const { formRef, formValues, formChange, formSubmit } = useForm({
-    submitHandler: (args) => console.log(args),
+    submitHandler: handleSubmit,
     formInitValues: { email: '' },
   })
 
@@ -24,7 +33,7 @@ export const ForgotPassPage: FC = () => {
         <EmailInput
           onChange={() => {}}
           placeholder={'Укажите e-mail'}
-          value={formValues.email || ''}
+          value={formValues.email ?? ''}
           name={'email'}
         />
         <Button htmlType="submit">Восстановить</Button>
