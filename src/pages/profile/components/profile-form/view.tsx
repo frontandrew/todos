@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 
 import { Button, EmailInput, Input, PasswordInput } from 'uikit'
-import { useAppDispatch, useAppSelector, useForm } from 'hooks'
+import { useAppDispatch, useAppSelector, useForm, useHotKey } from 'hooks'
 import { apiSlice } from 'api'
 
 import style from './style.module.css'
@@ -27,6 +27,7 @@ export const ProfileForm: FC = () => {
     formReset()
   }
 
+  useHotKey(handleReset, 'Escape')
   useEffect(() => handleReset(), [user])
 
   return (
