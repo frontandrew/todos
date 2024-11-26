@@ -1,25 +1,22 @@
 import { FC, useEffect, useState } from 'react'
+
 import { Button, EmailInput, Input, PasswordInput } from 'uikit'
-import { useForm } from 'hooks'
+import { useAppDispatch, useAppSelector, useForm } from 'hooks'
+import { apiSlice } from 'api'
 
 import style from './style.module.css'
 
 export const ProfileForm: FC = () => {
-  const [userData, setUserData] = useState({ email: '', name: '' })
+  const dispatch = useAppDispatch()
+  const { updateUser } = apiSlice.endpoints
+  const { user } = useAppSelector((state) => state.user)
+
   const [isEditMode, setEditMode] = useState(false)
 
   const { formRef, formValues, formChange, formSubmit, formReset } = useForm({
-    submitHandler: (args) => console.log(args),
-    formInitValues: { ...userData, password: '2123123' },
+    submitHandler: (args) => dispatch(updateUser.initiate(args)),
+    formInitValues: { ...user!, password: '' },
   })
-
-  useEffect(() => {
-    setUserData({ email: 'magick@mail.com', name: 'Andrew' })
-    setEditMode(false)
-    formReset()
-  }, [
-    // TODO: call useEffect after user data loading
-  ])
 
   const enableEditMode = () => {
     setEditMode(true)
@@ -30,6 +27,7 @@ export const ProfileForm: FC = () => {
     formReset()
   }
 
+  useEffect(() => handleReset(), [user])
 
   return (
     <form
@@ -61,7 +59,6 @@ export const ProfileForm: FC = () => {
         {...{ icon: isEditMode ? undefined : 'EditIcon' }}
       />
       <PasswordInput
-        // onIconClick={enableEditMode}
         onChange={() => {
         }}
         name={'password'}
