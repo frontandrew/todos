@@ -7,8 +7,4 @@ export const navItems = {
     to: '/orders',
     title: 'История заказов',
   },
-  logout: {
-    to: '/login',
-    title: 'Выход',
-  },
 }
