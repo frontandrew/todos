@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { FC } from 'react'
 
+import { ROOT_PATH } from 'consts'
 import { apiSlice } from 'api'
 import {
   ForgotPassPage,
@@ -24,7 +25,9 @@ export const App: FC = () => {
 
   return (
     <div className={style.container}>
-      <BrowserRouter future={{
+      <BrowserRouter
+        basename={ROOT_PATH}
+        future={{
         v7_startTransition: true,
         v7_relativeSplatPath: true,
       }}>
