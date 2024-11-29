@@ -8,8 +8,16 @@ export enum Token {
   refresh = 'refreshToken',
 }
 
+export interface BaseQueryData extends Record<string, unknown> {
+  success: boolean,
+  [Token.refresh]?: string,
+  [Token.access]?: string
+}
+
+export type AuthQueryData = Required<Pick<BaseQueryData, Token.access | Token.refresh>>
+
 export interface BaseQueryResponse {
-  data?: { success: boolean, refreshToken?: string, accessToken?: string } & Record<string, unknown>
+  data?: BaseQueryData
   error?: {
     data: {
       success: boolean,
