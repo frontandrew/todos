@@ -2,17 +2,16 @@ import { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { Button, EmailInput, PasswordInput } from 'uikit'
-import { useAppDispatch, useForm } from 'hooks'
+import { useForm } from 'hooks'
 import { apiSlice } from 'api'
 
 import style from './style.module.css'
 
 export const LoginPage: FC = () => {
-  const dispatch = useAppDispatch()
-  const { loginUser } = apiSlice.endpoints
+  const [handleLogin] = apiSlice.useLazyLoginUserQuery()
 
   const { formRef, formValues, formChange, formSubmit } = useForm({
-    submitHandler: (args) => dispatch(loginUser.initiate(args)),
+    submitHandler: handleLogin,
     formInitValues: { email: '', password: '' },
   })
 
