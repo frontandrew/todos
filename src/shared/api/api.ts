@@ -6,7 +6,7 @@ import { Order } from 'entities/order'
 import { User } from 'entities/user'
 
 import { formatIngredientsResponse, preparePostOrderBody } from './utils'
-import { BaseQueryResponse, IngredientsResponse, PostOrderResponse, UserResponse } from './type'
+import { BaseQueryResponse, IngredientResponseData, PostOrderResponse, UserResponse } from './type'
 
 // TODO: move baseQuery funk to api/utils
 const baseQuery = fetchBaseQuery({
@@ -111,7 +111,7 @@ export const apiSlice = createApi({
     getIngredients: build.query<Ingredient[], void>({
       query: () => ({ url: '/ingredients' }),
       transformResponse: ({ data }: {
-        data: IngredientsResponse[]
+        data: IngredientResponseData[]
       }) => formatIngredientsResponse(data),
     }),
 

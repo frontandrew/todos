@@ -13,7 +13,7 @@ export interface BaseQueryResponse {
   meta: FetchBaseQueryMeta
 }
 
-export type IngredientsResponse = {
+export type IngredientResponseData = {
   _id: string
   name: string
   type: IngredientTypes
