@@ -1,22 +1,13 @@
-import { FC, SyntheticEvent } from 'react'
-import { NavItem } from 'components'
+import { FC } from 'react'
 
-import { useAppDispatch } from 'hooks'
+import { NavItem } from 'components'
 import { apiSlice } from 'api'
 
 import { navItems } from './items'
 import style from './style.module.css'
 
 export const ProfileNav: FC = () => {
-  const dispatch = useAppDispatch()
-  const { logoutUser } = apiSlice.endpoints
-
-  const handleLogout = (event: SyntheticEvent) => {
-    event.stopPropagation()
-
-    const token = localStorage.getItem('refreshToken')
-    if (token) dispatch(logoutUser.initiate(token))
-  }
+  const [handleLogout] = apiSlice.useLazyLogoutUserQuery()
 
   return (
     <div className={style.container}>
@@ -28,7 +19,7 @@ export const ProfileNav: FC = () => {
             </li>,
           )}
           <li className={style.item} key={'logout'}>
-            <div onClick={handleLogout}>
+            <div onClick={() => handleLogout()}>
               <NavItem to={''} title={'Выход'} size={'medium'}/>
             </div>
           </li>

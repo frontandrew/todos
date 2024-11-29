@@ -48,9 +48,8 @@ export const apiSlice = createApi({
       }),
     }),
 
-    logoutUser: build.query<{ success: boolean, message: string }, string>({
-      query: (refreshToken) => ({
-        body: { token: refreshToken },
+    logoutUser: build.query<{ success: boolean, message: string }, void>({
+      query: () => ({
         method: 'POST',
         url: '/auth/logout',
       }),
