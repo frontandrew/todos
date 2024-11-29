@@ -1,6 +1,12 @@
 import { FetchBaseQueryMeta } from '@reduxjs/toolkit/query'
+
 import { IngredientTypes } from 'entities/ingredient'
 import { User } from 'entities/user'
+
+export enum Token {
+  access = 'accessToken',
+  refresh = 'refreshToken',
+}
 
 export interface BaseQueryResponse {
   data?: { success: boolean, refreshToken?: string, accessToken?: string } & Record<string, unknown>
