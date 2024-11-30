@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 
 import { Input, Button, PasswordInput } from 'uikit'
 import { useForm } from 'hooks'
@@ -8,12 +8,17 @@ import { apiSlice } from 'api'
 import style from './style.module.css'
 
 export const ResetPassPage: FC = () => {
-  const nav = useNavigate()
+  const navigation = useNavigate()
+  const location = useLocation()
   const [handleSubmit, { data }] = apiSlice.useLazyResetPassQuery()
 
   useEffect(() => {
-    if (data?.success) nav('/login')
-  }, [data, nav])
+    if (!location.state?.isEmailSent) navigation('/forgot-password')
+  }, [])
+
+  useEffect(() => {
+    if (data?.success) navigation('/login', { state: null })
+  }, [data, navigation])
 
   const { formRef, formValues, formChange, formSubmit } = useForm({
     submitHandler: handleSubmit,

@@ -13,7 +13,9 @@ export const ForgotPassPage: FC = () => {
   const [handleSubmit, { data }] = apiSlice.useLazyRecoverPassQuery()
 
   useEffect(() => {
-    if (data?.success) nav('/reset-password')
+    if (data?.success) {
+      nav('/reset-password', { state: { isEmailSent: true } })
+    }
   }, [data, nav])
 
   const { formRef, formValues, formChange, formSubmit } = useForm({
