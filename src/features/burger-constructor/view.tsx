@@ -1,4 +1,5 @@
 import { FC, SyntheticEvent, useCallback, useEffect, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { useAppSelector, useModal } from 'hooks'
 import { Button, CurrencyIcon } from 'uikit'
@@ -11,9 +12,13 @@ import { OrderDetails } from 'entities/order'
 import { EmptyItem, EmptyConstructor } from './componets'
 import style from './style.module.css'
 
-/** TODO: возможно, декомпозировать на более мелкие и радтелить стэйт */
+/** TODO: возможно, декомпозировать на более мелкие и раздтелить стэйт */
 export const BurgerConstructor: FC = () => {
-  const order = useAppSelector(state => state.currentOrder)
+  const navigate = useNavigate()
+  const [user, order] = useAppSelector(({
+    currentOrder,
+    user,
+  }) => [user.user, currentOrder] as const)
   const [postOrder] = apiSlice.usePostOrderMutation()
 
   const [bun, otherIngredients] = useMemo(() => [
@@ -25,7 +30,8 @@ export const BurgerConstructor: FC = () => {
 
   const handleOrderSubmit = useCallback((e: SyntheticEvent) => {
     e.stopPropagation()
-    postOrder(order.ingredients)
+    if (!user) navigate('/login')
+    else postOrder(order.ingredients)
   }, [order, postOrder])
 
   useEffect(() => {
@@ -54,7 +60,7 @@ export const BurgerConstructor: FC = () => {
                       expectType={'other'}
                     />
                   ))
-                  : <EmptyItem key={`3`} expectType={'other'} />
+                  : <EmptyItem key={`3`} expectType={'other'}/>
                 }
               </ul>
 
@@ -68,12 +74,12 @@ export const BurgerConstructor: FC = () => {
 
             <div className={style.footer}>
               <div className={style.total}>
-                <span className='text text_type_digits-medium'>{order.total}</span>
-                <CurrencyIcon type='primary' />
+                <span className={'text text_type_digits-medium'}>{order.total}</span>
+                <CurrencyIcon type={'primary'}/>
               </div>
               <Button
-                type='primary'
-                htmlType='submit'
+                type={'primary'}
+                htmlType={'submit'}
                 disabled={order.ingredients.length < 3}
                 onClick={handleOrderSubmit}
               >
@@ -82,13 +88,15 @@ export const BurgerConstructor: FC = () => {
             </div>
           </>
           :
-          <EmptyConstructor />
+          <EmptyConstructor/>
         }
       </article>
 
-      <Modal close={closeModal} isVisible={isModalOpen}>
-        <OrderDetails orderId={order.id ?? undefined} />
-      </Modal>
+      {order.id &&
+        <Modal close={closeModal} isVisible={isModalOpen}>
+          <OrderDetails orderId={order.id}/>
+        </Modal>
+      }
     </>
   )
 }
