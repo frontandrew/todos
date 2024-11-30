@@ -4,7 +4,7 @@ export const navItems = {
     title: 'Профиль',
   },
   orders: {
-    to: '/orders',
+    to: '/profile/orders',
     title: 'История заказов',
   },
 }
