@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { FC, useCallback, useMemo, useRef, useState } from 'react'
 import { InView } from 'react-intersection-observer'
 
 import { Tabs } from 'components'
@@ -36,9 +36,6 @@ export const BurgerIngredients: FC = () => {
     }, {})
   }, [ingredientsMap])
 
-  console.log(thresholds)
-
-
   const handleTabClick = useCallback((tabId: string) => {
     const targetEl = listRef.current?.querySelector(`#${tabId}`)
     if (targetEl instanceof Element) targetEl.scrollIntoView({ block: 'start', behavior: 'smooth' })
@@ -59,11 +56,8 @@ export const BurgerIngredients: FC = () => {
           ingrs.length > 0 &&
           <InView
             root={document.querySelector(style.groups)}
-            onChange={(state, e) => {
-              if (state) {
-                setTab(key)
-                console.log(key, e.intersectionRatio)
-              }
+            onChange={(state) => {
+              if (state) setTab(key)
             }}
             threshold={(thresholds as Record<string, number>)[key]}
             className={style.group}
