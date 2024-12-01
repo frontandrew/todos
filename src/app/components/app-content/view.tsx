@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import { FC, useCallback } from 'react'
+import { FC, useEffect } from 'react'
 
 import {
   ForgotPassPage,
@@ -24,7 +24,11 @@ export const AppContent: FC = () => {
   const navigate = useNavigate()
   const state = location.state as { backgroundLocation?: Location }
 
-  const { closeModal } = useModal({ closeHandler: () => navigate(-1)})
+  const { closeModal, isModalOpen, openModal } = useModal({ closeHandler: () => navigate(-1) })
+
+  useEffect(() => {
+    if (state?.backgroundLocation) openModal()
+  }, [state])
 
   return (
     <main className={style.content}>
@@ -43,8 +47,8 @@ export const AppContent: FC = () => {
       {state?.backgroundLocation && (
         <Routes>
           <Route path="ingredients/:id" element={
-            <Modal title='Детали ингредиента' close={closeModal} isVisible={true}>
-              <IngredientDetails />
+            <Modal title={'Детали ингредиента'} close={closeModal} isVisible={isModalOpen}>
+              <IngredientDetails/>
             </Modal>
           }/>
         </Routes>
