@@ -27,7 +27,7 @@ export const ProfileForm: FC = () => {
     formReset()
   }
 
-  useHotKey(handleReset, 'Escape')
+  useHotKey('Escape', isEditMode ? handleReset : undefined)
   useEffect(() => handleReset(), [user])
 
   return (
