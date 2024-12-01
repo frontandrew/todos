@@ -38,7 +38,7 @@ export const AppContent: FC = () => {
         <Route path="register" element={<OnlyUnAuth component={<RegisterPage/>}/>}/>
         <Route path="forgot-password" element={<OnlyUnAuth component={<ForgotPassPage/>}/>}/>
         <Route path="reset-password" element={<OnlyUnAuth component={<ResetPassPage/>}/>}/>
-        <Route path="ingredients/:id" element={<IngredientPage/>}/>
+        <Route path="ingredients/:ingredientId" element={<IngredientPage/>}/>
         <Route path="profile" element={<OnlyAuth component={<ProfilePage/>}/>}>
           <Route path="orders" element={<OrdersList/>}/>
         </Route>
@@ -46,7 +46,7 @@ export const AppContent: FC = () => {
 
       {state?.backgroundLocation && (
         <Routes>
-          <Route path="ingredients/:id" element={
+          <Route path="ingredients/:ingredientId" element={
             <Modal title={'Детали ингредиента'} close={closeModal} isVisible={isModalOpen}>
               <IngredientDetails/>
             </Modal>

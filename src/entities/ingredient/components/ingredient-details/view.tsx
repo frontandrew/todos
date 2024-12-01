@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useAppSelector } from 'hooks'
 
 import { Ingredient } from '../../type'
@@ -8,17 +8,13 @@ import style from './style.module.css'
 
 export const IngredientDetails: FC = () => {
   const [data, setData] = useState<Ingredient | undefined>()
-  const location = useLocation()
+  const params = useParams()
   const ingredients = useAppSelector(state => state.ingredients)
 
   useEffect(() => {
-    if (location.pathname.startsWith('/ingredients/')) {
-      const ingredientId = location.pathname.split('/').reverse()[0]
-      const data = ingredients.find(({ id }) => id === ingredientId)
-
+      const data = ingredients.find(({ id }) => id === params.ingredientId)
       setData(data)
-    }
-  }, [location, ingredients])
+  }, [ingredients, params.ingredientId])
 
 
   return (data &&
