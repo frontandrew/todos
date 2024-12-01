@@ -1,7 +1,7 @@
 import { FC, SyntheticEvent, useCallback, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppSelector, useModal } from 'hooks'
+import { useAppDispatch, useAppSelector, useModal } from 'hooks'
 import { Button, CurrencyIcon } from 'uikit'
 import { Modal } from 'components'
 import { apiSlice } from 'api'
@@ -13,9 +13,9 @@ import { userSlice } from 'entities/user'
 import { EmptyItem, EmptyConstructor } from './componets'
 import style from './style.module.css'
 
-/** TODO: возможно, декомпозировать на более мелкие и раздтелить стэйт */
 export const BurgerConstructor: FC = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const user = useAppSelector(userSlice.selectors.user)
   const order = useAppSelector(currentOrderSlice.selectors.order)
@@ -27,7 +27,10 @@ export const BurgerConstructor: FC = () => {
     order.ingredients.filter(({ type }) => type !== IngredientType.BUN),
   ], [order.ingredients])
 
-  const { isModalOpen, closeModal, openModal } = useModal()
+
+  const { isModalOpen, closeModal, openModal } = useModal({
+    closeHandler: () => dispatch(resetOrderState())
+  })
 
   const handleOrderSubmit = useCallback((e: SyntheticEvent) => {
     e.stopPropagation()
@@ -37,7 +40,7 @@ export const BurgerConstructor: FC = () => {
 
   useEffect(() => {
     if (order.id) openModal()
-  }, [openModal, order.id])
+  }, [order.id])
 
   return (
     <>
