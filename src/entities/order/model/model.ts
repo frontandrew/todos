@@ -27,6 +27,7 @@ const initState: Order = {
 export const currentOrderSlice = createSlice({
   name: 'currentOrder',
   initialState: initState,
+  selectors: { order: (state) => state },
   reducers: {
     createNewOrder: {
       prepare: (payload: Ingredient) => ({ payload: {

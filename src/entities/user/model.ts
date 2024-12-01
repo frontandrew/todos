@@ -10,6 +10,9 @@ const initState: { user: User | null } = {
 export const userSlice = createSlice({
   name: 'user',
   initialState: initState,
+  selectors: {
+    user: ({ user }) =>  user
+  },
   reducers: {},
   extraReducers: (builder) => builder
     .addMatcher(apiSlice.endpoints.loginUser.matchFulfilled, (state, { payload } ) => {
