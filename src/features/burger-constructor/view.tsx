@@ -7,7 +7,8 @@ import { Modal } from 'components'
 import { apiSlice } from 'api'
 
 import { IngredientType } from 'entities/ingredient'
-import { OrderDetails } from 'entities/order'
+import { currentOrderSlice, OrderDetails } from 'entities/order'
+import { userSlice } from 'entities/user'
 
 import { EmptyItem, EmptyConstructor } from './componets'
 import style from './style.module.css'
@@ -15,10 +16,10 @@ import style from './style.module.css'
 /** TODO: возможно, декомпозировать на более мелкие и раздтелить стэйт */
 export const BurgerConstructor: FC = () => {
   const navigate = useNavigate()
-  const [user, order] = useAppSelector(({
-    currentOrder,
-    user,
-  }) => [user.user, currentOrder] as const)
+
+  const user = useAppSelector(userSlice.selectors.user)
+  const order = useAppSelector(currentOrderSlice.selectors.order)
+  const { resetOrderState } = currentOrderSlice.actions
   const [postOrder] = apiSlice.usePostOrderMutation()
 
   const [bun, otherIngredients] = useMemo(() => [
