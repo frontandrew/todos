@@ -1,14 +1,16 @@
 import { useCallback, useEffect } from 'react'
+import { UseHotKey } from './type.ts'
 
-export const useHotKey = (key: string, handler?: () => void) => {
+export const useHotKey: UseHotKey = ({ key, handler, canUse }) => {
+
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     if (event.key === key && handler) handler()
   }, [handler, key])
 
   useEffect(() => {
-    if (handler) document.addEventListener('keyup', handleKeyDown)
+    if (canUse) document.addEventListener('keyup', handleKeyDown)
     return () => {
-      if (handler) document.removeEventListener('keyup', handleKeyDown)
+      if (canUse) document.removeEventListener('keyup', handleKeyDown)
     }
-  }, [handler])
+  }, [canUse])
 }
