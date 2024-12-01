@@ -24,12 +24,7 @@ export const AppContent: FC = () => {
   const navigate = useNavigate()
   const state = location.state as { backgroundLocation?: Location }
 
-  const { closeModal } = useModal()
-
-  const handelModalClose = useCallback(() => {
-    closeModal()
-    navigate(-1)
-  }, [closeModal, navigate])
+  const { closeModal } = useModal({ closeHandler: () => navigate(-1)})
 
   return (
     <main className={style.content}>
@@ -48,7 +43,7 @@ export const AppContent: FC = () => {
       {state?.backgroundLocation && (
         <Routes>
           <Route path="ingredients/:id" element={
-            <Modal title='Детали ингредиента' close={handelModalClose} isVisible={true}>
+            <Modal title='Детали ингредиента' close={closeModal} isVisible={true}>
               <IngredientDetails />
             </Modal>
           }/>
