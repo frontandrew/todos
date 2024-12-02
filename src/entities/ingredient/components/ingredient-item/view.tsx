@@ -52,6 +52,7 @@ export const IngredientItem: FC<IngredientItemProps> = ({ ingredient, isLocked, 
     >
       {!isLocked && <DragIcon type='primary' />}
       <ConstructorElement
+        extraClass={style.element}
         handleClose={handleRemove}
         key={id}
         type={position}

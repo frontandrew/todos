@@ -2,6 +2,7 @@ import { FC, useCallback, useMemo } from 'react'
 import { useDrop } from 'react-dnd'
 
 import { useAppDispatch } from 'hooks'
+import { ConstructorElement } from 'uikit'
 import { currentOrderSlice, OrderIngredientItem } from 'entities/order'
 import { IngredientItem, IngredientType, IngredientViewType } from 'entities/ingredient'
 
@@ -26,9 +27,7 @@ export const EmptyItem: FC<EmptyItemProps> = ({ orderIngredient: ingr, position,
         ingrId: ingr.id,
       }))
       dispatch(addOrderIngredient({ item, targId: ingr?.orderIngredientIndex }))
-    }
-
-    else dispatch(sortOrderIngredients({
+    } else dispatch(sortOrderIngredients({
       currId: item.orderIngredientIndex,
       targId: ingr!.orderIngredientIndex,
     }))
@@ -48,7 +47,7 @@ export const EmptyItem: FC<EmptyItemProps> = ({ orderIngredient: ingr, position,
     drop: handleDrop,
     collect: (monitor) => ({
       isOver: monitor.isOver(),
-    })
+    }),
   }, [dndAcceptTypesMap, handleDrop])
 
   const [dropAreaStyles, contentStyle] = useMemo(() => [
@@ -68,9 +67,19 @@ export const EmptyItem: FC<EmptyItemProps> = ({ orderIngredient: ingr, position,
   return (
     <li className={style.container} ref={dropAreaRef}>
       <div className={dropAreaStyles}>
-        <p className='text text_type_main-default text_color_inactive'>
-          {`Добавьте ${isBunType ? 'булку' : 'ингредиент'}`}
-        </p>
+        <div className={style.empty_container}>
+          <div className={style.empty_item}>
+            <p className={'text text_type_main-default'}>
+              {`Добавьте ${isBunType ? 'булку' : 'ингредиент'}`}
+            </p>
+            <ConstructorElement
+              text={'filler text filler text filler text'}
+              thumbnail={'null'}
+              price={0}
+              type={position}
+            />
+          </div>
+        </div>
       </div>
       <div className={contentStyle}>
         {ingr &&
