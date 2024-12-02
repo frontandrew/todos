@@ -6,6 +6,7 @@ import {
   IngredientPage,
   LoginPage,
   MainPage,
+  NotFoundPage,
   ProfilePage,
   RegisterPage,
   ResetPassPage,
@@ -42,6 +43,7 @@ export const AppContent: FC = () => {
         <Route path="profile" element={<OnlyAuth component={<ProfilePage/>}/>}>
           <Route path="orders" element={<OrdersList/>}/>
         </Route>
+        <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
 
       {state?.backgroundLocation && (
