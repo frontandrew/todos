@@ -15,14 +15,17 @@
 - for create build run: `npm run build`
 - for use build localy run: `npm run start`
 - for use dev-server run: `npm run dev`
+- for check code: `npm run lint`
 
 ### Used tools:
 
-- [TypeScript](https://www.typescriptlang.org/) - is JavaScript with syntax for types
+- [TypeScript](https://www.typescriptlang.org/) - JavaScript with syntax for types
 - [React](https://react.dev/) - the library for web and native user interfaces
+- [React Router]() - a multi-strategy router for React bridging the gap from React 18 to React 19.
 - [React DnD](https://react-dnd.github.io/react-dnd/about) - set of React utilities to help you build complex drag and drop interfaces while keeping your components decoupled
+- [React IntersectionObserver](https://react-intersection-observer.vercel.app/?path=/docs/intro--docs) - implementation of the Intersection Observer API to tell you when an element enters or leaves the viewport
 - [Redux Toolkit](https://redux-toolkit.js.org/) - the official, opinionated, batteries-included toolset for efficient Redux development
-- [Vite](https://vitejs.dev/) - is a build tool that aims to provide a faster and leaner development experience for modern web projects
+- [Vite](https://vitejs.dev/) - a build tool that aims to provide a faster and leaner development experience for modern web projects
 - [ESLint](https://eslint.org/) - statically analyzes your code to quickly find problems
 
 ### Project features:
