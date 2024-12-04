@@ -4,13 +4,13 @@ import { Ingredient } from 'entities/ingredient'
 import { Order } from 'entities/order'
 import { User } from 'entities/user'
 
-import { query } from './query'
+import { apiQuery } from './queries'
 import { formatIngredientsResponse, preparePostOrderBody } from './utils'
 import { IngredientResponseData, PostOrderResponse, UserResponse } from './type'
 
 export const apiSlice = createApi({
   reducerPath: 'appApi',
-  baseQuery: query,
+  baseQuery: apiQuery,
   endpoints: (build) => ({
 
     getIngredients: build.query<Ingredient[], void>({
