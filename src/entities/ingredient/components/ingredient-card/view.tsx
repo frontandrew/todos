@@ -1,24 +1,18 @@
-import { FC, SyntheticEvent, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import { useDrag } from 'react-dnd'
-
+import { Link, useLocation } from 'react-router-dom'
 import { Counter, CurrencyIcon } from 'uikit'
-import { useAppDispatch } from 'hooks'
-import { Ingredient, IngredientType } from 'entities/ingredient/type'
 
-import { currentIngredientSlice } from '../../model'
+import { IngredientType } from '../../type'
 import { IngredientViewType } from '../type'
+
+import { IngredientCardProps } from './type'
 import style from './style.module.css'
 
-export const IngredientCard: FC<Ingredient> = (ingredient) => {
+export const IngredientCard: FC<IngredientCardProps> = ({ ingredient }) => {
   const { image = '', id, name = 'unknown', price = 0, type, count = 0 } = ingredient
 
-  const { setCurrentIngredient } = currentIngredientSlice.actions
-  const dispatch = useAppDispatch()
-
-  const handleCardClick = (event: SyntheticEvent) => {
-    event.stopPropagation()
-    dispatch(setCurrentIngredient(ingredient))
-  }
+  const location = useLocation()
 
   /**
    * TODO: вынести вычисление принимаемых типов в отдельную
@@ -32,8 +26,8 @@ export const IngredientCard: FC<Ingredient> = (ingredient) => {
     type: `${IngredientViewType.CARD}-${getDNDAcceptType}`,
     item: ingredient,
     collect: (monitor) => ({
-      isDrag: monitor.isDragging()
-    })
+      isDrag: monitor.isDragging(),
+    }),
   })
 
 
@@ -41,24 +35,30 @@ export const IngredientCard: FC<Ingredient> = (ingredient) => {
     <li
       key={id}
       ref={cardRef}
-      className={isDrag ? style.container_dragging : style.container}
-      onClick={handleCardClick}
+      className={style.container}
     >
-      <img className={style.image} src={image} alt={name} />
-      <div className={style.price}>
-        <span className={'text text_type_digits-default'}>{price}</span>
-        <CurrencyIcon type='primary' />
-      </div>
-      <span className={'text text_type_main-default ' + style.name}>{name}</span>
-      {count > 0 &&
-        <Counter
-          count={count}
-          size="default"
-          extraClass={style.counter}
-        />
-      }
+      <Link
+        to={`ingredients/${id}`}
+        state={{ backgroundLocation: location }}
+        className={isDrag ? style.content_dragging : style.content}
+      >
+        <img className={style.image} src={image} alt={name}/>
+        <div className={style.price}>
+          <span className={'text text_type_digits-default'}>{price}</span>
+          <CurrencyIcon type={'primary'}/>
+        </div>
+        <span className={'text text_type_main-default ' + style.name}>{name}</span>
+        {count > 0 &&
+          <Counter
+            count={count}
+            size={'default'}
+            extraClass={style.counter}
+          />
+        }
+      </Link>
     </li>
+
   )
 
-  return id && name && (typeof price === 'number') ? ingredientCard : null
+  return id && name && price ? ingredientCard : null
 }

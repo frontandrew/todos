@@ -1,0 +1,40 @@
+.container {
+	height: auto;
+	width: 100%;
+	padding-top: 4%;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	gap: 4em;
+}
+
+.header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	text-shadow: var(--text-glow);
+}
+
+.title {
+	font-size: 15em;
+
+}
+
+.navlist {
+	width: 100%;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1em;
+}
+.navitem {
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+	gap: 0.5em;
+}

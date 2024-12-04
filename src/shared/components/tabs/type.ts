@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react'
 
 interface Props {
   tabsNameValueMap: Record<string, string>
-  initialTab?: string
+  currentTab?: string
   onClick?: (x: string) => void
 }
 

@@ -1,23 +1,31 @@
+import { BrowserRouter } from 'react-router-dom'
 import { FC } from 'react'
 
+import { ROOT_PATH } from 'consts'
 import { apiSlice } from 'api'
-import { Main } from 'pages'
 
 import { AppHeader } from 'features/app-header'
 import { AppLoader } from 'features/app-loader'
 
+import { AppContent } from './components'
 import style from './style.module.css'
 
 export const App: FC = () => {
-  const { isSuccess } = apiSlice.useGetIngredientsQuery()
+  apiSlice.useGetUserQuery()
+  apiSlice.useGetIngredientsQuery()
 
   return (
     <div className={style.container}>
-      <AppHeader />
-      <main className={style.content}>
-        {isSuccess && <Main />}
-      </main>
-      <AppLoader />
+      <BrowserRouter
+        basename={ROOT_PATH}
+        future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}>
+        <AppHeader/>
+        <AppContent/>
+        <AppLoader/>
+      </BrowserRouter>
     </div>
   )
 }

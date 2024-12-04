@@ -20,7 +20,3 @@ export interface Ingredient {
   imageLarge: string,
   count?: number,
 }
-
-export interface CurrentIngredientState {
-  ingredient: Ingredient | null
-}

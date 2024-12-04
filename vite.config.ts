@@ -2,10 +2,17 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
+/**
+ * This root path used for deploy to GH-Pages
+ */
+const basePath = process.env.NODE_ENV === 'production'
+  ? '/stellar-burgers'
+  : '/'
+
 export default defineConfig({
-  base: '/stellar-burgers',
+  base: basePath,
   plugins: [react()],
-  server: { port: 3000 },
+  server: { port: 3002 },
   resolve: {
     alias: {
       api: path.resolve('src/shared/api/index'),
@@ -19,5 +26,5 @@ export default defineConfig({
       uikit: '@ya.praktikum/react-developer-burger-ui-components',
       utils: path.resolve('src/shared/utils/index'),
     },
-  }
+  },
 })

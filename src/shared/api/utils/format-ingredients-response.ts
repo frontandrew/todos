@@ -1,7 +1,7 @@
 import { Ingredient } from 'entities/ingredient'
-import { IngredientsResponse } from 'shared/api/type'
+import { IngredientResponseData } from '../type'
 
-export const formatIngredientsResponse = (data: IngredientsResponse[]): Ingredient[] => {
+export const formatIngredientsResponse = (data: IngredientResponseData[]): Ingredient[] => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return data.map(({ _id, image_mobile, image_large, __v, ...rest }) => ({
     id: _id,

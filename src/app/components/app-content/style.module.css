@@ -1,0 +1,9 @@
+.content {
+	max-width: var(--content-width);
+	width: 100%;
+	overflow: hidden;
+	flex-grow: 1;
+
+	display: flex;
+	justify-content: center;
+}

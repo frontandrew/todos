@@ -23,7 +23,7 @@ export const useModal: UseModalType = (props) => {
     if (isModalOpen) closeModal()
   }, [closeModal, isModalOpen, openModal])
 
-  useHotKey(closeModal, 'Escape')
+  useHotKey({ key: 'Escape', canUse: isModalOpen, handler: closeModal })
 
   return { openModal, closeModal, toggleModal, isModalOpen }
 }

@@ -7,14 +7,14 @@ import style from './style.module.css'
 export const Overlay: FC<OverlayProps> = (props) => {
   const { isVisible, children, onClick, root } = props
 
-  const handeleClick = useCallback((event: SyntheticEvent) => {
+  const handleClick = useCallback((event: SyntheticEvent) => {
     if (onClick) onClick(event)
   }, [onClick])
 
   return createPortal((
     <div
       className={`${style.backdrop} ${isVisible ? style.backdrop_hidden : ''}`}
-      onClick={handeleClick}
+      onClick={handleClick}
     >
       {children}
     </div>

@@ -1,0 +1,25 @@
+.item {
+    padding: 1em 1.25em;
+    display: flex;
+    gap: 0.5em;
+}
+
+.item:hover > svg {
+    opacity: 0.9;
+    fill: var(--text-primary-color);
+    transition: var(--common-transition);
+}
+
+.item:not(:hover) > svg {
+    transition: var(--common-transition);
+}
+
+.item:hover > span {
+    color: var(--text-primary-color);
+    transition: var(--common-transition);
+
+}
+
+.item:not(:hover) > span {
+    transition: var(--common-transition);
+}

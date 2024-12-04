@@ -1,14 +1,22 @@
 .container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.content {
     display: flex;
     flex-direction: column;
     align-items: center;
 
     gap: 0.25em;
     position: relative;
+
+	color: unset;
 }
 
-.container_dragging {
-    composes: container;
+.content_dragging {
+    composes: content;
     opacity: 0.6;
 }
 
@@ -25,6 +33,5 @@
 }
 
 .name {
-    /* height: 24px; */
     text-align: center;
 }
