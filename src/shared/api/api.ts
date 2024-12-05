@@ -69,7 +69,7 @@ export const apiSlice = createApi({
       transformResponse: (response: UserResponse) => response.user,
     }),
 
-    recoverPass: build.query<{ success: boolean, message: string }, { email: string }>({
+    recoverPass: build.query<{ success: boolean }, { email: string }>({
       query: (credentials) => ({
         body: credentials,
         method: 'POST',
@@ -77,10 +77,7 @@ export const apiSlice = createApi({
       }),
     }),
 
-    resetPass: build.query<{ success: boolean, message: string }, {
-      password: string,
-      token: string
-    }>({
+    resetPass: build.query<{ success: boolean }, { password: string, token: string }>({
       query: (credentials) => ({
         body: credentials,
         method: 'POST',
