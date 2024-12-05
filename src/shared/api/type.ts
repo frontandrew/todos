@@ -1,6 +1,8 @@
 import { IngredientTypes } from 'entities/ingredient'
 import { User } from 'entities/user'
 
+import { AuthQueryResponseData, QueryResponseData } from './queries/type.ts'
+
 export type IngredientResponseData = {
   _id: string
   name: string
@@ -23,9 +25,10 @@ export type PostOrderResponse = {
   }
 }
 
-export type UserResponse = {
-  success: boolean
+export interface UserResponse extends QueryResponseData {
   user: User
-  accessToken: string
-  refreshToken: string
+}
+
+export interface LoginResponse extends AuthQueryResponseData {
+  user: User
 }

@@ -6,7 +6,7 @@ import { User } from 'entities/user'
 
 import { apiQuery } from './queries'
 import { formatIngredientsResponse, preparePostOrderBody } from './utils'
-import { IngredientResponseData, PostOrderResponse, UserResponse } from './type'
+import { IngredientResponseData, LoginResponse, PostOrderResponse, UserResponse } from './type'
 
 export const apiSlice = createApi({
   reducerPath: 'appApi',
@@ -32,39 +32,43 @@ export const apiSlice = createApi({
       }),
     }),
 
-    registerUser: build.query<UserResponse, User & { password: string }>({
+    registerUser: build.query<User, User & { password: string }>({
       query: (credentials) => ({
         body: credentials,
         method: 'POST',
         url: '/auth/register',
       }),
+      transformResponse: (response: LoginResponse) => response.user,
     }),
 
-    loginUser: build.query<UserResponse, { email: User['email'], password: string }>({
+    loginUser: build.query<User, { email: User['email'], password: string }>({
       query: (credentials) => ({
         body: credentials,
         method: 'POST',
         url: '/auth/login',
       }),
+      transformResponse: (response: LoginResponse) => response.user,
     }),
 
-    logoutUser: build.query<{ success: boolean, message: string }, void>({
+    logoutUser: build.query<void, void>({
       query: () => ({
         method: 'POST',
         url: '/auth/logout',
       }),
     }),
 
-    getUser: build.query<UserResponse, void>({
+    getUser: build.query<User, void>({
       query: () => ({ url: '/auth/user' }),
+      transformResponse: (response: UserResponse) => response.user,
     }),
 
-    updateUser: build.mutation<UserResponse, User & { password: string }>({
+    updateUser: build.mutation<User, User & { password: string }>({
       query: (credentials) => ({
         body: credentials,
         url: '/auth/user',
         method: 'PATCH',
       }),
+      transformResponse: (response: UserResponse) => response.user,
     }),
 
     recoverPass: build.query<{ success: boolean, message: string }, { email: string }>({
