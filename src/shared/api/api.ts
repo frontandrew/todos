@@ -6,7 +6,7 @@ import { User } from 'entities/user'
 
 import { apiQuery } from './queries'
 import { formatIngredientsResponse, preparePostOrderBody } from './utils'
-import { IngredientResponseData, LoginResponse, PostOrderResponse, UserResponse } from './type'
+import { IngredientsResponse, LoginResponse, PostOrderResponse, UserResponse } from './type'
 
 export const apiSlice = createApi({
   reducerPath: 'appApi',
@@ -15,9 +15,7 @@ export const apiSlice = createApi({
 
     getIngredients: build.query<Ingredient[], void>({
       query: () => ({ url: '/ingredients' }),
-      transformResponse: ({ data }: {
-        data: IngredientResponseData[]
-      }) => formatIngredientsResponse(data),
+      transformResponse: ({ data }: IngredientsResponse) => formatIngredientsResponse(data),
     }),
 
     postOrder: build.mutation<{ name: string, id: number }, Order['ingredients']>({

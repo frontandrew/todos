@@ -3,7 +3,7 @@ import { User } from 'entities/user'
 
 import { AuthQueryResponseData, QueryResponseData } from './queries/type.ts'
 
-export type IngredientResponseData = {
+export type RawIngredient = {
   _id: string
   name: string
   type: IngredientTypes
@@ -23,6 +23,10 @@ export type PostOrderResponse = {
   order: {
     number: number
   }
+}
+
+export interface IngredientsResponse extends QueryResponseData {
+  data: RawIngredient[]
 }
 
 export interface UserResponse extends QueryResponseData {
