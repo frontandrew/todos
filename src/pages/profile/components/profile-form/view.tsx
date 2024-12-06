@@ -13,7 +13,16 @@ export const ProfileForm: FC = () => {
 
   const [isEditMode, setEditMode] = useState(false)
 
-  const { formRef, formValues, formChange, formSubmit, formReset } = useForm({
+  const {
+    formRef,
+    formValues,
+    formChange,
+    formSubmit,
+    formReset,
+    formErrors,
+    formValidity,
+    checkFieldValidity,
+  } = useForm({
     submitHandler: (args) => dispatch(updateUser.initiate(args)),
     formInitValues: { ...user!, password: '' },
   })
@@ -42,6 +51,12 @@ export const ProfileForm: FC = () => {
         onIconClick={enableEditMode}
         onChange={() => {
         }}
+        onBlur={checkFieldValidity}
+        error={!!formErrors.name}
+        errorText={formErrors.name}
+        required={true}
+        minLength={2}
+        maxLength={40}
         name={'name'}
         placeholder={'Имя'}
         value={formValues.name ?? ''}
@@ -51,8 +66,12 @@ export const ProfileForm: FC = () => {
       <EmailInput
         // @ts-expect-error-next-line
         onIconClick={enableEditMode}
+        onBlur={checkFieldValidity}
         onChange={() => {
         }}
+        error={!!formErrors.email}
+        errorText={formErrors.email}
+        required={true}
         name={'email'}
         placeholder={'E-mail'}
         value={formValues.email ?? ''}
@@ -72,11 +91,17 @@ export const ProfileForm: FC = () => {
         /> :
         <>
           <PasswordInput
+            onBlur={checkFieldValidity}
             onChange={() => {
             }}
+            required={false}
             name={'password'}
             placeholder={'Пароль'}
+            minLength={6}
             value={formValues.password ?? ''}
+            // @ts-expect-error-next-line
+            error={!!formErrors.password}
+            errorText={formErrors.password}
           />
           <div className={style.actions}>
             <Button
@@ -87,6 +112,7 @@ export const ProfileForm: FC = () => {
             </Button>
             <Button
               htmlType={'submit'}
+              disabled={!formValidity}
             >
               Сохранить
             </Button>
