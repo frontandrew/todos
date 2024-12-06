@@ -11,20 +11,18 @@ export const RegisterPage: FC = () => {
   const dispatch = useAppDispatch()
   const { registerUser } = apiSlice.endpoints
 
-  const { formRef, formValues, formChange, formSubmit } = useForm({
+  const {
+    formRef,
+    formValues,
+    formChange,
+    formErrors,
+    formValidity,
+    formSubmit,
+    checkFieldValidity,
+  } = useForm({
     submitHandler: (args) => dispatch(registerUser.initiate(args)),
     formInitValues: { email: '', password: '', name: '' },
   })
-
-  /**
-   * TODO: need to clean up before review
-   * CREDENTIALS: {
-   *  email: 'some@magic.tech',
-   *  password: '159753',
-   *  name: 'Some Magic'
-   * }
-   */
-
 
   return (
     <div className={style.container}>
@@ -36,27 +34,46 @@ export const RegisterPage: FC = () => {
       >
         <h1 className={'text text_type_main-medium'}>Регистрация</h1>
         <Input
-          onChange={() => {
-          }}
+          onChange={() => {}}
           placeholder={'Имя'}
           value={formValues.name || ''}
           name={'name'}
+          onBlur={checkFieldValidity}
+          required={true}
+          tabIndex={1}
+          errorText={formErrors.name}
+          error={!!formErrors.name}
         />
         <EmailInput
-          onChange={() => {
-          }}
           placeholder={'E-mail'}
           value={formValues.email || ''}
           name={'email'}
+          onBlur={checkFieldValidity}
+          required={true}
+          tabIndex={2}
+          errorText={formErrors.email}
+          // @ts-expect-error-next-line
+          error={!!formErrors.email}
         />
         <PasswordInput
-          onChange={() => {
-          }}
           placeholder={'Пароль'}
           value={formValues.password || ''}
           name={'password'}
+          onBlur={checkFieldValidity}
+          minLength={6}
+          required={true}
+          tabIndex={3}
+          errorText={formErrors.password}
+          // @ts-expect-error-next-line
+          error={!!formErrors.password}
         />
-        <Button htmlType="submit">Зарегистрироваться</Button>
+        <Button
+          htmlType={'submit'}
+          disabled={!formValidity}
+          tabIndex={4}
+        >
+          Зарегистрироваться
+        </Button>
       </form>
       <nav>
         <ul className={style.navlist}>
@@ -65,7 +82,7 @@ export const RegisterPage: FC = () => {
               Уже зарегистрированы?
             </span>
             <span className={'text text_type_main-small text_color_accent'}>
-              <NavLink to={'/login'}>
+              <NavLink to={'/login'} tabIndex={5}>
                 Войти
               </NavLink>
             </span>

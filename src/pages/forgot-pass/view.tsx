@@ -41,7 +41,6 @@ export const ForgotPassPage: FC = () => {
       >
         <h1 className={'text text_type_main-medium'}>Восстановление пароля</h1>
         <EmailInput
-          onChange={() => {}}
           onBlur={checkFieldValidity}
           required={true}
           placeholder={'Укажите e-mail'}
