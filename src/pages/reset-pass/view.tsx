@@ -20,7 +20,15 @@ export const ResetPassPage: FC = () => {
     if (data?.success) navigation('/login', { state: null })
   }, [data, navigation])
 
-  const { formRef, formValues, formChange, formSubmit } = useForm({
+  const {
+    formRef,
+    formValues,
+    formErrors,
+    formChange,
+    formSubmit,
+    formValidity,
+    checkFieldValidity,
+  } = useForm({
     submitHandler: handleSubmit,
     formInitValues: { password: '', token: '' },
   })
@@ -35,20 +43,35 @@ export const ResetPassPage: FC = () => {
       >
         <h1 className={'text text_type_main-medium'}>Восстановление пароля</h1>
         <PasswordInput
-          onChange={() => {
-          }}
           placeholder={'Введите новый пароль'}
           value={formValues.password ?? ''}
           name={'password'}
+          onBlur={checkFieldValidity}
+          minLength={6}
+          required={true}
+          tabIndex={1}
+          errorText={formErrors.password}
+          // @ts-expect-error-next-line
+          error={!!formErrors.password}
         />
         <Input
-          onChange={() => {
-          }}
+          onChange={() => {}}
           placeholder={'Введите код из письма'}
           value={formValues.token ?? ''}
           name={'token'}
+          onBlur={checkFieldValidity}
+          required={true}
+          tabIndex={2}
+          errorText={formErrors.token}
+          error={!!formErrors.token}
         />
-        <Button htmlType="submit">Сохранить</Button>
+        <Button
+          htmlType={'submit'}
+          disabled={!formValidity}
+          tabIndex={3}
+        >
+          Сохранить
+        </Button>
       </form>
       <nav>
         <ul className={style.navlist}>
@@ -57,7 +80,7 @@ export const ResetPassPage: FC = () => {
               Вспомнили пароль?
             </span>
             <span className={'text text_type_main-small text_color_accent'}>
-              <NavLink to={'/login'}>
+              <NavLink to={'/login'} tabIndex={4}>
                 Войти
               </NavLink>
             </span>
