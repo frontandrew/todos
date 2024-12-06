@@ -53,9 +53,9 @@ export const ResetPassPage: FC = () => {
           errorText={formErrors.password}
           // @ts-expect-error-next-line
           error={!!formErrors.password}
+          onChange={()=>{}}
         />
         <Input
-          onChange={() => {}}
           placeholder={'Введите код из письма'}
           value={formValues.token ?? ''}
           name={'token'}
@@ -64,6 +64,7 @@ export const ResetPassPage: FC = () => {
           tabIndex={2}
           errorText={formErrors.token}
           error={!!formErrors.token}
+          onChange={()=>{}}
         />
         <Button
           htmlType={'submit'}

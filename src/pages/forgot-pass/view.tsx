@@ -50,6 +50,7 @@ export const ForgotPassPage: FC = () => {
           errorText={formErrors.email}
           // @ts-expect-error-next-line
           error={!formValidity}
+          onChange={()=>{}}
         />
         <Button
           htmlType={'submit'}

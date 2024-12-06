@@ -42,6 +42,7 @@ export const LoginPage: FC = () => {
           errorText={formErrors.email}
           // @ts-expect-error-next-line
           error={!!formErrors.email}
+          onChange={()=>{}}
         />
         <PasswordInput
           placeholder={'Пароль'}
@@ -54,6 +55,7 @@ export const LoginPage: FC = () => {
           errorText={formErrors.password}
           // @ts-expect-error-next-line
           error={!!formErrors.password}
+          onChange={()=>{}}
         />
         <Button
           htmlType={'submit'}

@@ -34,7 +34,6 @@ export const RegisterPage: FC = () => {
       >
         <h1 className={'text text_type_main-medium'}>Регистрация</h1>
         <Input
-          onChange={() => {}}
           placeholder={'Имя'}
           value={formValues.name || ''}
           name={'name'}
@@ -43,6 +42,7 @@ export const RegisterPage: FC = () => {
           tabIndex={1}
           errorText={formErrors.name}
           error={!!formErrors.name}
+          onChange={()=>{}}
         />
         <EmailInput
           placeholder={'E-mail'}
@@ -54,6 +54,7 @@ export const RegisterPage: FC = () => {
           errorText={formErrors.email}
           // @ts-expect-error-next-line
           error={!!formErrors.email}
+          onChange={()=>{}}
         />
         <PasswordInput
           placeholder={'Пароль'}
@@ -66,6 +67,7 @@ export const RegisterPage: FC = () => {
           errorText={formErrors.password}
           // @ts-expect-error-next-line
           error={!!formErrors.password}
+          onChange={()=>{}}
         />
         <Button
           htmlType={'submit'}

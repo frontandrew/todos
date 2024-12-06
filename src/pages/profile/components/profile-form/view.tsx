@@ -49,8 +49,7 @@ export const ProfileForm: FC = () => {
     >
       <Input
         onIconClick={enableEditMode}
-        onChange={() => {
-        }}
+        onChange={()=>{}}
         onBlur={checkFieldValidity}
         error={!!formErrors.name}
         errorText={formErrors.name}
@@ -67,8 +66,7 @@ export const ProfileForm: FC = () => {
         // @ts-expect-error-next-line
         onIconClick={enableEditMode}
         onBlur={checkFieldValidity}
-        onChange={() => {
-        }}
+        onChange={()=>{}}
         error={!!formErrors.email}
         errorText={formErrors.email}
         required={true}
@@ -82,8 +80,7 @@ export const ProfileForm: FC = () => {
       {!isEditMode ?
         <Input
           onIconClick={enableEditMode}
-          onChange={() => {
-          }}
+          onChange={()=>{}}
           placeholder={'Пароль'}
           value={''}
           disabled={true}
@@ -92,8 +89,7 @@ export const ProfileForm: FC = () => {
         <>
           <PasswordInput
             onBlur={checkFieldValidity}
-            onChange={() => {
-            }}
+            onChange={()=>{}}
             required={false}
             name={'password'}
             placeholder={'Пароль'}
