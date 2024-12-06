@@ -18,7 +18,15 @@ export const ForgotPassPage: FC = () => {
     }
   }, [data, nav])
 
-  const { formRef, formValues, formChange, formSubmit } = useForm({
+  const {
+    formRef,
+    formValues,
+    formChange,
+    formSubmit,
+    formErrors,
+    formValidity,
+    checkFieldValidity,
+  } = useForm({
     submitHandler: handleSubmit,
     formInitValues: { email: '' },
   })
@@ -34,11 +42,23 @@ export const ForgotPassPage: FC = () => {
         <h1 className={'text text_type_main-medium'}>Восстановление пароля</h1>
         <EmailInput
           onChange={() => {}}
+          onBlur={checkFieldValidity}
+          required={true}
           placeholder={'Укажите e-mail'}
           value={formValues.email ?? ''}
           name={'email'}
+          tabIndex={1}
+          errorText={formErrors.email}
+          // @ts-expect-error-next-line
+          error={!formValidity}
         />
-        <Button htmlType="submit">Восстановить</Button>
+        <Button
+          htmlType={'submit'}
+          disabled={!formValidity}
+          tabIndex={2}
+        >
+          Восстановить
+        </Button>
       </form>
       <nav>
         <ul className={style.navlist}>
@@ -47,7 +67,7 @@ export const ForgotPassPage: FC = () => {
               Вспомнили пароль?
             </span>
             <span className={'text text_type_main-small text_color_accent'}>
-              <NavLink to={'/login'}>
+              <NavLink to={'/login'} tabIndex={3}>
                 Войти
               </NavLink>
             </span>
