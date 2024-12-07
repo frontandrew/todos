@@ -4,20 +4,18 @@ import { Ingredient } from 'entities/ingredient'
 import { Order } from 'entities/order'
 import { User } from 'entities/user'
 
-import { query } from './query'
+import { apiQuery } from './queries'
 import { formatIngredientsResponse, preparePostOrderBody } from './utils'
-import { IngredientResponseData, PostOrderResponse, UserResponse } from './type'
+import { IngredientsResponse, LoginResponse, PostOrderResponse, UserResponse } from './type'
 
 export const apiSlice = createApi({
   reducerPath: 'appApi',
-  baseQuery: query,
+  baseQuery: apiQuery,
   endpoints: (build) => ({
 
     getIngredients: build.query<Ingredient[], void>({
       query: () => ({ url: '/ingredients' }),
-      transformResponse: ({ data }: {
-        data: IngredientResponseData[]
-      }) => formatIngredientsResponse(data),
+      transformResponse: ({ data }: IngredientsResponse) => formatIngredientsResponse(data),
     }),
 
     postOrder: build.mutation<{ name: string, id: number }, Order['ingredients']>({
@@ -32,42 +30,46 @@ export const apiSlice = createApi({
       }),
     }),
 
-    registerUser: build.query<UserResponse, User & { password: string }>({
+    registerUser: build.query<User, User & { password: string }>({
       query: (credentials) => ({
         body: credentials,
         method: 'POST',
         url: '/auth/register',
       }),
+      transformResponse: (response: LoginResponse) => response.user,
     }),
 
-    loginUser: build.query<UserResponse, { email: User['email'], password: string }>({
+    loginUser: build.query<User, { email: User['email'], password: string }>({
       query: (credentials) => ({
         body: credentials,
         method: 'POST',
         url: '/auth/login',
       }),
+      transformResponse: (response: LoginResponse) => response.user,
     }),
 
-    logoutUser: build.query<{ success: boolean, message: string }, void>({
+    logoutUser: build.query<void, void>({
       query: () => ({
         method: 'POST',
         url: '/auth/logout',
       }),
     }),
 
-    getUser: build.query<UserResponse, void>({
+    getUser: build.query<User, void>({
       query: () => ({ url: '/auth/user' }),
+      transformResponse: (response: UserResponse) => response.user,
     }),
 
-    updateUser: build.mutation<UserResponse, User & { password: string }>({
+    updateUser: build.mutation<User, User & { password: string }>({
       query: (credentials) => ({
         body: credentials,
         url: '/auth/user',
         method: 'PATCH',
       }),
+      transformResponse: (response: UserResponse) => response.user,
     }),
 
-    recoverPass: build.query<{ success: boolean, message: string }, { email: string }>({
+    recoverPass: build.query<{ success: boolean }, { email: string }>({
       query: (credentials) => ({
         body: credentials,
         method: 'POST',
@@ -75,10 +77,7 @@ export const apiSlice = createApi({
       }),
     }),
 
-    resetPass: build.query<{ success: boolean, message: string }, {
-      password: string,
-      token: string
-    }>({
+    resetPass: build.query<{ success: boolean }, { password: string, token: string }>({
       query: (credentials) => ({
         body: credentials,
         method: 'POST',

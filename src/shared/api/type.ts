@@ -1,33 +1,9 @@
-import { FetchBaseQueryMeta } from '@reduxjs/toolkit/query'
-
 import { IngredientTypes } from 'entities/ingredient'
 import { User } from 'entities/user'
 
-export enum Token {
-  access = 'accessToken',
-  refresh = 'refreshToken',
-}
+import { AuthQueryResponseData, QueryResponseData } from './queries/type.ts'
 
-export interface BaseQueryData extends Record<string, unknown> {
-  success: boolean,
-  [Token.refresh]?: string,
-  [Token.access]?: string
-}
-
-export type AuthQueryData = Required<Pick<BaseQueryData, Token.access | Token.refresh>>
-
-export interface BaseQueryResponse {
-  data?: BaseQueryData
-  error?: {
-    data: {
-      success: boolean,
-      message: string,
-    }
-  }
-  meta: FetchBaseQueryMeta
-}
-
-export type IngredientResponseData = {
+export interface RawIngredient {
   _id: string
   name: string
   type: IngredientTypes
@@ -42,16 +18,25 @@ export type IngredientResponseData = {
   __v: number
 }
 
-export type PostOrderResponse = {
+export interface RawOrder {
+
+}
+
+export interface PostOrderResponse extends QueryResponseData {
   name: string
   order: {
     number: number
   }
 }
 
-export type UserResponse = {
-  success: boolean
+export interface IngredientsResponse extends QueryResponseData {
+  data: RawIngredient[]
+}
+
+export interface UserResponse extends QueryResponseData {
   user: User
-  accessToken: string
-  refreshToken: string
+}
+
+export interface LoginResponse extends AuthQueryResponseData {
+  user: User
 }

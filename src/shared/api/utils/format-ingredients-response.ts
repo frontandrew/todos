@@ -1,9 +1,9 @@
 import { Ingredient } from 'entities/ingredient'
-import { IngredientResponseData } from '../type'
+import { RawIngredient } from '../type'
 
-export const formatIngredientsResponse = (data: IngredientResponseData[]): Ingredient[] => {
+export const formatIngredientsResponse = (array: RawIngredient[]): Ingredient[] => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  return data.map(({ _id, image_mobile, image_large, __v, ...rest }) => ({
+  return array.map(({ _id, image_mobile, image_large, __v, ...rest }) => ({
     id: _id,
     imageMobile: image_mobile,
     imageLarge: image_large,

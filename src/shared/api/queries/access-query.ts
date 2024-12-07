@@ -1,10 +1,10 @@
 import { BaseQueryApi } from '@reduxjs/toolkit/query'
 
-import { Token } from '../type'
+import { isAuthResponseData } from '../utils'
 import { baseQuery } from './base-query'
-import { isAuthData } from './is-auth-data'
+import { Token } from './type'
 
-export const tryRefreshAccess = async (api: BaseQueryApi, extraOptions: object) => {
+export const accessQuery = async (api: BaseQueryApi, extraOptions: object) => {
   try {
 
     /**
@@ -12,7 +12,6 @@ export const tryRefreshAccess = async (api: BaseQueryApi, extraOptions: object) 
      */
     const token = localStorage.getItem(Token.refresh)
     if (!token) {
-      // console.error('No refresh token available')
       return Promise.reject({ message: 'No refresh token available', success: false })
     }
 
@@ -32,7 +31,7 @@ export const tryRefreshAccess = async (api: BaseQueryApi, extraOptions: object) 
     /**
      * Check response data and write if tokens exists
      */
-    if (isAuthData(result.data)) {
+    if (isAuthResponseData(result.data)) {
       localStorage.setItem(Token.access, result.data[Token.access])
       localStorage.setItem(Token.refresh, result.data[Token.refresh])
 

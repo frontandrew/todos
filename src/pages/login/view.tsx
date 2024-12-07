@@ -10,7 +10,15 @@ import style from './style.module.css'
 export const LoginPage: FC = () => {
   const [handleLogin] = apiSlice.useLazyLoginUserQuery()
 
-  const { formRef, formValues, formChange, formSubmit } = useForm({
+  const {
+    formRef,
+    formValues,
+    formChange,
+    formErrors,
+    formValidity,
+    formSubmit,
+    checkFieldValidity
+  } = useForm({
     submitHandler: handleLogin,
     formInitValues: { email: '', password: '' },
   })
@@ -25,18 +33,37 @@ export const LoginPage: FC = () => {
       >
         <h1 className={'text text_type_main-medium'}>Вход</h1>
         <EmailInput
-          onChange={() => {}}
           placeholder={'E-mail'}
-          value={formValues.email || ''}
+          value={formValues.email ?? ''}
           name={'email'}
+          onBlur={checkFieldValidity}
+          required={true}
+          tabIndex={1}
+          errorText={formErrors.email}
+          // @ts-expect-error-next-line
+          error={!!formErrors.email}
+          onChange={()=>{}}
         />
         <PasswordInput
-          onChange={() => {}}
           placeholder={'Пароль'}
-          value={formValues.password || ''}
+          value={formValues.password ?? ''}
           name={'password'}
+          onBlur={checkFieldValidity}
+          minLength={6}
+          required={true}
+          tabIndex={2}
+          errorText={formErrors.password}
+          // @ts-expect-error-next-line
+          error={!!formErrors.password}
+          onChange={()=>{}}
         />
-        <Button htmlType="submit">Войти</Button>
+        <Button
+          htmlType={'submit'}
+          disabled={!formValidity}
+          tabIndex={3}
+        >
+          Войти
+        </Button>
       </form>
       <nav>
         <ul className={style.navlist}>
@@ -45,7 +72,7 @@ export const LoginPage: FC = () => {
               Вы — новый пользователь?
             </span>
             <span className={'text text_type_main-small text_color_accent'}>
-              <NavLink to={'/register'}>
+              <NavLink to={'/register'} tabIndex={4}>
                 Зарегистрироваться
               </NavLink>
             </span>
@@ -55,7 +82,7 @@ export const LoginPage: FC = () => {
               Забыли пароль?
             </span>
             <span className={'text text_type_main-small text_color_accent'}>
-              <NavLink to={'/forgot-password'}>
+              <NavLink to={'/forgot-password'} tabIndex={5}>
                 Восстановить пароль
               </NavLink>
             </span>

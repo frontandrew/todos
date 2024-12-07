@@ -16,18 +16,18 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => builder
     .addMatcher(apiSlice.endpoints.loginUser.matchFulfilled, (state, { payload } ) => {
-      state.user = payload.user
+      state.user = payload
     })
     .addMatcher(apiSlice.endpoints.logoutUser.matchFulfilled, (state) => {
       state.user = null
     })
     .addMatcher(apiSlice.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      state.user = payload.user
+      state.user = payload
     })
     .addMatcher(apiSlice.endpoints.updateUser.matchFulfilled, (state, { payload }) => {
-      state.user = payload.user
+      state.user = payload
     })
     .addMatcher(apiSlice.endpoints.registerUser.matchFulfilled, (state, { payload }) => {
-      state.user = payload.user
+      state.user = payload
     })
 })
