@@ -2,7 +2,7 @@
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    background: linear-gradient(77.28deg, rgb(82, 128, 226)2.24%, rgb(162, 81, 238) 104.45%);
+    background: linear-gradient(77.28deg, rgb(82, 128, 226) 2.24%, rgb(162, 81, 238) 104.45%);
     animation: animate 0.3s linear infinite;
     margin-top: 100px;
     margin-bottom: 100px;
@@ -13,7 +13,7 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: linear-gradient(77.28deg, rgb(135, 234, 238)2.24%, rgb(152, 77, 196) 104.45%);
+    background: linear-gradient(77.28deg, rgb(135, 234, 238) 2.24%, rgb(152, 77, 196) 104.45%);
     animation: animate 0.2s linear infinite;
 }
 
