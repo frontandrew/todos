@@ -7,10 +7,11 @@ import { Modal } from 'components'
 import { apiSlice } from 'api'
 
 import { IngredientType } from 'entities/ingredient'
-import { currentOrderSlice, OrderDetails } from 'entities/order'
+import { OrderDetails } from 'entities/order'
 import { userSlice } from 'entities/user'
 
-import { EmptyItem } from './componets'
+import { burgerConstructorSlice } from './model'
+import { BurgerConstructorItem } from './componets'
 import style from './style.module.css'
 
 export const BurgerConstructor: FC = () => {
@@ -18,9 +19,9 @@ export const BurgerConstructor: FC = () => {
   const dispatch = useAppDispatch()
 
   const user = useAppSelector(userSlice.selectors.user)
-  const order = useAppSelector(currentOrderSlice.selectors.order)
-  const { resetOrderState } = currentOrderSlice.actions
-  const [postOrder] = apiSlice.usePostOrderMutation()
+  const order = useAppSelector(burgerConstructorSlice.selectors.state)
+  const { resetOrderState } = burgerConstructorSlice.actions
+  const [postOrder, { isSuccess, data: postOrderResult }] = apiSlice.usePostOrderMutation()
 
   const [bun, otherIngredients] = useMemo(() => [
     order.ingredients.find(({ type }) => type === IngredientType.BUN),
@@ -39,16 +40,16 @@ export const BurgerConstructor: FC = () => {
   }, [order, postOrder])
 
   useEffect(() => {
-    if (order.id) openModal()
-  }, [order.id])
+    if (order.isReady && isSuccess) openModal()
+  }, [isSuccess, openModal, order.isReady])
 
   return (
     <>
       <article className={style.container + ' pt-25 pb-10'}>
         <div className={style.content}>
-          <EmptyItem
-            orderIngredient={bun}
-            key={`${bun?.orderIngredientIndex}1`}
+          <BurgerConstructorItem
+            ingredient={bun}
+            key={`${bun?.inBurgerConstructorIndex}1`}
             expectType={IngredientType.BUN}
             position={'top'}
           />
@@ -56,19 +57,19 @@ export const BurgerConstructor: FC = () => {
           <ul className={style.draggable}>
             {otherIngredients.length > 0
               ? otherIngredients.map(item => (
-                <EmptyItem
-                  orderIngredient={item}
-                  key={item.orderIngredientIndex}
+                <BurgerConstructorItem
+                  ingredient={item}
+                  key={item.inBurgerConstructorIndex}
                   expectType={'other'}
                 />
               ))
-              : <EmptyItem key={`3`} expectType={'other'}/>
+              : <BurgerConstructorItem key={`3`} expectType={'other'}/>
             }
           </ul>
 
-          <EmptyItem
-            orderIngredient={bun}
-            key={`${bun?.orderIngredientIndex}2`}
+          <BurgerConstructorItem
+            ingredient={bun}
+            key={`${bun?.inBurgerConstructorIndex}2`}
             expectType={IngredientType.BUN}
             position={'bottom'}
           />
@@ -90,9 +91,9 @@ export const BurgerConstructor: FC = () => {
         </div>
       </article>
 
-      {order.id &&
+      {postOrderResult?.id &&
         <Modal close={closeModal} isVisible={isModalOpen}>
-          <OrderDetails orderId={order.id}/>
+          <OrderDetails orderId={postOrderResult.id}/>
         </Modal>
       }
     </>
