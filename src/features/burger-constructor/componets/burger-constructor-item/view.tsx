@@ -3,35 +3,35 @@ import { useDrop } from 'react-dnd'
 
 import { useAppDispatch } from 'hooks'
 import { ConstructorElement } from 'uikit'
-import { currentOrderSlice, OrderIngredientItem } from 'entities/order'
 import { IngredientItem, IngredientType, IngredientViewType } from 'entities/ingredient'
 
-import { EmptyItemProps } from './type'
+import { BurgerConstructorItemProps } from './type'
 import style from './style.module.css'
+import { burgerConstructorSlice, BurgerConstructorIngredient } from 'features/burger-constructor'
 
-export const EmptyItem: FC<EmptyItemProps> = ({ orderIngredient: ingr, position, expectType }) => {
+export const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({ ingredient: ingr, position, expectType }) => {
   const isBunType = expectType === IngredientType.BUN
 
   const {
-    addOrderIngredient,
-    removeOrderIngredient,
-    sortOrderIngredients,
-  } = currentOrderSlice.actions
+    addIngredient,
+    removeIngredient,
+    sortIngredients,
+  } = burgerConstructorSlice.actions
   const dispatch = useAppDispatch()
 
-  const handleDrop: (x: OrderIngredientItem) => void = useCallback((item) => {
-    if (!item.orderIngredientIndex) {
+  const handleDrop: (x: BurgerConstructorIngredient) => void = useCallback((item) => {
+    if (!item.inBurgerConstructorIndex) {
 
-      if (isBunType && ingr) dispatch(removeOrderIngredient({
-        orderId: ingr.orderIngredientIndex,
+      if (isBunType && ingr) dispatch(removeIngredient({
+        orderId: ingr.inBurgerConstructorIndex,
         ingrId: ingr.id,
       }))
-      dispatch(addOrderIngredient({ item, targId: ingr?.orderIngredientIndex }))
-    } else dispatch(sortOrderIngredients({
-      currId: item.orderIngredientIndex,
-      targId: ingr!.orderIngredientIndex,
+      dispatch(addIngredient({ item, targId: ingr?.inBurgerConstructorIndex }))
+    } else dispatch(sortIngredients({
+      currId: item.inBurgerConstructorIndex,
+      targId: ingr!.inBurgerConstructorIndex,
     }))
-  }, [addOrderIngredient, dispatch, ingr, isBunType, removeOrderIngredient, sortOrderIngredients])
+  }, [addIngredient, dispatch, ingr, isBunType, removeIngredient, sortIngredients])
 
   /**
    * TODO: вынести вычисление принимаемых типов в отдельную
@@ -42,7 +42,7 @@ export const EmptyItem: FC<EmptyItemProps> = ({ orderIngredient: ingr, position,
     fromList: `${IngredientViewType.CARD}-${expectType}`,
   }), [expectType])
 
-  const [{ isOver }, dropAreaRef] = useDrop<OrderIngredientItem, void, { isOver: boolean }>({
+  const [{ isOver }, dropAreaRef] = useDrop<BurgerConstructorIngredient, void, { isOver: boolean }>({
     accept: Object.values(dndAcceptTypesMap),
     drop: handleDrop,
     collect: (monitor) => ({

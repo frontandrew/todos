@@ -1,11 +1,12 @@
 import { PropsWithChildren } from 'react'
-import { OrderIngredientItem } from 'entities/order'
 import { IngredientType } from 'entities/ingredient'
 
+import { BurgerConstructorIngredient } from '../../model'
+
 interface Props {
-  orderIngredient?: OrderIngredientItem
+  ingredient?: BurgerConstructorIngredient
   position?: 'top' | 'bottom'
   expectType: IngredientType.BUN | 'other'
 }
 
-export type EmptyItemProps = PropsWithChildren<Props>
+export type BurgerConstructorItemProps = PropsWithChildren<Props>
