@@ -1,8 +1,8 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { Ingredient } from 'entities/ingredient'
-import { Order } from 'entities/order'
 import { User } from 'entities/user'
+import { BurgerConstructorState } from 'features/burger-constructor'
 
 import { apiQuery } from './queries'
 import { formatIngredientsResponse, preparePostOrderBody } from './utils'
@@ -18,7 +18,7 @@ export const apiSlice = createApi({
       transformResponse: ({ data }: IngredientsResponse) => formatIngredientsResponse(data),
     }),
 
-    postOrder: build.mutation<{ name: string, id: number }, Order['ingredients']>({
+    postOrder: build.mutation<{ name: string, id: number }, BurgerConstructorState['ingredients']>({
       query: (ingredients) => ({
         body: preparePostOrderBody(ingredients),
         method: 'POST',

@@ -1,13 +1,16 @@
 import { combineReducers } from '@reduxjs/toolkit'
-
 import { apiSlice } from 'api'
-import { ingredientsSlice } from 'features/burger-ingredients'
+
 import { currentOrderSlice } from 'entities/order'
-import { appLoaderSlice } from 'features/app-loader'
 import { userSlice } from 'entities/user'
+
 import { authSlice } from 'features/authentification'
+import { appLoaderSlice } from 'features/app-loader'
+import { burgerConstructorSlice } from 'features/burger-constructor'
+import { ingredientsSlice } from 'features/burger-ingredients'
 
 export const rootReducer = combineReducers({
+  [burgerConstructorSlice.reducerPath]: burgerConstructorSlice.reducer,
   [currentOrderSlice.reducerPath]: currentOrderSlice.reducer,
   [ingredientsSlice.reducerPath]: ingredientsSlice.reducer,
   [appLoaderSlice.reducerPath]: appLoaderSlice.reducer,
