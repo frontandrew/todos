@@ -2,8 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { genItemIndex } from 'utils'
 import { apiSlice } from 'api'
 
-import { Ingredient } from 'entities/ingredient'
-
 import { ORDER_MIN_LENGTH } from './const'
 import { BurgerConstructorState, BurgerConstructorIngredient } from './type'
 import {
@@ -25,15 +23,6 @@ export const burgerConstructorSlice = createSlice({
   initialState: initState,
   selectors: { state: (state) => state },
   reducers: {
-    create: {
-      prepare: (payload: Ingredient) => ({ payload: {
-        ...payload, inBurgerConstructorIndex: genItemIndex()
-      }}),
-      reducer: (state, { payload }: PayloadAction<BurgerConstructorIngredient>) => {
-        state.ingredients = addIngredient(state.ingredients, payload)
-        state.total = calcTotal(state.ingredients)
-      },
-    },
     addIngredient: {
       prepare: ({ item, ...rest }: { item: BurgerConstructorIngredient, targId?: string }) => ({ payload: {
         item: { ...item, inBurgerConstructorIndex: genItemIndex()}, ...rest }
