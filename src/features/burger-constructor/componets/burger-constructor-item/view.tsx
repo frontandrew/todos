@@ -5,11 +5,17 @@ import { useAppDispatch } from 'hooks'
 import { ConstructorElement } from 'uikit'
 import { IngredientItem, IngredientType, IngredientViewType } from 'entities/ingredient'
 
+import { burgerConstructorSlice, BurgerConstructorIngredient } from '../../model'
+import { IngredientItemDNDWrapper } from '../ingredient-item-dnd-wrapper'
+
 import { BurgerConstructorItemProps } from './type'
 import style from './style.module.css'
-import { burgerConstructorSlice, BurgerConstructorIngredient } from 'features/burger-constructor'
 
-export const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({ ingredient: ingr, position, expectType }) => {
+export const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({
+  ingredient: ingr,
+  position,
+  expectType,
+}) => {
   const isBunType = expectType === IngredientType.BUN
 
   const {
@@ -47,7 +53,9 @@ export const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({ ingredie
     fromList: `${IngredientViewType.CARD}-${expectType}`,
   }), [expectType])
 
-  const [{ isOver }, dropAreaRef] = useDrop<BurgerConstructorIngredient, void, { isOver: boolean }>({
+  const [{ isOver }, dropAreaRef] = useDrop<BurgerConstructorIngredient, void, {
+    isOver: boolean
+  }>({
     accept: Object.values(dndAcceptTypesMap),
     drop: handleDrop,
     collect: (monitor) => ({
@@ -88,11 +96,14 @@ export const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({ ingredie
       </div>
       <div className={contentStyle}>
         {ingr &&
-          <IngredientItem
-            ingredient={ingr}
-            position={position}
-            isLocked={isBunType}
-          />
+          <IngredientItemDNDWrapper ingredient={ingr} isLocked={isBunType}>
+            <IngredientItem
+              {...ingr}
+              position={position}
+              isLocked={isBunType}
+              removeHandler={handleRemove}
+            />
+          </IngredientItemDNDWrapper>
         }
       </div>
     </li>
