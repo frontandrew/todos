@@ -8,4 +8,5 @@ export interface BurgerConstructorState {
   ingredients: BurgerConstructorIngredient[]
   total: number
   isReady: boolean
+  orderNumber?: number
 }

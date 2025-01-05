@@ -1,8 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { genItemIndex } from 'utils'
+import { apiSlice } from 'api'
 
+import { Ingredient } from 'entities/ingredient'
+
+import { ORDER_MIN_LENGTH } from './const'
 import { BurgerConstructorState, BurgerConstructorIngredient } from './type'
-
 import {
   addIngredient,
   calcTotal,
@@ -10,8 +13,6 @@ import {
   checkIsReady,
   removeIngredient,
 } from './utils'
-import { ORDER_MIN_LENGTH } from './const'
-import { Ingredient } from 'entities/ingredient'
 
 const initState: BurgerConstructorState = {
   ingredients: [],
@@ -35,7 +36,7 @@ export const burgerConstructorSlice = createSlice({
     },
     addIngredient: {
       prepare: ({ item, ...rest }: { item: BurgerConstructorIngredient, targId?: string }) => ({ payload: {
-        item: {...item, inBurgerConstructorIndex: genItemIndex()}, ...rest }
+        item: { ...item, inBurgerConstructorIndex: genItemIndex()}, ...rest }
       }),
       reducer: (state, { payload }: PayloadAction<{ item: BurgerConstructorIngredient, targId?: string }>) => {
         state.ingredients = addIngredient(state.ingredients, payload.item, payload.targId)
@@ -48,9 +49,13 @@ export const burgerConstructorSlice = createSlice({
       state.isReady = checkIsReady(state.ingredients, ORDER_MIN_LENGTH)
       state.total = calcTotal(state.ingredients)
     },
-    sortIngredients: (state, { payload }: PayloadAction<{currId: string, targId: string}>) => {
+    sortIngredients: (state, { payload }: PayloadAction<{ currId: string, targId: string }>) => {
       state.ingredients = changeIngredientPosition(state.ingredients, payload.currId, payload.targId)
     },
-    resetOrderState: () => initState,
+    resetConstructorState: () => initState,
   },
+  extraReducers: builder => builder
+    .addMatcher(apiSlice.endpoints.postOrder.matchFulfilled, (state, { payload }) => {
+      state.orderNumber = payload.id
+    }),
 })

@@ -10,7 +10,7 @@ import { IngredientType } from 'entities/ingredient'
 import { OrderDetails } from 'entities/order'
 import { userSlice } from 'entities/user'
 
-import { burgerConstructorSlice } from './model'
+import { burgerConstructorSlice as model } from './model'
 import { BurgerConstructorItem } from './componets'
 import style from './style.module.css'
 
@@ -19,29 +19,29 @@ export const BurgerConstructor: FC = () => {
   const dispatch = useAppDispatch()
 
   const user = useAppSelector(userSlice.selectors.user)
-  const order = useAppSelector(burgerConstructorSlice.selectors.state)
-  const { resetOrderState } = burgerConstructorSlice.actions
-  const [postOrder, { isSuccess, data: postOrderResult }] = apiSlice.usePostOrderMutation()
+  const { ingredients, isReady, orderNumber, total } = useAppSelector(model.selectors.state)
+  const { resetConstructorState } = model.actions
+  const [postOrder] = apiSlice.usePostOrderMutation()
 
   const [bun, otherIngredients] = useMemo(() => [
-    order.ingredients.find(({ type }) => type === IngredientType.BUN),
-    order.ingredients.filter(({ type }) => type !== IngredientType.BUN),
-  ], [order.ingredients])
+    ingredients.find(({ type }) => type === IngredientType.BUN),
+    ingredients.filter(({ type }) => type !== IngredientType.BUN),
+  ], [ingredients])
 
 
   const { isModalOpen, closeModal, openModal } = useModal({
-    closeHandler: () => dispatch(resetOrderState()),
+    closeHandler: () => dispatch(resetConstructorState()),
   })
 
   const handleOrderSubmit = useCallback((e: SyntheticEvent) => {
     e.stopPropagation()
     if (!user) navigate('/login')
-    else postOrder(order.ingredients)
-  }, [order, postOrder])
+    else postOrder(ingredients)
+  }, [navigate, ingredients, postOrder, user])
 
   useEffect(() => {
-    if (order.isReady && isSuccess) openModal()
-  }, [isSuccess, openModal, order.isReady])
+    if (orderNumber) openModal()
+  }, [openModal, orderNumber])
 
   return (
     <>
@@ -77,13 +77,13 @@ export const BurgerConstructor: FC = () => {
 
         <div className={style.footer}>
           <div className={style.total}>
-            <span className={'text text_type_digits-medium'}>{order.total}</span>
+            <span className={'text text_type_digits-medium'}>{total}</span>
             <CurrencyIcon type={'primary'}/>
           </div>
           <Button
             type={'primary'}
             htmlType={'submit'}
-            disabled={order.ingredients.length < 3}
+            disabled={!isReady}
             onClick={handleOrderSubmit}
           >
             Оформить заказ
@@ -91,11 +91,10 @@ export const BurgerConstructor: FC = () => {
         </div>
       </article>
 
-      {postOrderResult?.id &&
-        <Modal close={closeModal} isVisible={isModalOpen}>
-          <OrderDetails orderId={postOrderResult.id}/>
-        </Modal>
-      }
+      <Modal close={closeModal} isVisible={isModalOpen}>
+        <OrderDetails orderId={orderNumber!}/>
+      </Modal>
+
     </>
   )
 }
