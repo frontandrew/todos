@@ -1,8 +1,8 @@
 import { FC, useCallback, useMemo } from 'react'
 import { useDrop } from 'react-dnd'
-
 import { useAppDispatch } from 'hooks'
 import { ConstructorElement } from 'uikit'
+
 import { IngredientItem, IngredientType, IngredientViewType } from 'entities/ingredient'
 
 import { burgerConstructorSlice, BurgerConstructorIngredient } from '../../model'

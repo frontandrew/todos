@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 import { apiSlice } from 'api'
 
 import { Ingredient, IngredientType } from 'entities/ingredient'
-import { currentOrderSlice } from 'entities/order'
+import { burgerConstructorSlice } from 'features/burger-constructor'
+
+const { addIngredient, removeIngredient, resetConstructorState } = burgerConstructorSlice.actions
 
 const initState: Ingredient[] = []
 
@@ -11,42 +13,29 @@ export const ingredientsSlice = createSlice({
   initialState: initState,
   reducers: {},
   extraReducers: (builder) => builder
-    .addCase(currentOrderSlice.actions.removeOrderIngredient, (state, { payload }) => state
+    .addCase(removeIngredient, (state, { payload }) => state
       .map((item) => item.id === payload.ingrId
         ? { ...item, count: undefined }
         : item
       )
     )
-    .addCase(currentOrderSlice.actions.addOrderIngredient, (state, { payload }) => state
+    .addCase(addIngredient, (state, { payload }) => state
       .map((item) => {
         if (item.id === payload.item.id) {
           const nextCount = payload.item.type === IngredientType.BUN ? 2 : 1
 
           return { ...item, count: typeof item.count === 'number'
-              ? item.count + nextCount
-              : nextCount
+            ? item.count + nextCount
+            : nextCount
           }
         }
 
         return item
       })
     )
-    .addCase(currentOrderSlice.actions.createNewOrder, (state, { payload }) => state
-      .map((item) => {
-        if (item.id === payload.id) {
-          const nextCount = payload.type === IngredientType.BUN ? 2 : 1
-
-          return { ...item, count: typeof item.count === 'number'
-              ? item.count + nextCount
-              : nextCount
-          }}
-
-        return item
-      })
-    )
-    .addCase(currentOrderSlice.actions.resetOrderState, (state) => state
-      .map((item) => ({...item, count: undefined }))
+    .addCase(resetConstructorState, (state) => state
+      .map((item) => ({ ...item, count: undefined })),
     )
 
-    .addMatcher(apiSlice.endpoints.getIngredients.matchFulfilled, (_state, { payload }) => payload)
+    .addMatcher(apiSlice.endpoints.getIngredients.matchFulfilled, (_state, { payload }) => payload),
 })
