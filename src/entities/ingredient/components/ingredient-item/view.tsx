@@ -1,41 +1,15 @@
-import { FC, useCallback, useMemo } from 'react';
-import { useDrag } from 'react-dnd';
-import { ConstructorElement, DragIcon } from 'uikit'
-import { useAppDispatch } from 'hooks'
+import { FC, useCallback } from 'react'
+import { ConstructorElement } from 'uikit'
 
-import { currentOrderSlice } from 'entities/order'
-import { IngredientType } from 'entities/ingredient/type'
-
-import { IngredientViewType } from '../type'
 import { FromPositionPostfix, IngredientItemProps } from './type'
 import { fromPositionPostfix } from './const'
 import style from './style.module.css'
 
-export const IngredientItem: FC<IngredientItemProps> = ({ ingredient, isLocked, position }) => {
-  const { name, id, image, price, orderIngredientIndex, type } = ingredient
-
-  /**
-   * TODO: вынести вычисление принимаемых типов в отдельную
-   * `entity/ingredient/components/utils`
-   */
-  const getDNDAcceptType = useMemo(() => (
-    type === IngredientType.BUN ? IngredientType.BUN : 'other'
-  ), [type])
-
-  const [{ isDrag }, cardRef] = useDrag({
-    type: `${IngredientViewType.ITEM}-${getDNDAcceptType}`,
-    item: ingredient,
-    collect: (monitor) => ({
-      isDrag: monitor.isDragging()
-    }),
-  }, [id])
-
-  const { removeOrderIngredient } = currentOrderSlice.actions
-  const dispatch = useAppDispatch()
+export const IngredientItem: FC<IngredientItemProps> = ({ name, id, image, price, isLocked, position, removeHandler }) => {
 
   const handleRemove = useCallback(() => {
-    dispatch(removeOrderIngredient({ orderId: orderIngredientIndex, ingrId: id }))
-  }, [dispatch, id, orderIngredientIndex, removeOrderIngredient])
+    if (removeHandler) removeHandler()
+  }, [removeHandler])
 
   const printBunTypePostfix = useCallback(() => {
     if (!position) return ''
@@ -43,14 +17,9 @@ export const IngredientItem: FC<IngredientItemProps> = ({ ingredient, isLocked, 
       return ` (${fromPositionPostfix.top})`
     }
     return ` (${fromPositionPostfix.bottom})`
-  }, [])
+  }, [position])
 
   return (
-    <div
-      className={isDrag ? style.container_dragging : style.container}
-      {...{ ref: !isLocked ? cardRef : null }}
-    >
-      {!isLocked && <DragIcon type='primary' />}
       <ConstructorElement
         extraClass={style.element}
         handleClose={handleRemove}
@@ -61,6 +30,5 @@ export const IngredientItem: FC<IngredientItemProps> = ({ ingredient, isLocked, 
         price={price}
         thumbnail={image}
       />
-    </div>
   )
 }
