@@ -1,7 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit'
 import { apiSlice } from 'api'
 
-import { currentOrderSlice } from 'entities/order'
 import { userSlice } from 'entities/user'
 
 import { authSlice } from 'features/authentification'
@@ -11,7 +10,6 @@ import { ingredientsSlice } from 'features/burger-ingredients'
 
 export const rootReducer = combineReducers({
   [burgerConstructorSlice.reducerPath]: burgerConstructorSlice.reducer,
-  [currentOrderSlice.reducerPath]: currentOrderSlice.reducer,
   [ingredientsSlice.reducerPath]: ingredientsSlice.reducer,
   [appLoaderSlice.reducerPath]: appLoaderSlice.reducer,
   [userSlice.reducerPath]: userSlice.reducer,
