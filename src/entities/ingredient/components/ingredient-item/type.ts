@@ -1,8 +1,9 @@
 import { PropsWithChildren } from 'react'
-import { OrderIngredientItem } from 'entities/order'
 
-interface Props {
-  ingredient: OrderIngredientItem
+import { Ingredient } from '../../type'
+
+type Props = Ingredient & {
+  removeHandler: () => void
   isLocked: boolean
   position?: 'top' | 'bottom'
 }

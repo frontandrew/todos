@@ -19,6 +19,11 @@ export const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({ ingredie
   } = burgerConstructorSlice.actions
   const dispatch = useAppDispatch()
 
+  const handleRemove = useCallback(() => {
+    if (ingr)
+    dispatch(removeIngredient({ orderId: ingr?.inBurgerConstructorIndex, ingrId: ingr?.id }))
+  }, [dispatch, ingr, removeIngredient])
+
   const handleDrop: (x: BurgerConstructorIngredient) => void = useCallback((item) => {
     if (!item.inBurgerConstructorIndex) {
 
