@@ -16,8 +16,8 @@ export const ingredientsSlice = createSlice({
     .addCase(removeIngredient, (state, { payload }) => state
       .map((item) => item.id === payload.ingrId
         ? { ...item, count: undefined }
-        : item
-      )
+        : item,
+      ),
     )
     .addCase(addIngredient, (state, { payload }) => state
       .map((item) => {
