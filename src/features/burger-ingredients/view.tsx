@@ -7,13 +7,14 @@ import { useAppSelector } from 'hooks'
 import { Ingredient, IngredientCard } from 'entities/ingredient'
 
 import { IngredientsGroupNames } from './consts'
+import { ingredientsSlice } from './model'
 import style from './style.module.css'
 
 export const BurgerIngredients: FC = () => {
   const listRef = useRef<HTMLUListElement>(null)
   const [currentTab, setTab] = useState(Object.keys(IngredientsGroupNames)[0])
 
-  const ingredients = useAppSelector(state => state.ingredients)
+  const ingredients = useAppSelector(ingredientsSlice.selectors.getState)
   const ingredientsMap = useMemo<Record<string, Ingredient[]>>(() => Object
     .keys(IngredientsGroupNames)
     .reduce(

@@ -11,6 +11,9 @@ const initState: Ingredient[] = []
 export const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState: initState,
+  selectors: {
+    getState: (state) => state,
+  },
   reducers: {},
   extraReducers: (builder) => builder
     .addCase(removeIngredient, (state, { payload }) => state
