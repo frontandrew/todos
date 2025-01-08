@@ -4,12 +4,13 @@ import { appLoaderSlice } from 'features/app-loader'
 import { apiSlice } from 'api'
 
 import { rootReducer } from './root-reducer'
+import { ordersSlice } from 'features/orders'
 
 export const setupStore = () => {
   return configureStore({
     devTools: process.env.NODE_ENV !== 'production',
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(apiSlice.middleware, appLoaderSlice.middleware)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+      .concat(apiSlice.middleware, appLoaderSlice.middleware, ordersSlice.middleware),
   })
 }
