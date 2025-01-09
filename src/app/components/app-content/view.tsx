@@ -15,7 +15,7 @@ import { useModal } from 'hooks'
 import { Modal } from 'components'
 
 import { OnlyAuth, OnlyUnAuth } from 'features/authentification'
-import { OrdersList } from 'features/orders-list'
+import { OrdersList } from 'features/orders'
 import { IngredientDetails } from 'entities/ingredient'
 
 import style from './style.module.css'
@@ -41,7 +41,7 @@ export const AppContent: FC = () => {
         <Route path="reset-password" element={<OnlyUnAuth component={<ResetPassPage/>}/>}/>
         <Route path="ingredients/:ingredientId" element={<IngredientPage/>}/>
         <Route path="profile" element={<OnlyAuth component={<ProfilePage/>}/>}>
-          <Route path="orders" element={<OrdersList/>}/>
+          <Route path="orders" element={<OrdersList affiliation={'user'}/>}/>
         </Route>
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
