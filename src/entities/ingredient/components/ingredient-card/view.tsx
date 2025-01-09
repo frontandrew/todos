@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 import { useDrag } from 'react-dnd'
 import { Link, useLocation } from 'react-router-dom'
-import { Counter, CurrencyIcon } from 'uikit'
+import { Counter } from 'uikit'
 
 import { IngredientType } from '../../type'
 import { IngredientViewType } from '../type'
