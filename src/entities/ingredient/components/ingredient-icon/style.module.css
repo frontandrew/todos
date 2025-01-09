@@ -1,0 +1,22 @@
+.gradient {
+	width: 64px;
+	height: 64px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background: var(--icon-border-gradient);
+	border-radius: 50%;
+}
+
+.container {
+	width: 60px;
+	height: 60px;
+
+	display: flex;
+	justify-content: center;
+
+	background: var(--background);
+	border-radius: 50%;
+}

@@ -5,6 +5,7 @@ import { PriceWithCurrency } from 'components'
 import { OrderItemProps } from './type'
 import style from './style.module.css'
 import { OrderStatusesMap } from 'entities/order'
+import { IngredientIcon } from 'entities/ingredient'
 
 export const OrderItem: FC<OrderItemProps> = memo(({
   name,
@@ -35,9 +36,12 @@ export const OrderItem: FC<OrderItemProps> = memo(({
       </div>
       <div className={style.details}>
         <ul className={style.components}>
-          {/*{ingredients.map(*/}
-          {/*  ({ name, imageMobile }) => (<img >)*/}
-          {/*)}*/}
+          {ingredients.map(
+            (ingredient, index) => <IngredientIcon
+              key={`${ingredient.id}-${index}`}
+              {...ingredient}
+            />
+          )}
         </ul>
         <PriceWithCurrency value={total}/>
       </div>
