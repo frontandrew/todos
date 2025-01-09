@@ -8,6 +8,7 @@ import { IngredientViewType } from '../type'
 
 import { IngredientCardProps } from './type'
 import style from './style.module.css'
+import { PriceWithCurrency } from 'components'
 
 export const IngredientCard: FC<IngredientCardProps> = ({ ingredient }) => {
   const { image = '', id, name = 'unknown', price = 0, type, count = 0 } = ingredient
@@ -43,10 +44,7 @@ export const IngredientCard: FC<IngredientCardProps> = ({ ingredient }) => {
         className={isDrag ? style.content_dragging : style.content}
       >
         <img className={style.image} src={image} alt={name}/>
-        <div className={style.price}>
-          <span className={'text text_type_digits-default'}>{price}</span>
-          <CurrencyIcon type={'primary'}/>
-        </div>
+        <PriceWithCurrency value={price}/>
         <span className={'text text_type_main-default ' + style.name}>{name}</span>
         {count > 0 &&
           <Counter
