@@ -15,7 +15,6 @@ export const OrdersList: FC<{ affiliation: OrdersAffiliation }> = ({ affiliation
     .reduce((acc, ingr) => acc.set(ingr.id, ingr), new Map<string, Ingredient>())
 
 
-
   useEffect(() => {
     dispatch(ordersSlice.actions.startWatchOrders(affiliation))
     return () => {
@@ -25,16 +24,18 @@ export const OrdersList: FC<{ affiliation: OrdersAffiliation }> = ({ affiliation
 
   return (
     <ul className={style.container}>
-      {orders.length && orders.map(({ ingredients, ...rest }) => {
-        const orderIngredients = ingredients
-          .reduce((acc, ingrId) => {
-            const ingr = ingrs.get(ingrId)
-            if (!ingr) return acc
-            return [...acc, ingr]
-          }, [] as Array<Ingredient>)
+      {orders.length <= 0 ? null : [...orders]
+        .reverse()
+        .map(({ ingredients, ...rest }) => {
+          const orderIngredients = ingredients
+            .reduce((acc, ingrId) => {
+              const ingr = ingrs.get(ingrId)
+              if (!ingr) return acc
+              return [...acc, ingr]
+            }, [] as Array<Ingredient>)
 
-        return <OrderItem {...rest} ingredients={orderIngredients} key={rest.id}/>
-      })
+          return <OrderItem {...rest} ingredients={orderIngredients} key={rest.id}/>
+        })
       }
     </ul>
   )
