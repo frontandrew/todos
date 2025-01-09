@@ -1,14 +1,19 @@
 import { Order } from 'entities/order'
 
+export interface RawOrder extends Omit<Order, 'id'> {
+  _id: string
+}
+
 export type OrdersAffiliation = 'user' | 'all'
 
 export interface OrdersState {
   readonly readyState?: number
-  // readonly readyState: Pick<WebSocket, 'readyState'>
   orders: Order[]
   affiliation?: OrdersAffiliation
   total?: number
   totalToday?: number
 }
 
-export type OrdersResponse = Pick<OrdersState, 'orders' | 'total' | 'totalToday'>
+export interface OrdersResponse extends Pick<OrdersState, 'total' | 'totalToday'> {
+  orders: RawOrder[]
+}

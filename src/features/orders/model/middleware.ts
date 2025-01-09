@@ -4,7 +4,7 @@ import { WS_HOST } from 'consts'
 import { appLoaderSlice } from 'features/app-loader'
 
 import { ordersSlice } from './model'
-import { isOrdersResponse } from './is-orders-response.ts'
+import { formatRawOrder, isOrdersResponse } from './utils'
 
 export const ordersMiddleware: Middleware = (store) => (next) => (action) => {
   const { startWatchOrders, stopWatchOrders, updateState, updateReadyState } = ordersSlice.actions
@@ -30,12 +30,15 @@ export const ordersMiddleware: Middleware = (store) => (next) => (action) => {
       store.dispatch(updateReadyState(socket?.readyState))
     }
 
-    socket.onmessage = ({ data }: MessageEvent<string>)  => {
+    socket.onmessage = ({ data }: MessageEvent<string>) => {
       const payload = JSON.parse(data)
 
       if (isOrdersResponse(payload)) {
-        store.dispatch(updateState(payload))
-
+        const formatedPayload = {
+          ...payload,
+          orders: payload.orders.map(rawOrder => formatRawOrder(rawOrder)),
+        }
+        store.dispatch(updateState(formatedPayload))
       }
 
       store.dispatch(updateReadyState(socket?.readyState))
