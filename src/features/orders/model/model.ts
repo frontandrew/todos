@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { OrdersAffiliation, OrdersResponse, OrdersState } from 'features/orders/model/type.ts'
+import { OrdersAffiliation, OrdersState } from './type'
 
 const initState: OrdersState = {
   orders: [],
@@ -17,7 +17,7 @@ export const ordersSlice = createSlice({
     updateReadyState: (state, { payload }: PayloadAction<OrdersState['readyState']>) => {
       state.readyState = payload
     },
-    updateState: (state, { payload }: PayloadAction<OrdersResponse>) => ({ ...state, ...payload }),
+    updateState: (state, { payload }: PayloadAction<OrdersState>) => ({ ...state, ...payload }),
     resetOrders: (state) => ({ ...state, orders: initState.orders }),
     stopWatchOrders: (state) => ({ ...initState, orders: state.orders }),
   },
