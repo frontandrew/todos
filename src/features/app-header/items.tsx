@@ -6,8 +6,8 @@ export const appHeaderItems = {
     title: 'Конструктор',
     Icon: BurgerIcon,
   },
-  orders: {
-    to: '/orders',
+  feed: {
+    to: '/feed',
     title: 'Лента заказов',
     Icon: ListIcon,
   },

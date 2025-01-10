@@ -1,3 +1,4 @@
+export * from './feed'
 export * from './forgot-pass'
 export * from './ingredient'
 export * from './login'

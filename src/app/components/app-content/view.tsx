@@ -2,6 +2,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { FC, useEffect } from 'react'
 
 import {
+  FeedPage,
   ForgotPassPage,
   IngredientPage,
   LoginPage,
@@ -40,6 +41,7 @@ export const AppContent: FC = () => {
         <Route path="forgot-password" element={<OnlyUnAuth component={<ForgotPassPage/>}/>}/>
         <Route path="reset-password" element={<OnlyUnAuth component={<ResetPassPage/>}/>}/>
         <Route path="ingredients/:ingredientId" element={<IngredientPage/>}/>
+        <Route path="feed" element={<FeedPage/>}/>
         <Route path="profile" element={<OnlyAuth component={<ProfilePage/>}/>}>
           <Route path="orders" element={<OrdersList affiliation={'user'}/>}/>
         </Route>
