@@ -26,7 +26,6 @@ export const ordersMiddleware: Middleware = (store) => (next) => (action) => {
 
 
     socket.onopen = () => {
-      store.dispatch(appLoaderSlice.actions.setIsLoading(false))
       store.dispatch(updateReadyState(socket?.readyState))
     }
 
@@ -42,6 +41,7 @@ export const ordersMiddleware: Middleware = (store) => (next) => (action) => {
       }
 
       store.dispatch(updateReadyState(socket?.readyState))
+      store.dispatch(appLoaderSlice.actions.setIsLoading(false))
     }
 
     socket.onclose = () => {
