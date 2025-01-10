@@ -1,10 +1,10 @@
 .container {
 	box-sizing: border-box;
-    /*width: 100%;*/
+	/*width: 100%;*/
 
-    display: flex;
+	display: flex;
 	flex-direction: column;
-    gap: 1.5em;
+	gap: 1.5em;
 	padding: 1.5em;
 
 	background: var(--background);
@@ -24,10 +24,20 @@
 
 .details {
 	display: flex;
+	gap: 1.5em;
 }
 
 .components {
 	display: flex;
-	/*gap: 0.5em;*/
+	flex-direction: row-reverse;
+	justify-content: flex-end;
 	flex-grow: 1;
+
+	.component:not(:last-child) {
+		margin-left: -1em;
+	}
+}
+
+.component {
+	display: flex;
 }
