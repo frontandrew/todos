@@ -1,6 +1,7 @@
 .item {
     padding: 1em 1.25em;
     display: flex;
+	align-items: center;
     gap: 0.5em;
 }
 
