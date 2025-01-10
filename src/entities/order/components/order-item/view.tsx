@@ -2,10 +2,11 @@ import { FC, memo } from 'react'
 import { FormattedDate } from 'uikit'
 import { PriceWithCurrency } from 'components'
 
+import { IngredientIcon } from 'entities/ingredient'
+
+import { OrderStatusesMap } from './constants'
 import { OrderItemProps } from './type'
 import style from './style.module.css'
-import { OrderStatusesMap } from 'entities/order'
-import { IngredientIcon } from 'entities/ingredient'
 
 export const OrderItem: FC<OrderItemProps> = memo(({
     name,
