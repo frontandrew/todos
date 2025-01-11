@@ -1,17 +1,18 @@
-import { FC, useCallback, useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector, useModal } from 'hooks'
-import { Modal } from 'components'
+import { FC, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from 'hooks'
 
-import { Order, OrderItem } from 'entities/order'
+import { OrderItem } from 'entities/order'
 import { Ingredient } from 'entities/ingredient'
 import { ingredientsSlice } from 'features/burger-ingredients' //TODO: sin
 
 import { OrdersAffiliation, ordersSlice } from '../../model'
 import style from './style.module.css'
-import { OrderDetails } from 'features/order-details'
 
 export const OrdersList: FC<{ affiliation: OrdersAffiliation }> = ({ affiliation }) => {
+  const location = useLocation()
   const dispatch = useAppDispatch()
+
   let { orders: sortedOrders } = useAppSelector(ordersSlice.selectors.state)
   const ingrs = useAppSelector(ingredientsSlice.selectors.getState)
     .reduce((acc, ingr) => acc.set(ingr.id, ingr), new Map<string, Ingredient>())
@@ -19,16 +20,6 @@ export const OrdersList: FC<{ affiliation: OrdersAffiliation }> = ({ affiliation
   if (affiliation === 'user' && sortedOrders.length > 0) {
     sortedOrders = [...sortedOrders].reverse()
   }
-
-  const [openedOrder, setOpenedOrder] = useState<Order>()
-  const { isModalOpen, openModal, closeModal } = useModal({
-    closeHandler: () => setOpenedOrder(undefined),
-  })
-
-  const handelOrderClick = useCallback((order: Order) => {
-    setOpenedOrder(order)
-    openModal()
-  }, [openModal])
 
   useEffect(() => {
     dispatch(ordersSlice.actions.startWatchOrders(affiliation))
@@ -39,7 +30,6 @@ export const OrdersList: FC<{ affiliation: OrdersAffiliation }> = ({ affiliation
   }, [])
 
   return (
-    <>
       <ul className={style.container}>
         {sortedOrders.length <= 0 ? null : sortedOrders
           .map(({ ingredients, ...rest }) => {
@@ -51,27 +41,21 @@ export const OrdersList: FC<{ affiliation: OrdersAffiliation }> = ({ affiliation
               }, [] as Array<Ingredient>)
 
             return (
-              <li
-                onClick={() => handelOrderClick({ ingredients, ...rest })}
-                key={rest.id}
-              >
-                <OrderItem
-                  ingredients={orderIngredients}
-                  {...rest}
-                />
+              <li key={rest.id}>
+                <Link
+                  to={`${location.pathname}/${rest.id}`}
+                  state={{ backgroundLocation: location }}
+                  style={{ color: 'inherit' }}
+                >
+                  <OrderItem
+                    ingredients={orderIngredients}
+                    {...rest}
+                  />
+                </Link>
               </li>
             )
           })
         }
       </ul>
-
-      {openedOrder?.id &&
-        <Modal isVisible={isModalOpen} close={closeModal} title={
-          <p className={'text text_type_digits-default'}>{`#${openedOrder.number}`}</p>
-        }>
-          <OrderDetails {...openedOrder}/>
-        </Modal>
-      }
-    </>
   )
 }
