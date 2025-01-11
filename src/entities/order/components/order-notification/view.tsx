@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { orderDoneIcon } from './assets'
 import style from './style.module.css'
 
-export const OrderDetails: FC<{ orderId: number }> = ({ orderId }) => (
+export const OrderNotification: FC<{ orderId: number }> = ({ orderId }) => (
   <article className={style.container + ' pb-20'}>
     <h3 className={style.title + ' text text_type_digits-large pb-8'}>
       {orderId}

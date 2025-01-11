@@ -7,7 +7,7 @@ import { Modal } from 'components'
 import { apiSlice } from 'api'
 
 import { IngredientType } from 'entities/ingredient'
-import { OrderDetails } from 'entities/order'
+import { OrderNotification } from 'entities/order'
 import { userSlice } from 'entities/user'
 
 import { burgerConstructorSlice as model } from './model'
@@ -92,7 +92,7 @@ export const BurgerConstructor: FC = () => {
       </article>
 
       <Modal close={closeModal} isVisible={isModalOpen}>
-        <OrderDetails orderId={orderNumber!}/>
+        <OrderNotification orderId={orderNumber!}/>
       </Modal>
     </>
   )

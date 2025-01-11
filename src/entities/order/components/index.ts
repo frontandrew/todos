@@ -1,2 +1,2 @@
-export * from './order-details'
+export * from './order-notification'
 export * from './order-item'
