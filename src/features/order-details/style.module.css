@@ -1,0 +1,13 @@
+.container {
+	max-width: 40em;
+
+    display: flex;
+	flex-direction: column;
+}
+
+.footer {
+    display: flex;
+	align-items: center;
+	justify-content: space-between;
+    gap: 2em;
+}
