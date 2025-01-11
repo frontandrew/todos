@@ -45,7 +45,7 @@ export const BurgerConstructor: FC = () => {
 
   return (
     <>
-      <article className={style.container + ' pt-25 pb-10'}>
+      <article className={style.container}>
         <div className={style.content}>
           <BurgerConstructorItem
             ingredient={bun}
@@ -94,7 +94,6 @@ export const BurgerConstructor: FC = () => {
       <Modal close={closeModal} isVisible={isModalOpen}>
         <OrderDetails orderId={orderNumber!}/>
       </Modal>
-
     </>
   )
 }

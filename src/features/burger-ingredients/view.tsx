@@ -33,7 +33,10 @@ export const BurgerIngredients: FC = () => {
 
     return Object.entries(rest).reduce((acc, [type, length]) => {
       const empiricalCoefficient = 0.08
-      return { ...acc, [type]: (Math.ceil((length as number) * 100 / total) / 100) - empiricalCoefficient }
+      return {
+        ...acc,
+        [type]: (Math.ceil((length as number) * 100 / total) / 100) - empiricalCoefficient,
+      }
     }, {})
   }, [ingredientsMap])
 
@@ -43,15 +46,12 @@ export const BurgerIngredients: FC = () => {
   }, [listRef])
 
   return (
-    <article className={style.container + ' pt-10 pb-10'}>
-      <div className={style.header}>
-        <h2 className={'text text_type_main-large'}>Собери бургер</h2>
-        <Tabs
-          onClick={handleTabClick}
-          tabsNameValueMap={IngredientsGroupNames}
-          currentTab={currentTab}
-        />
-      </div>
+    <article className={style.container}>
+      <Tabs
+        onClick={handleTabClick}
+        tabsNameValueMap={IngredientsGroupNames}
+        currentTab={currentTab}
+      />
       <ul className={style.groups} ref={listRef}>
         {Object.entries(ingredientsMap).map(([key, ingrs]) =>
           ingrs.length > 0 &&
@@ -72,7 +72,7 @@ export const BurgerIngredients: FC = () => {
                 <IngredientCard ingredient={ingr} key={ingr.id}/>,
               )}
             </ul>
-          </InView>,
+          </InView>
         )}
       </ul>
     </article>
