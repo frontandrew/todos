@@ -12,7 +12,10 @@ export const Modal: FC<ModalProps> = ({ children, title, close, isVisible, root 
       onClick={(e) => e.stopPropagation()}
     >
       <div className={style.header}>
-        <h4 className={'text text_type_main-large'}>{title}</h4>
+        {title && typeof title === 'string'
+          ? <h4 className={'text text_type_main-large'}>{title}</h4>
+          : title
+        }
         <CloseIcon type='primary' onClick={close} />
       </div>
       <div className={style.content}>
