@@ -12,7 +12,6 @@ export const OrderDetails: FC<Order> = memo(({
   ingredients: ingrIds,
   createdAt,
   updatedAt,
-  number,
   name,
   status,
 }) => {
@@ -23,15 +22,17 @@ export const OrderDetails: FC<Order> = memo(({
 
   return (
     <article className={style.container}>
-      <p className={'text text_type_digits-default pb-10'}>{`#${number}`}</p>
-      <h3 className={'text text_type_main-medium pb-3'}>{name}</h3>
+      <h3 className={'text text_type_main-medium pt-10 pb-3'}>{name}</h3>
       <OrderStatusColored className={'pb-15'} text={status}/>
       <p className={'text text_type_main-medium pb-6'}>Состав:</p>
       <ul className={style.list}>
         {/*  <IngredientsList {...ingredients}/>*/}
       </ul>
       <footer className={style.footer + ' pt-10'}>
-        <FormattedDate date={date}/>
+        <FormattedDate
+          className={'text text_type_main-default text_color_inactive'}
+          date={date}
+        />
         <PriceWithCurrency value={total}/>
       </footer>
     </article>
