@@ -18,10 +18,6 @@ export interface RawIngredient {
   __v: number
 }
 
-export interface RawOrder {
-
-}
-
 export interface PostOrderResponse extends QueryResponseData {
   name: string
   order: {

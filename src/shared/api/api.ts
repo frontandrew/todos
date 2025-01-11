@@ -84,5 +84,9 @@ export const apiSlice = createApi({
         url: '/password-reset/reset',
       }),
     }),
+
+    gerOrderById: build.query<unknown, string>({
+      query: (id) => ({ url: `/orders/${id}` })
+    })
   }),
 })
