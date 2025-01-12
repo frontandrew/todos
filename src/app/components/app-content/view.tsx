@@ -54,8 +54,8 @@ export const AppContent: FC = () => {
       {state?.backgroundLocation && (
         <Routes>
           <Route path="ingredients/:ingredientId" element={
-            <Modal title={'Детали ингредиента'} close={closeModal} isVisible={isModalOpen}>
-              <IngredientDetails/>
+            <Modal close={closeModal} isVisible={isModalOpen}>
+              <IngredientDetails variant={'modal'}/>
             </Modal>
           }/>
           <Route path="feed/:orderId" element={

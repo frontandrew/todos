@@ -56,16 +56,13 @@ export const OrderDetails: FC<{ variant?: 'modal' | 'default' }> = ({ variant = 
 
   if (renderData) {
     const { number, name, total, date, status } = renderData
-    const numberTextAlign = variant === 'default' ? 'center' : 'left'
+    const headerStyles = `text text_type_digits-default pb-5 ${
+      variant === 'default' ? style.header : style.header_modal
+    }`
 
     return (
       <article className={style.container}>
-        <p
-          className={`text text_type_digits-default pb-10`}
-          style={{ textAlign: numberTextAlign }}
-        >
-          {`#${number}`}
-        </p>
+        <p className={headerStyles}>{`#${number}`}</p>
         <h3 className={'text text_type_main-medium pb-3'}>{name}</h3>
         <OrderStatusColored className={'pb-15'} text={status}/>
         <p className={'text text_type_main-medium pb-6'}>Состав:</p>

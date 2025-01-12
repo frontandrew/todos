@@ -4,7 +4,7 @@ import { orderDoneIcon } from './assets'
 import style from './style.module.css'
 
 export const OrderNotification: FC<{ orderId: number }> = ({ orderId }) => (
-  <article className={style.container + ' pb-20'}>
+  <article className={style.container + ' pt-20 pb-20'}>
     <h3 className={style.title + ' text text_type_digits-large pb-8'}>
       {orderId}
     </h3>

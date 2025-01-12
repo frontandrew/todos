@@ -5,22 +5,20 @@ import { Overlay } from 'components'
 import { ModalProps } from './type'
 import style from './style.module.css'
 
-export const Modal: FC<ModalProps> = ({ children, title, close, isVisible, root }) => (
+export const Modal: FC<ModalProps> = ({ children, close, isVisible, root }) => (
   <Overlay root={root} onClick={close} isVisible={isVisible}>
     <section
-      className={style.container + ' p-10'}
+      className={style.container}
       onClick={(e) => e.stopPropagation()}
     >
-      <div className={style.header}>
-        {title && typeof title === 'string'
-          ? <h4 className={'text text_type_main-large'}>{title}</h4>
-          : title
-        }
-        <CloseIcon type='primary' onClick={close} />
-      </div>
+      <CloseIcon
+        className={style.leave}
+        type="primary"
+        onClick={close}
+      />
       <div className={style.content}>
         {children}
       </div>
-    </section >
+    </section>
   </Overlay>
 )

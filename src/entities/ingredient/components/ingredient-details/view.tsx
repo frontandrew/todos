@@ -6,7 +6,7 @@ import { Ingredient } from '../../type'
 import { IngredientNutrients } from './components'
 import style from './style.module.css'
 
-export const IngredientDetails: FC = () => {
+export const IngredientDetails: FC<{ variant?: 'modal' | 'default' }> = ({ variant = 'default' }) => {
   const [data, setData] = useState<Ingredient | undefined>()
   const params = useParams()
   const ingredients = useAppSelector(state => state.ingredients)
@@ -16,9 +16,13 @@ export const IngredientDetails: FC = () => {
       setData(data)
   }, [ingredients, params.ingredientId])
 
+  const headerStyles = `text text_type_main-large ${
+    variant === 'default' ? style.header : style.header_modal
+  }`
 
   return (data &&
     <article className={style.container}>
+      <h2 className={headerStyles}>Детали ингредиента</h2>
       <img className={style.image} src={data.imageLarge} alt={data.name}/>
       <h4 className={'text text_type_main-medium pt-4 pb-8'}>{data.name}</h4>
       <IngredientNutrients {...{
