@@ -6,13 +6,14 @@ import { appLoaderSlice } from 'features/app-loader'
 import { ordersSlice } from './model'
 import { formatRawOrder, isOrdersResponse } from './utils'
 
+let socket: WebSocket | null = null
+
 export const ordersMiddleware: Middleware = (store) => (next) => (action) => {
   const { startWatchOrders, stopWatchOrders, updateState, updateReadyState } = ordersSlice.actions
 
-  let socket: WebSocket | null = null
-  let path: string = `${WS_HOST}/orders`
-
   if (startWatchOrders.match(action)) {
+    let path: string = `${WS_HOST}/orders`
+
     if (action.payload === 'user') {
       const token = localStorage.getItem('accessToken')?.split(' ').reverse()[0]
       path += `?token=${token}`
@@ -20,10 +21,9 @@ export const ordersMiddleware: Middleware = (store) => (next) => (action) => {
       path += `/all`
     }
 
-    socket = new WebSocket(path)
     store.dispatch(appLoaderSlice.actions.setIsLoading(true))
+    socket = new WebSocket(path)
     store.dispatch(updateReadyState(socket?.readyState))
-
 
     socket.onopen = () => {
       store.dispatch(updateReadyState(socket?.readyState))
@@ -33,11 +33,8 @@ export const ordersMiddleware: Middleware = (store) => (next) => (action) => {
       const payload = JSON.parse(data)
 
       if (isOrdersResponse(payload)) {
-        const formatedPayload = {
-          ...payload,
-          orders: payload.orders.map(rawOrder => formatRawOrder(rawOrder)),
-        }
-        store.dispatch(updateState(formatedPayload))
+        const formattedOrders = payload.orders.map(rawOrder => formatRawOrder(rawOrder))
+        store.dispatch(updateState({ ...payload, orders: formattedOrders }))
       }
 
       store.dispatch(updateReadyState(socket?.readyState))
@@ -54,7 +51,8 @@ export const ordersMiddleware: Middleware = (store) => (next) => (action) => {
   }
 
   if (stopWatchOrders.match(action)) {
-    socket?.close()
+    socket?.close(1000, `Closed by client, ${Date()}`)
+    socket = null
   }
 
   return next(action)
