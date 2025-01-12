@@ -1,41 +1,88 @@
-import { FC, memo } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { FormattedDate } from 'uikit'
-import { PriceWithCurrency } from 'components'
+
+import { apiSlice } from 'api'
 import { useAppSelector } from 'hooks'
+import { PriceWithCurrency } from 'components'
 
 import { Order, OrderStatusColored } from 'entities/order'
+import { isRawOrder } from 'features/orders'
 import { ingredientsSlice } from 'features/burger-ingredients' //TODO: sin
 
 import style from './style.module.css'
 
-export const OrderDetails: FC<Order> = memo(({
-  ingredients: ingrIds,
-  createdAt,
-  updatedAt,
-  name,
-  status,
-}) => {
-  const ingredients = useAppSelector(ingredientsSlice.selectors.getState)
-    .filter(({ id }) => ingrIds.includes(id))
-  const total = ingredients.reduce((acc, { price }) => acc + price, 0)
-  const date = new Date(updatedAt ?? createdAt)
+export const OrderDetails: FC<{ variant?: 'modal' | 'default' }> = ({ variant = 'default' }) => {
+  const allIngredients = useAppSelector(ingredientsSlice.selectors.getState)
+  const [getOrderById, { data }] = apiSlice.useLazyGerOrderByIdQuery()
+  const [order, setOrder] = useState<Order>()
+  const { pathname } = useLocation()
 
-  return (
-    <article className={style.container}>
-      <h3 className={'text text_type_main-medium pt-10 pb-3'}>{name}</h3>
-      <OrderStatusColored className={'pb-15'} text={status}/>
-      <p className={'text text_type_main-medium pb-6'}>Состав:</p>
-      <ul className={style.list}>
-        {/*  <IngredientsList {...ingredients}/>*/}
-      </ul>
-      <footer className={style.footer + ' pt-10'}>
-        <FormattedDate
-          className={'text text_type_main-default text_color_inactive'}
-          date={date}
-        />
-        <PriceWithCurrency value={total}/>
-      </footer>
-    </article>
 
-  )
-}, ({ id: old }, { id: nxt }) => old === nxt)
+  useEffect(() => {
+    const orderId = pathname.split('/').reverse()[0]
+    if (orderId) getOrderById(orderId)
+
+    return () => {
+      setOrder(undefined)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (data && typeof data === 'object' && 'orders' in data && Array.isArray(data.orders) && data.orders.length > 0) {
+      const rawOrder = data.orders[0]
+      if (isRawOrder(rawOrder)) {
+        setOrder({ ...rawOrder, id: rawOrder._id })
+      }
+    }
+
+  }, [data])
+
+  const renderData = useMemo(() => {
+    if (order) {
+      const { ingredients, createdAt, updatedAt, ...rest } = order
+      const orderIngredients = allIngredients.filter(({ id }) => ingredients.includes(id))
+
+      return {
+        ...rest,
+        ingredients: orderIngredients,
+        total: orderIngredients.reduce((acc, { price }) => acc + price, 0),
+        date: new Date(updatedAt ?? createdAt),
+      }
+    }
+
+    return null
+  }, [order])
+
+  if (renderData) {
+    const { number, name, total, date, status } = renderData
+    const numberTextAlign = variant === 'default' ? 'center' : 'left'
+
+    return (
+      <article className={style.container}>
+        <p
+          className={`text text_type_digits-default pb-10`}
+          style={{ textAlign: numberTextAlign }}
+        >
+          {`#${number}`}
+        </p>
+        <h3 className={'text text_type_main-medium pb-3'}>{name}</h3>
+        <OrderStatusColored className={'pb-15'} text={status}/>
+        <p className={'text text_type_main-medium pb-6'}>Состав:</p>
+        <ul className={style.list}>
+          {/*  <IngredientsList {...ingredients}/>*/}
+        </ul>
+        <footer className={style.footer + ' pt-10'}>
+          <FormattedDate
+            className={'text text_type_main-default text_color_inactive'}
+            date={date}
+          />
+          <PriceWithCurrency value={total}/>
+        </footer>
+      </article>
+
+    )
+  }
+
+  return null
+}
