@@ -44,9 +44,10 @@ export const OrdersDetails: FC = () => {
         </div>
 
         <div className={style.cell}>
-          {progressOrders.length < 1 ? null : progressOrders.map(({ number }) => (
+          {progressOrders.length < 1 ? null : progressOrders.map(({ number, id }) => (
             <span
               className={'text text_type_digits-default'}
+              key={id}
             >
               {number}
             </span>
