@@ -1,10 +1,10 @@
 import { FC } from 'react'
+import { DetailsPageLayout } from 'components'
+
 import { OrderDetails } from 'features/order-details'
 
-import style from './style.module.css'
-
 export const OrderPage: FC = () => (
-  <div className={style.container}>
+  <DetailsPageLayout>
     <OrderDetails/>
-  </div>
+  </DetailsPageLayout>
 )
