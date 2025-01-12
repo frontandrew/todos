@@ -8,6 +8,7 @@ import {
   LoginPage,
   MainPage,
   NotFoundPage,
+  OrderPage,
   ProfilePage,
   RegisterPage,
   ResetPassPage,
@@ -41,6 +42,7 @@ export const AppContent: FC = () => {
         <Route path="forgot-password" element={<OnlyUnAuth component={<ForgotPassPage/>}/>}/>
         <Route path="reset-password" element={<OnlyUnAuth component={<ResetPassPage/>}/>}/>
         <Route path="ingredients/:ingredientId" element={<IngredientPage/>}/>
+        <Route path="feed/:orderId" element={<OrderPage/>}/>
         <Route path="feed" element={<FeedPage/>}/>
         <Route path="profile" element={<OnlyAuth component={<ProfilePage/>}/>}>
           <Route path="orders" element={<OrdersList affiliation={'user'}/>}/>
