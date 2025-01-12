@@ -20,8 +20,8 @@ export const OrderDetails: FC<{ variant?: 'modal' | 'default' }> = ({ variant = 
 
 
   useEffect(() => {
-    const orderId = pathname.split('/').reverse()[0]
-    if (orderId) getOrderById(orderId)
+    const orderNumber = Number(pathname.split('/').reverse()[0])
+    if (orderNumber) getOrderById(orderNumber)
 
     return () => {
       setOrder(undefined)

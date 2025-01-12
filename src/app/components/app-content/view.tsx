@@ -43,7 +43,7 @@ export const AppContent: FC = () => {
         <Route path="forgot-password" element={<OnlyUnAuth component={<ForgotPassPage/>}/>}/>
         <Route path="reset-password" element={<OnlyUnAuth component={<ResetPassPage/>}/>}/>
         <Route path="ingredients/:ingredientId" element={<IngredientPage/>}/>
-        <Route path="feed/:orderId" element={<OrderPage/>}/>
+        <Route path="feed/:orderNumber" element={<OrderPage/>}/>
         <Route path="feed" element={<FeedPage/>}/>
         <Route path="profile" element={<OnlyAuth component={<ProfilePage/>}/>}>
           <Route path="orders" element={<OrdersList affiliation={'user'}/>}/>
@@ -58,14 +58,14 @@ export const AppContent: FC = () => {
               <IngredientDetails variant={'modal'}/>
             </Modal>
           }/>
-          <Route path="feed/:orderId" element={
+          <Route path="feed/:orderNumber" element={
             <Modal
               close={closeModal}
               isVisible={isModalOpen}>
               <OrderDetails variant={'modal'}/>
             </Modal>
           }/>
-          <Route path="profile/orders/:orderId" element={
+          <Route path="profile/orders/:orderNumber" element={
             <Modal
               close={closeModal}
               isVisible={isModalOpen}>

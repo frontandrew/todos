@@ -43,7 +43,7 @@ export const OrdersList: FC<{ affiliation: OrdersAffiliation }> = ({ affiliation
             return (
               <li key={rest.id}>
                 <Link
-                  to={`${location.pathname}/${rest.id}`}
+                  to={`${location.pathname}/${rest.number}`}
                   state={{ backgroundLocation: location }}
                   style={{ color: 'inherit' }}
                 >

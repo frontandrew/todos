@@ -85,8 +85,8 @@ export const apiSlice = createApi({
       }),
     }),
 
-    gerOrderById: build.query<unknown, string>({
-      query: (id) => ({ url: `/orders/${id}` })
+    gerOrderById: build.query<unknown, number>({
+      query: (number) => ({ url: `/orders/${number}` })
     })
   }),
 })
