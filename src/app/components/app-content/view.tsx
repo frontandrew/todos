@@ -17,6 +17,7 @@ import { useModal } from 'hooks'
 import { Modal } from 'components'
 
 import { OnlyAuth, OnlyUnAuth } from 'features/authentification'
+import { OrderDetails } from 'features/order-details'
 import { OrdersList } from 'features/orders'
 import { IngredientDetails } from 'entities/ingredient'
 
@@ -55,6 +56,20 @@ export const AppContent: FC = () => {
           <Route path="ingredients/:ingredientId" element={
             <Modal title={'Детали ингредиента'} close={closeModal} isVisible={isModalOpen}>
               <IngredientDetails/>
+            </Modal>
+          }/>
+          <Route path="feed/:orderId" element={
+            <Modal
+              close={closeModal}
+              isVisible={isModalOpen}>
+              <OrderDetails variant={'modal'}/>
+            </Modal>
+          }/>
+          <Route path="profile/orders/:orderId" element={
+            <Modal
+              close={closeModal}
+              isVisible={isModalOpen}>
+              <OrderDetails variant={'modal'}/>
             </Modal>
           }/>
         </Routes>
