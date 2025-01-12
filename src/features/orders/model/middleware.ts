@@ -33,8 +33,8 @@ export const ordersMiddleware: Middleware = (store) => (next) => (action) => {
       const payload = JSON.parse(data)
 
       if (isOrdersResponse(payload)) {
-        const formattedOrders = payload.orders.map(rawOrder => formatRawOrder(rawOrder))
-        store.dispatch(updateState({ ...payload, orders: formattedOrders }))
+        const formatedOrders = payload.orders.map(rawOrder => formatRawOrder(rawOrder))
+        store.dispatch(updateState({ ...payload, orders: formatedOrders }))
       }
 
       store.dispatch(updateReadyState(socket?.readyState))

@@ -25,7 +25,6 @@ export const OrdersList: FC<{ affiliation: OrdersAffiliation }> = ({ affiliation
     dispatch(ordersSlice.actions.startWatchOrders(affiliation))
     return () => {
       dispatch(ordersSlice.actions.stopWatchOrders())
-      dispatch(ordersSlice.actions.resetOrders())
     }
   }, [])
 

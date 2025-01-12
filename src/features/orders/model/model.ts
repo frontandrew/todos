@@ -17,8 +17,7 @@ export const ordersSlice = createSlice({
     updateReadyState: (state, { payload }: PayloadAction<OrdersState['readyState']>) => {
       state.readyState = payload
     },
-    updateState: (state, { payload }: PayloadAction<OrdersState>) => ({ ...state, ...payload }),
-    resetOrders: (state) => ({ ...state, orders: initState.orders }),
-    stopWatchOrders: (state) => ({ ...initState, orders: state.orders }),
+    updateState: (state, { payload }: PayloadAction<Omit<OrdersState, 'readyState' | 'affiliation'>>) => ({ ...state, ...payload }),
+    stopWatchOrders: () => initState,
   },
 })
