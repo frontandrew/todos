@@ -3,7 +3,7 @@ import { useDrop } from 'react-dnd'
 import { useAppDispatch } from 'hooks'
 import { ConstructorElement } from 'uikit'
 
-import { IngredientItem, IngredientType, IngredientViewType } from 'entities/ingredient'
+import { IngredientBurger, IngredientType, IngredientViewType } from 'entities/ingredient'
 
 import { burgerConstructorSlice, BurgerConstructorIngredient } from '../../model'
 import { IngredientItemDNDWrapper } from '../ingredient-item-dnd-wrapper'
@@ -97,7 +97,7 @@ export const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({
       <div className={contentStyle}>
         {ingr &&
           <IngredientItemDNDWrapper ingredient={ingr} isLocked={isBunType}>
-            <IngredientItem
+            <IngredientBurger
               {...ingr}
               position={position}
               isLocked={isBunType}
