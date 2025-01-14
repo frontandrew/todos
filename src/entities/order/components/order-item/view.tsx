@@ -1,26 +1,48 @@
-import { FC, memo } from 'react'
+import { FC, memo, useCallback, useEffect, useRef, useState } from 'react'
 import { FormattedDate } from 'uikit'
+import { useAppSelector } from 'hooks'
 import { PriceWithCurrency } from 'components'
 
-import { IngredientIcon, IngredientType } from 'entities/ingredient'
+import { AppState } from 'store' //TODO: sin??
 
-import { OrderItemProps } from './type'
+import { Order, OrderStatusColored } from 'entities/order'
+import { Ingredient, IngredientIcon, IngredientType } from 'entities/ingredient'
+import { ingredientsSlice } from 'features/burger-ingredients'
+
 import style from './style.module.css'
-import { OrderStatusColored } from 'entities/order'
 
-export const OrderItem: FC<OrderItemProps> = memo(({
+export const OrderItem: FC<Order> = memo(({
     name,
     number,
     status,
     createdAt,
     updatedAt,
-    ingredients,
+    ingredients: ingrIds,
   }) => {
     const date = new Date(updatedAt ?? createdAt)
+    const ingrsSelector = useCallback((state: AppState, ids: string[]) => ingredientsSlice.selectors.getById(state, ids), [])
+    const ingredients = useAppSelector((state) => ingrsSelector(state, ingrIds))
+      .filter(Boolean) as Ingredient[]
     const total = ingredients.reduce((acc, { price, type }) => {
       return acc + (type === IngredientType.BUN ? 2 : 1) * price
     }, 0)
 
+    /* TODO: separate to IngredientsPreviewList */
+    const unicIgrs = Array.from(new Set(ingredients)).reverse()
+
+    const listRef = useRef<HTMLUListElement>(null)
+    const [ingrsVisible, setIngrsVisible] = useState(0)
+    const [ingrsHidden, setIngrsHidden] = useState(0)
+
+    useEffect(() => {
+      if (listRef.current && unicIgrs.length > 0) {
+        const magicFactor = 55
+        const length = Math.floor(listRef.current.offsetWidth / magicFactor)
+        const hidden = unicIgrs.length - length
+        setIngrsVisible(length)
+        setIngrsHidden(hidden)
+      }
+    }, [unicIgrs.length])
 
     return (
       <article className={style.container}>
@@ -36,16 +58,36 @@ export const OrderItem: FC<OrderItemProps> = memo(({
           <OrderStatusColored text={status}/>
         </div>
         <div className={style.details}>
-          <ul className={style.components}>
-            {ingredients.map(
-              (ingredient, index) =>
+          {/* TODO: separate to IngredientsPreviewList */}
+          <ul className={style.components} ref={listRef}>
+
+            {unicIgrs.length > ingrsVisible && unicIgrs
+              .slice(ingrsVisible, ingrsVisible + 1)
+              .map((ingredient, index) =>
+                <li
+                  className={style.component}
+                  key={`${ingredient.id}-${index}`}
+                >
+                  <div className={style.count_back}></div>
+                  <span className={style.count + ' text text_type_digits-default'}>
+                  {`+${ingrsHidden}`}
+                </span>
+                  <IngredientIcon {...ingredient}/>
+                </li>
+              )}
+
+            {unicIgrs.length > 0 && unicIgrs
+              .slice(0, ingrsVisible)
+              .reverse()
+              .map((ingredient, index) =>
                 <li
                   className={style.component}
                   key={`${ingredient.id}-${index}`}
                 >
                   <IngredientIcon {...ingredient}/>
                 </li>
-            )}
+              )}
+
           </ul>
           <PriceWithCurrency value={total}/>
         </div>
