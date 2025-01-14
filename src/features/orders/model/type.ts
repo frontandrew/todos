@@ -16,4 +16,5 @@ export interface OrdersState {
 
 export interface OrdersResponse extends Pick<OrdersState, 'total' | 'totalToday'> {
   orders: RawOrder[]
+  success: boolean
 }
