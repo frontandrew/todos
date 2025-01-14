@@ -1,10 +1,12 @@
-import { Middleware } from '@reduxjs/toolkit'
+import { Middleware,  } from '@reduxjs/toolkit'
 
 import { WS_HOST } from 'consts'
 import { appLoaderSlice } from 'features/app-loader'
+import { ingredientsSlice } from 'features/burger-ingredients'
 
 import { ordersSlice } from './model'
 import { formatRawOrder, isOrdersResponse } from './utils'
+import { checkOrdersValidity } from 'features/orders/model/utils/check-orders-validity.ts'
 
 let socket: WebSocket | null = null
 
@@ -33,8 +35,12 @@ export const ordersMiddleware: Middleware = (store) => (next) => (action) => {
       const payload = JSON.parse(data)
 
       if (isOrdersResponse(payload)) {
+        const ingredients = ingredientsSlice.selectors.getState(store.getState())
         const formatedOrders = payload.orders.map(rawOrder => formatRawOrder(rawOrder))
-        store.dispatch(updateState({ ...payload, orders: formatedOrders }))
+        store.dispatch(updateState({ ...payload, orders: checkOrdersValidity({
+            orders: formatedOrders,
+            ingrs: ingredients,
+        }) }))
       }
 
       store.dispatch(updateReadyState(socket?.readyState))
