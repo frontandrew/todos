@@ -21,8 +21,6 @@ export const checkOrdersValidity = ({ orders, ingrs }: {
       .map((idx) => ingrs.find(({ id }) => id === idx))
       .filter(Boolean) as Ingredient[]
 
-    console.log(`#${number}`, ordrIngrs)
-
     const [bunIngrs, otherIngrs] = [
       ordrIngrs.filter(({ type }) => type === IngredientType.BUN),
       ordrIngrs.filter(({ type }) => type !== IngredientType.BUN),
