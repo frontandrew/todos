@@ -13,6 +13,7 @@ export const ingredientsSlice = createSlice({
   initialState: initState,
   selectors: {
     getState: (state) => state,
+    getById: (state, index: string[]) => index.map((idx) => state.find(({ id }) => id === idx)),
   },
   reducers: {},
   extraReducers: (builder) => builder
