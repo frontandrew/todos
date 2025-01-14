@@ -2,7 +2,7 @@ import { FC, memo } from 'react'
 import { FormattedDate } from 'uikit'
 import { PriceWithCurrency } from 'components'
 
-import { IngredientIcon } from 'entities/ingredient'
+import { IngredientIcon, IngredientType } from 'entities/ingredient'
 
 import { OrderItemProps } from './type'
 import style from './style.module.css'
@@ -17,7 +17,9 @@ export const OrderItem: FC<OrderItemProps> = memo(({
     ingredients,
   }) => {
     const date = new Date(updatedAt ?? createdAt)
-    const total = ingredients.reduce((acc, { price }) => acc + price, 0)
+    const total = ingredients.reduce((acc, { price, type }) => {
+      return acc + (type === IngredientType.BUN ? 2 : 1) * price
+    }, 0)
 
 
     return (
