@@ -11,6 +11,8 @@ import { isRawOrder } from 'features/orders'
 import { ingredientsSlice } from 'features/burger-ingredients' //TODO: sin
 
 import style from './style.module.css'
+import { IngredientsList } from 'features/ingredients-list'
+import { IngredientType } from 'entities/ingredient'
 
 export const OrderDetails: FC<{ variant?: 'modal' | 'default' }> = ({ variant = 'default' }) => {
   const allIngredients = useAppSelector(ingredientsSlice.selectors.getState)
@@ -41,12 +43,20 @@ export const OrderDetails: FC<{ variant?: 'modal' | 'default' }> = ({ variant = 
   const renderData = useMemo(() => {
     if (order) {
       const { ingredients, createdAt, updatedAt, ...rest } = order
-      const orderIngredients = allIngredients.filter(({ id }) => ingredients.includes(id))
+      const orderIngredients = allIngredients
+        .filter(({ id }) => ingredients.includes(id))
+        .map((ingr) => {
+          const count = ingr.type !== IngredientType.BUN
+            ? ingredients.filter((idx) => ingr.id === idx).length
+            : 2
+          return { ...ingr, count }
+        })
+
 
       return {
         ...rest,
         ingredients: orderIngredients,
-        total: orderIngredients.reduce((acc, { price }) => acc + price, 0),
+        total: orderIngredients.reduce((acc, { price, count }) => count * price + acc, 0),
         date: new Date(updatedAt ?? createdAt),
       }
     }
@@ -55,7 +65,7 @@ export const OrderDetails: FC<{ variant?: 'modal' | 'default' }> = ({ variant = 
   }, [order])
 
   if (renderData) {
-    const { number, name, total, date, status } = renderData
+    const { number, name, total, date, status, ingredients } = renderData
     const headerStyles = `text text_type_digits-default pb-5 ${
       variant === 'default' ? style.header : style.header_modal
     }`
@@ -66,9 +76,7 @@ export const OrderDetails: FC<{ variant?: 'modal' | 'default' }> = ({ variant = 
         <h3 className={'text text_type_main-medium pb-3'}>{name}</h3>
         <OrderStatusColored className={'pb-15'} text={status}/>
         <p className={'text text_type_main-medium pb-6'}>Состав:</p>
-        <ul className={style.list}>
-          {/*  <IngredientsList {...ingredients}/>*/}
-        </ul>
+        <IngredientsList ingredients={ingredients}/>
         <footer className={style.footer + ' pt-10'}>
           <FormattedDate
             className={'text text_type_main-default text_color_inactive'}
