@@ -1,34 +1,26 @@
-import { FC, useCallback } from 'react'
-import { ConstructorElement } from 'uikit'
+import { FC } from 'react'
 
-import { FromPositionPostfix, IngredientItemProps } from './type'
-import { fromPositionPostfix } from './const'
+import { Ingredient } from '../../type'
 import style from './style.module.css'
+import { IngredientIcon } from 'entities/ingredient'
+import { PriceWithCurrency } from 'components'
 
-export const IngredientItem: FC<IngredientItemProps> = ({ name, id, image, price, isLocked, position, removeHandler }) => {
-
-  const handleRemove = useCallback(() => {
-    if (removeHandler) removeHandler()
-  }, [removeHandler])
-
-  const printBunTypePostfix = useCallback(() => {
-    if (!position) return ''
-    if (position === FromPositionPostfix.TOP) {
-      return ` (${fromPositionPostfix.top})`
-    }
-    return ` (${fromPositionPostfix.bottom})`
-  }, [position])
+export const IngredientItem: FC<Ingredient> = (props) => {
 
   return (
-      <ConstructorElement
-        extraClass={style.element}
-        handleClose={handleRemove}
-        key={id}
-        type={position}
-        isLocked={isLocked}
-        text={`${name}${printBunTypePostfix()}`}
-        price={price}
-        thumbnail={image}
-      />
+    <div className={style.container}>
+      <IngredientIcon {...props}/>
+      <div className={style.title}>
+        <h3 className={'text text_type_main-default'}>{props.name}</h3>
+      </div>
+      <div className={style.price}>
+        {props.count &&
+          <span className={'text text_type_digits-default'}>
+            {`${props.count}\u00A0x\u00A0`}
+          </span>
+        }
+        <PriceWithCurrency value={props.price}/>
+      </div>
+    </div>
   )
 }
