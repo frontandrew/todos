@@ -4,8 +4,6 @@
 
 	display: flex;
 	gap: 1em;
-
-	background: var(--background);
 }
 
 .title {
