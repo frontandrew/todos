@@ -48,6 +48,7 @@ export const AppContent: FC = () => {
         <Route path="profile" element={<OnlyAuth component={<ProfilePage/>}/>}>
           <Route path="orders" element={<OrdersList affiliation={'user'}/>}/>
         </Route>
+        <Route path="profile/orders/:orderNumber" element={<OnlyAuth component={<OrderPage/>}/>}/>
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
 
