@@ -1,4 +1,4 @@
-import { AuthQueryResponseData, Token } from '../queries/type'
+import { AuthQueryResponseData, Token } from '../queries/type.ts'
 
 
 export const isAuthResponseData = (res: unknown): res is AuthQueryResponseData =>

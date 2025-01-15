@@ -3,9 +3,9 @@ import { BaseQueryApi, FetchArgs } from '@reduxjs/toolkit/query'
 import { JWT_EXPIRED_MESSAGE } from 'consts'
 
 import { isAuthResponseData, isResponseData, isResponseError } from '../utils'
-import { Token } from './type'
-import { baseQuery } from './base-query'
-import { accessQuery } from './access-query'
+import { Token } from './type.ts'
+import { baseQuery } from './base-query.ts'
+import { accessQuery } from './access-query.ts'
 
 export const apiQuery = async (args: FetchArgs, api: BaseQueryApi, extraOptions: object) => {
 

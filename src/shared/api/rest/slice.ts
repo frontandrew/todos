@@ -6,7 +6,7 @@ import { BurgerConstructorState } from 'features/burger-constructor'
 
 import { apiQuery } from './queries'
 import { formatIngredientsResponse, preparePostOrderBody } from './utils'
-import { IngredientsResponse, LoginResponse, PostOrderResponse, UserResponse } from './type'
+import { IngredientsResponse, LoginResponse, PostOrderResponse, UserResponse } from './type.ts'
 
 export const apiSlice = createApi({
   reducerPath: 'appApi',

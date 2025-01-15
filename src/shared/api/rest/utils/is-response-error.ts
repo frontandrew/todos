@@ -1,4 +1,4 @@
-import { QueryErrorData } from '../queries/type'
+import { QueryErrorData } from '../queries/type.ts'
 
 
 export const isResponseError = (res: unknown): res is QueryErrorData =>

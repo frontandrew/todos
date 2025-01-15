@@ -1,8 +1,8 @@
 import { BaseQueryApi } from '@reduxjs/toolkit/query'
 
 import { isAuthResponseData } from '../utils'
-import { baseQuery } from './base-query'
-import { Token } from './type'
+import { baseQuery } from './base-query.ts'
+import { Token } from './type.ts'
 
 export const accessQuery = async (api: BaseQueryApi, extraOptions: object) => {
   try {

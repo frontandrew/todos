@@ -1,5 +1,5 @@
 import { Ingredient } from 'entities/ingredient'
-import { RawIngredient } from '../type'
+import { RawIngredient } from '../type.ts'
 
 export const formatIngredientsResponse = (array: RawIngredient[]): Ingredient[] => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,4 +1,4 @@
-import { QueryResponseData } from '../queries/type'
+import { QueryResponseData } from '../queries/type.ts'
 
 
 export const isResponseData = (res: unknown): res is QueryResponseData =>

@@ -1,7 +1,7 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { API_HOST } from 'consts'
 
-import { Token } from './type'
+import { Token } from './type.ts'
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: API_HOST,
