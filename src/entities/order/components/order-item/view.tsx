@@ -1,13 +1,12 @@
-import { FC, memo, useCallback, useEffect, useRef, useState } from 'react'
+import { FC, memo, useEffect, useRef, useState } from 'react'
+import { shallowEqual } from 'react-redux'
 import { FormattedDate } from 'uikit'
 import { useAppSelector } from 'hooks'
 import { PriceWithCurrency } from 'components'
 
-import { AppState } from 'store' //TODO: sin??
-
 import { Order, OrderStatusColored } from 'entities/order'
 import { Ingredient, IngredientIcon, IngredientType } from 'entities/ingredient'
-import { ingredientsSlice } from 'features/burger-ingredients'
+import {  selectIngredientsByIds } from 'features/burger-ingredients'
 
 import style from './style.module.css'
 
@@ -20,8 +19,7 @@ export const OrderItem: FC<Order> = memo(({
     ingredients: ingrIds,
   }) => {
     const date = new Date(updatedAt ?? createdAt)
-    const ingrsSelector = useCallback((state: AppState, ids: string[]) => ingredientsSlice.selectors.getById(state, ids), [])
-    const ingredients = useAppSelector((state) => ingrsSelector(state, ingrIds))
+    const ingredients = useAppSelector((state) => selectIngredientsByIds(state, ingrIds), shallowEqual)
       .filter(Boolean) as Ingredient[]
     const total = ingredients.reduce((acc, { price, type }) => {
       return acc + (type === IngredientType.BUN ? 2 : 1) * price

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { apiSlice } from 'api'
 
 import { Ingredient, IngredientType } from 'entities/ingredient'
@@ -11,10 +11,7 @@ const initState: Ingredient[] = []
 export const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState: initState,
-  selectors: {
-    getState: (state) => state,
-    getById: (state, index: string[]) => index.map((idx) => state.find(({ id }) => id === idx)),
-  },
+  selectors: { getState: (state) => state },
   reducers: {},
   extraReducers: (builder) => builder
     .addCase(removeIngredient, (state, { payload }) => state
@@ -43,3 +40,8 @@ export const ingredientsSlice = createSlice({
 
     .addMatcher(apiSlice.endpoints.getIngredients.matchFulfilled, (_state, { payload }) => payload),
 })
+
+export const selectIngredientsByIds = createSelector(
+  [ingredientsSlice.selectors.getState, (_, ids: string[]) => ids],
+  (state, index: string[]) => index.map((idx) => state.find(({ id }) => id === idx)),
+);
