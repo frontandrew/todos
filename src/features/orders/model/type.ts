@@ -1,4 +1,5 @@
 import { Order } from 'entities/order'
+import { Action } from '@reduxjs/toolkit'
 
 export interface RawOrder extends Omit<Order, 'id'> {
   _id: string
@@ -17,4 +18,12 @@ export interface OrdersState {
 export interface OrdersResponse extends Pick<OrdersState, 'total' | 'totalToday'> {
   orders: RawOrder[]
   success: boolean
+}
+
+export interface OrdersUpdateAction extends Action {
+  payload: OrdersResponse
+}
+
+export interface OrdersStateAction extends Action {
+  payload: number
 }

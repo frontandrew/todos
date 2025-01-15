@@ -18,11 +18,11 @@ export const OrdersList: FC<{ affiliation: OrdersAffiliation }> = ({ affiliation
   }
 
   useEffect(() => {
-    dispatch(ordersSlice.actions.startWatchOrders(affiliation))
+    dispatch(ordersSlice.actions.connectOrders(affiliation))
     return () => {
-      dispatch(ordersSlice.actions.stopWatchOrders())
+      dispatch(ordersSlice.actions.disconnectOrders())
     }
-  }, [])
+  }, [dispatch])
 
   return (
     <ul className={style.container}>
