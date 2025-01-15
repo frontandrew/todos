@@ -11,7 +11,7 @@
 
     visibility: hidden;
     position: absolute;
-    z-index: 1000;
+    z-index: var(--z-index-overlay);
 
     width: 100vw;
     height: 100vh;

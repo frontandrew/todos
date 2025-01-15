@@ -17,6 +17,10 @@
     --text-glow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.50);
 	--content-width: 1280px;
 	--icon-border-gradient: linear-gradient(45deg, #801AB2, #4c4cff);
+
+	--z-index-overlay: 1000;
+	--z-index-loader: 2000;
+
 }
 
 body {

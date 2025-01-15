@@ -6,6 +6,8 @@
     animation: animate 0.3s linear infinite;
     margin-top: 100px;
     margin-bottom: 100px;
+
+	z-index: var(--z-index-loader);
 }
 
 .glow_layer {
