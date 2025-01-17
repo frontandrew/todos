@@ -12,6 +12,7 @@ export const wsMiddleware: Middleware = (store) => (next) => (action) => {
 
   if (isConnectWSAction(action)) {
     const storeName = action.type.split('/')[0]
+    if (wsConnections[storeName]?.readyState < 2) return next(action)
 
     const updateAction = createAction(
       `${storeName}/${wsActionNames.message}`,
@@ -20,11 +21,8 @@ export const wsMiddleware: Middleware = (store) => (next) => (action) => {
 
     const updateConnectionStateAction = createAction(
       `${storeName}/${wsActionNames.state}`,
-      () => ({ payload: wsConnections[storeName].readyState }),
+      () => ({ payload: wsConnections[storeName]?.readyState }),
     )
-
-    if (typeof storeName !== 'string') return next(action)
-    if (wsConnections[storeName]) return next(action)
 
     store.dispatch(appLoaderSlice.actions.setIsLoading(true))
     wsConnections[storeName] = new WebSocket(`${WS_HOST}${action.payload}`)
@@ -54,6 +52,7 @@ export const wsMiddleware: Middleware = (store) => (next) => (action) => {
 
   if (isDisconnectWSAction(action)) {
     const storeName = action.type.split('/')[0]
+    if (wsConnections[storeName]?.readyState < 1) return next(action)
     wsConnections[storeName]?.close(1000, `Closed by client, ${Date()}`)
   }
 
