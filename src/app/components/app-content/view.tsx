@@ -2,11 +2,13 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { FC, useEffect } from 'react'
 
 import {
+  FeedPage,
   ForgotPassPage,
   IngredientPage,
   LoginPage,
   MainPage,
   NotFoundPage,
+  OrderPage,
   ProfilePage,
   RegisterPage,
   ResetPassPage,
@@ -15,7 +17,8 @@ import { useModal } from 'hooks'
 import { Modal } from 'components'
 
 import { OnlyAuth, OnlyUnAuth } from 'features/authentification'
-import { OrdersList } from 'features/orders-list'
+import { OrderDetails } from 'features/order-details'
+import { OrdersList } from 'features/orders'
 import { IngredientDetails } from 'entities/ingredient'
 
 import style from './style.module.css'
@@ -40,17 +43,34 @@ export const AppContent: FC = () => {
         <Route path="forgot-password" element={<OnlyUnAuth component={<ForgotPassPage/>}/>}/>
         <Route path="reset-password" element={<OnlyUnAuth component={<ResetPassPage/>}/>}/>
         <Route path="ingredients/:ingredientId" element={<IngredientPage/>}/>
+        <Route path="feed/:orderNumber" element={<OrderPage/>}/>
+        <Route path="feed" element={<FeedPage/>}/>
         <Route path="profile" element={<OnlyAuth component={<ProfilePage/>}/>}>
-          <Route path="orders" element={<OrdersList/>}/>
+          <Route path="orders" element={<OrdersList affiliation={'user'}/>}/>
         </Route>
+        <Route path="profile/orders/:orderNumber" element={<OnlyAuth component={<OrderPage/>}/>}/>
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
 
       {state?.backgroundLocation && (
         <Routes>
           <Route path="ingredients/:ingredientId" element={
-            <Modal title={'Детали ингредиента'} close={closeModal} isVisible={isModalOpen}>
-              <IngredientDetails/>
+            <Modal close={closeModal} isVisible={isModalOpen}>
+              <IngredientDetails variant={'modal'}/>
+            </Modal>
+          }/>
+          <Route path="feed/:orderNumber" element={
+            <Modal
+              close={closeModal}
+              isVisible={isModalOpen}>
+              <OrderDetails variant={'modal'}/>
+            </Modal>
+          }/>
+          <Route path="profile/orders/:orderNumber" element={
+            <Modal
+              close={closeModal}
+              isVisible={isModalOpen}>
+              <OrderDetails variant={'modal'}/>
             </Modal>
           }/>
         </Routes>

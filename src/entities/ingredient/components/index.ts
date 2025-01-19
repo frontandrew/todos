@@ -1,4 +1,6 @@
+export * from './ingredient-burger'
 export * from './ingredient-card'
 export * from './ingredient-details'
+export * from './ingredient-icon'
 export * from './ingredient-item'
 export * from './type'

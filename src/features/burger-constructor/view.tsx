@@ -7,10 +7,11 @@ import { Modal } from 'components'
 import { apiSlice } from 'api'
 
 import { IngredientType } from 'entities/ingredient'
-import { currentOrderSlice, OrderDetails } from 'entities/order'
+import { OrderNotification } from 'entities/order'
 import { userSlice } from 'entities/user'
 
-import { EmptyItem } from './componets'
+import { burgerConstructorSlice as model } from './model'
+import { BurgerConstructorItem } from './componets'
 import style from './style.module.css'
 
 export const BurgerConstructor: FC = () => {
@@ -18,37 +19,37 @@ export const BurgerConstructor: FC = () => {
   const dispatch = useAppDispatch()
 
   const user = useAppSelector(userSlice.selectors.user)
-  const order = useAppSelector(currentOrderSlice.selectors.order)
-  const { resetOrderState } = currentOrderSlice.actions
+  const { ingredients, isReady, orderNumber, total } = useAppSelector(model.selectors.state)
+  const { resetConstructorState } = model.actions
   const [postOrder] = apiSlice.usePostOrderMutation()
 
   const [bun, otherIngredients] = useMemo(() => [
-    order.ingredients.find(({ type }) => type === IngredientType.BUN),
-    order.ingredients.filter(({ type }) => type !== IngredientType.BUN),
-  ], [order.ingredients])
+    ingredients.find(({ type }) => type === IngredientType.BUN),
+    ingredients.filter(({ type }) => type !== IngredientType.BUN),
+  ], [ingredients])
 
 
   const { isModalOpen, closeModal, openModal } = useModal({
-    closeHandler: () => dispatch(resetOrderState()),
+    closeHandler: () => dispatch(resetConstructorState()),
   })
 
   const handleOrderSubmit = useCallback((e: SyntheticEvent) => {
     e.stopPropagation()
     if (!user) navigate('/login')
-    else postOrder(order.ingredients)
-  }, [order, postOrder])
+    else postOrder(ingredients)
+  }, [navigate, ingredients, postOrder, user])
 
   useEffect(() => {
-    if (order.id) openModal()
-  }, [order.id])
+    if (orderNumber) openModal()
+  }, [openModal, orderNumber])
 
   return (
     <>
-      <article className={style.container + ' pt-25 pb-10'}>
+      <article className={style.container}>
         <div className={style.content}>
-          <EmptyItem
-            orderIngredient={bun}
-            key={`${bun?.orderIngredientIndex}1`}
+          <BurgerConstructorItem
+            ingredient={bun}
+            key={`${bun?.inBurgerConstructorIndex}1`}
             expectType={IngredientType.BUN}
             position={'top'}
           />
@@ -56,19 +57,19 @@ export const BurgerConstructor: FC = () => {
           <ul className={style.draggable}>
             {otherIngredients.length > 0
               ? otherIngredients.map(item => (
-                <EmptyItem
-                  orderIngredient={item}
-                  key={item.orderIngredientIndex}
+                <BurgerConstructorItem
+                  ingredient={item}
+                  key={item.inBurgerConstructorIndex}
                   expectType={'other'}
                 />
               ))
-              : <EmptyItem key={`3`} expectType={'other'}/>
+              : <BurgerConstructorItem key={`3`} expectType={'other'}/>
             }
           </ul>
 
-          <EmptyItem
-            orderIngredient={bun}
-            key={`${bun?.orderIngredientIndex}2`}
+          <BurgerConstructorItem
+            ingredient={bun}
+            key={`${bun?.inBurgerConstructorIndex}2`}
             expectType={IngredientType.BUN}
             position={'bottom'}
           />
@@ -76,13 +77,13 @@ export const BurgerConstructor: FC = () => {
 
         <div className={style.footer}>
           <div className={style.total}>
-            <span className={'text text_type_digits-medium'}>{order.total}</span>
+            <span className={'text text_type_digits-medium'}>{total}</span>
             <CurrencyIcon type={'primary'}/>
           </div>
           <Button
             type={'primary'}
             htmlType={'submit'}
-            disabled={order.ingredients.length < 3}
+            disabled={!isReady}
             onClick={handleOrderSubmit}
           >
             Оформить заказ
@@ -90,11 +91,9 @@ export const BurgerConstructor: FC = () => {
         </div>
       </article>
 
-      {order.id &&
-        <Modal close={closeModal} isVisible={isModalOpen}>
-          <OrderDetails orderId={order.id}/>
-        </Modal>
-      }
+      <Modal close={closeModal} isVisible={isModalOpen}>
+        <OrderNotification orderId={orderNumber!}/>
+      </Modal>
     </>
   )
 }

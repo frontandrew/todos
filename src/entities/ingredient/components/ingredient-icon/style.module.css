@@ -1,0 +1,31 @@
+
+
+
+
+.gradient {
+	--ingredient-icon-size: 4em;
+
+	width: var(--ingredient-icon-size);
+	min-width: var(--ingredient-icon-size);
+
+	height: var(--ingredient-icon-size);
+	min-height: var(--ingredient-icon-size);
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background: var(--icon-border-gradient);
+	border-radius: 50%;
+}
+
+.container {
+	width: calc(var(--ingredient-icon-size) - 0.25em);
+	height: calc(var(--ingredient-icon-size) - 0.25em);
+
+	display: flex;
+	justify-content: center;
+
+	background: var(--background);
+	border-radius: 50%;
+}

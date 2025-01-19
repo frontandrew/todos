@@ -26,12 +26,6 @@
     object-fit: cover;
 }
 
-.price {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
 .name {
     text-align: center;
 }
